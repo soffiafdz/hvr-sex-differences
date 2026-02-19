@@ -17,7 +17,7 @@ This project examines whether the hippocampal-to-ventricle ratio (HVR), a self-n
 
 This study uses data from the [UK Biobank](https://www.ukbiobank.ac.uk/) (Application Number 35605). Individual-level data cannot be shared publicly under the UK Biobank Material Transfer Agreement. Researchers can apply for access at <https://www.ukbiobank.ac.uk/enable-your-research/apply-for-access>.
 
-The `data/`, `models/`, and `outputs/` directories are not included in this repository. To reproduce the analyses, you will need:
+The `data/` and `outputs/` directories are not included in this repository. Model definitions (`models/lavaan/`) are tracked; fitted model objects (`models/fits/`, `models/results/`, `models/diagnostics/`) are not. To reproduce the analyses, you will need:
 
 | Input | Path (in config) | Description |
 |-------|-------------------|-------------|
@@ -29,7 +29,6 @@ The `data/`, `models/`, and `outputs/` directories are not included in this repo
 | DARQ QC | `data/lists/darq_out_*.csv` | Deep-learning QC scores |
 | Exclusion list | `data/lists/exclude_id.txt` | Subject IDs to exclude |
 | Segmentations | `data/derivatives/hclvag_segmentations.csv` | HC/LV segmentation volumes |
-| lavaan models | `models/lavaan/*.txt` | SEM/CFA model specifications |
 
 All data paths are configured in `config/pipeline_config.yaml` under the `data:` section.
 
@@ -39,20 +38,20 @@ All data paths are configured in `config/pipeline_config.yaml` under the `data:`
 
 ```
 01 Parse Volumes ─────┐
-                      ├──→ 05 Adjust Head-size ──┬──→ 08 Normative Tables
-02 Quality Control ───┘          │                ├──→ 09 Sex Differences
-                                 │                └──→ 10 HVR Comparison ──┐
-03 Parse Covariates ──→ 04 Clean SES/Cognitive    │                        │
-                                 │                │                        │
-                                 └──→ 06 Cognitive Factors ───────────────┤
-                                           │                               │
-                                           └──→ 11 SEM Analysis ─────────┤
-                                                                          │
-                        07 Demographics ──────────────────────────────────┤
-                                                                          │
-                                         12 Manuscript Objects ◄──────────┘
-                                                   │
-                                           Quarto Render
+                      ├──→ 05 Adjust Head-size ──┬──→ 08 Normative Tables ─┐
+02 Quality Control ───┤                           ├──→ 09 Sex Differences ──┤
+                      │                           │                         │
+03 Parse Covariates ──┴──→ 04 Clean SES/Cognitive │                         │
+                                │                  │                         │
+                                ├──→ 06 Cog Factors┼──→ 10 HVR Comparison ──┤
+                                │         │        │                         │
+                                │         ├────────┼──→ 07 Demographics ────┤
+                                │                  │                         │
+                                └─────────┴──→ 11 SEM Analysis ────────────┤
+                                                                            │
+                                          12 Manuscript Objects ◄───────────┘
+                                                    │
+                                            Quarto Render
 ```
 
 ### Script summary
@@ -115,7 +114,10 @@ hvr_sex_differences/
 │   ├── references.bib             # Bibliography
 │   ├── human-brain-mapping.csl    # HBM citation style
 │   └── apa.csl                    # APA citation style
+├── .Rprofile                      # renv bootstrap (sources renv/activate.R)
+├── .renvignore                    # Exclude data/ from renv dependency scan
 ├── renv.lock                      # R package versions (renv::restore)
+├── renv/activate.R                # renv activation script
 ├── environment.yml                # Conda environment spec
 └── LICENSE                        # MIT
 ```
@@ -135,13 +137,13 @@ install.packages("renv")
 renv::restore()
 ```
 
-Key dependencies: `data.table`, `lavaan`, `gamlss`, `gt`, `ggplot2`, `duckdb`, `fst`, `MatchIt`, `patchwork`, `ggtext`.
+Key dependencies: `data.table`, `lavaan`, `gamlss`, `gt`, `ggplot2`, `duckdb`, `fst`, `patchwork`, `ggtext`.
 
 ### Conda environment (optional)
 
 ```bash
 conda env create -f environment.yml
-conda activate hvr_sex_differences
+conda activate ukb_sexeffects
 ```
 
 ## Running the Pipeline
@@ -168,9 +170,13 @@ Individual scripts can be run directly (e.g., `Rscript R/09_sex_differences.R`),
 The pipeline orchestrator runs step 12 automatically. To render manually:
 
 ```bash
-Rscript R/12_manuscript_objects.R           # Pre-compute inline values
-cd reports-src && quarto render             # Render PDF + supplementary
+Rscript R/12_manuscript_objects.R     # Pre-compute inline values
+cd reports-src
+quarto render manuscript.qmd          # Main manuscript (HTML + PDF)
+quarto render supplementary.qmd       # Supplementary materials
 ```
+
+**Important:** Run `quarto render` from inside `reports-src/` (not the project root). Each `.qmd` setup chunk activates the parent project's renv library via `renv::load()`.
 
 Output goes to `outputs/reports/`.
 
