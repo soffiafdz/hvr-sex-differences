@@ -54,6 +54,9 @@ _freeze/
 *.docx
 *.rtf
 
+# LaTeX output from gt/quarto (but not source templates like title.tex)
+outputs/**/*.tex
+
 # R CMD build / check
 /*.tar.gz
 /*.Rcheck/
