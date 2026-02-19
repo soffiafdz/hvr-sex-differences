@@ -1,0 +1,76 @@
+# Data and outputs (not distributed; see README for data access)
+data/
+models/
+outputs/
+logs/
+
+# R session files
+.Rhistory
+.Rapp.history
+.RData
+.RDataTmp
+.Ruserdata
+.Rprofile
+.Renviron
+
+# renv library cache (only renv.lock is tracked)
+renv/library/
+renv/staging/
+renv/cellar/
+renv/sandbox/
+renv/python/
+
+# Quarto / knitr build artifacts
+.quarto/
+_freeze/
+*_cache/
+*_files/
+*.knit.md
+*.utf8.md
+
+# LaTeX intermediates (but not source templates like title.tex)
+*.aux
+*.log
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.out
+
+# Rendered documents (rebuild from source)
+*.pdf
+*.html
+*.docx
+*.rtf
+
+# R CMD build / check
+/*.tar.gz
+/*.Rcheck/
+
+# RStudio
+.Rproj.user/
+rsconnect/
+
+# Plots generated at console
+Rplots.pdf
+
+# Conda environment (only environment.yml is tracked)
+.conda/
+__pycache__/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor / IDE
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Misc
+*.otter.*
+.envrc
+.lintr

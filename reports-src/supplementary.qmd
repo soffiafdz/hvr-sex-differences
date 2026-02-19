@@ -1,0 +1,442 @@
+---
+title: "Supporting Information"
+subtitle: "Hippocampal-to-Ventricle Ratio as a Head-Size-Independent Biomarker: Sex Differences and Cognitive Associations in 27,680 UK Biobank Participants"
+author:
+  - name: Sofia Fernandez-Lozano
+  - name: Louis D. Collins
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: false
+    embed-resources: true
+    include-in-header:
+      text: |
+        <style>
+        .gt_table, .gt_table th, .gt_table td {
+          font-size: 14px !important;
+        }
+        table, th, td {
+          font-size: 14px !important;
+        }
+        </style>
+  pdf:
+    toc: false
+    number-sections: false
+    documentclass: article
+    geometry:
+      - margin=1in
+    latex-max-runs: 20
+    pdf-engine: xelatex
+    include-in-header:
+      text: |
+        \usepackage{array}
+        \usepackage{booktabs}
+        \usepackage{longtable}
+        \usepackage{amsmath}
+        \usepackage{amssymb}
+        \usepackage{textcomp}
+        \usepackage{fontspec}
+        \setmainfont{Latin Modern Roman}
+        \usepackage{newunicodechar}
+        \newunicodechar{ε}{\ensuremath{\varepsilon}}
+        % Center longtables
+        \setlength{\LTleft}{\fill}
+        \setlength{\LTright}{\fill}
+        % Supplementary numbering: Table S1, Figure S1, etc.
+        \renewcommand{\thetable}{S\arabic{table}}
+        \renewcommand{\thefigure}{S\arabic{figure}}
+        % Force exact placement so floats don't drift
+        \usepackage{float}
+        \floatplacement{table}{H}
+        \floatplacement{figure}{H}
+execute:
+  echo: false
+  warning: false
+  message: false
+  eval: true
+bibliography: references.bib
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(here)
+library(data.table)
+library(gt)
+here::i_am("reports-src/supplementary.qmd")
+source(here("reports-src/_common.R"))
+
+# Load pre-computed manuscript environment (from R/12_manuscript_objects.R)
+ms <- read_rds_safe(here("data/derivatives/manuscript_env.rds"), "manuscript environment")
+list2env(ms$scalars, envir = environment())
+list2env(ms$data, envir = environment())
+list2env(ms$tables, envir = environment())
+```
+
+# Supplementary Tables {.unnumbered}
+
+```{r}
+#| label: supp-tbl-cog-battery
+#| tbl-cap: "Cognitive test battery administered at the UK Biobank imaging visit with field identifiers."
+
+cog_battery <- data.table(
+  Domain = c("Memory", "Memory", "Memory",
+             "Processing Speed", "Processing Speed", "Processing Speed",
+             "Executive Function",
+             "Reasoning", "Reasoning", "Reasoning",
+             "Verbal", "Numeric"),
+  Test = c("Pairs Matching (round 1)", "Pairs Matching (round 2)", "Prospective Memory",
+           "Reaction Time", "Symbol Digit Substitution", "Trail Making A",
+           "Trail Making B",
+           "Fluid Intelligence", "Matrix Reasoning", "Tower Rearranging",
+           "Vocabulary", "Numeric Memory"),
+  `UK Biobank Field` = c("399", "400", "20018",
+                         "20023", "20159", "6348",
+                         "6350",
+                         "20016", "6373", "21004",
+                         "6364", "4282"),
+  Description = c("Number of errors in visual memory task",
+                  "Number of errors in delayed recall",
+                  "Correct execution of delayed instruction",
+                  "Mean response time (ms)",
+                  "Number correct in 60 seconds",
+                  "Time to complete (s)",
+                  "Time to complete (s)",
+                  "Number correct in 13 verbal-numerical items",
+                  "Number correct in non-verbal reasoning",
+                  "Planning task score",
+                  "Number of synonyms identified",
+                  "Maximum digit span")
+)
+
+cog_battery |>
+  gt(groupname_col = "Domain") |>
+  tab_header(
+    title = "Cognitive Test Battery",
+    subtitle = "UK Biobank imaging visit assessments"
+  ) |>
+  cols_label(`UK Biobank Field` = "Field ID") |>
+  gt_pdf_style()
+```
+
+\clearpage
+
+```{r}
+#| label: supp-tbl-sem-covariates-fields
+#| tbl-cap: "SEM model covariates with UK Biobank field identifiers. Age² included in HVR and HC-RES models only. IMDP available for England subsample only. Site modeled as random effect in GAMLSS; cluster-robust SE in pooled SEM."
+
+data.table(
+  Variable = c("Age", "Age²", "ICV", "IMDP", "Education", "Site"),
+  Description = c(
+    "Age at imaging visit (years)",
+    "Quadratic age term",
+    "Intracranial volume (cc)",
+    "Index of Multiple Deprivation",
+    "Educational attainment (years)",
+    "UK Biobank assessment centre"
+  ),
+  Field_ID = c(
+    "21003",
+    "Derived",
+    "Derived",
+    "26410",
+    "6138",
+    "54"
+  )
+) |>
+  gt(rowname_col = "Variable") |>
+  cols_label(
+    Description = "Description",
+    Field_ID = "UK Biobank Field"
+  ) |>
+  tab_header(title = "SEM Model Covariates") |>
+  gt_pdf_style()
+```
+
+\clearpage
+
+```{r}
+#| label: supp-tbl-temporal-stability
+#| tbl-cap: "Test-retest reliability of brain measures across a mean follow-up interval of 2.7 years (SD = 1.1). N = 2,935 participants with both ses-2 and ses-3 imaging. ICC = intraclass correlation coefficient (two-way, absolute agreement); not to be confused with ICV (intracranial volume)."
+
+if (!is.null(stability_dt)) {
+  stability_dt |>
+    gt(groupname_col = "ROI") |>
+    fmt_number(columns = c(`Pearson r`, ICC), decimals = 3) |>
+    tab_header(title = "Temporal Stability of Brain Measures") |>
+    gt_pdf_style()
+} else {
+  gt(data.table(Message = "Longitudinal data not available")) |>
+    tab_header(title = "Temporal Stability")
+}
+```
+
+\clearpage
+
+```{r}
+#| label: supp-tbl-hvr-centiles-female
+#| tbl-cap: "Hippocampal-to-Ventricle Ratio (HVR) normative centiles for females by hemisphere. Values at 5-year age intervals for clinical reference."
+format_centile_hemisphere_gt(
+  norm_tables, roi = "HVR", adj = "NON", sex = "Female",
+  title = "HVR Normative Centiles: Females (by Hemisphere)",
+  ages_subset = seq(45, 80, by = 5),
+  centiles = c("p10", "p25", "p50", "p75", "p90")
+)
+```
+
+\clearpage
+
+```{r}
+#| label: supp-tbl-hvr-centiles-male
+#| tbl-cap: "Hippocampal-to-Ventricle Ratio (HVR) normative centiles for males by hemisphere. Values at 5-year age intervals for clinical reference."
+format_centile_hemisphere_gt(
+  norm_tables, roi = "HVR", adj = "NON", sex = "Male",
+  title = "HVR Normative Centiles: Males (by Hemisphere)",
+  ages_subset = seq(45, 80, by = 5),
+  centiles = c("p10", "p25", "p50", "p75", "p90")
+)
+```
+
+\clearpage
+
+```{r}
+#| label: supp-tbl-hc-centiles-female
+#| tbl-cap: "Hippocampal volume normative centiles for females by hemisphere (ICV-controlled). Given significant lateralization (right HC > left HC in females), hemisphere-specific norms are provided."
+format_centile_hemisphere_gt(
+  norm_tables, roi = "HC", adj = "NON", sex = "Female",
+  title = "HC Normative Centiles: Females (cc, by Hemisphere)",
+  ages_subset = seq(45, 80, by = 5),
+  centiles = c("p10", "p25", "p50", "p75", "p90")
+)
+```
+
+\clearpage
+
+```{r}
+#| label: supp-tbl-hc-centiles-male
+#| tbl-cap: "Hippocampal volume normative centiles for males by hemisphere (ICV-controlled)."
+format_centile_hemisphere_gt(
+  norm_tables, roi = "HC", adj = "NON", sex = "Male",
+  title = "HC Normative Centiles: Males (cc, by Hemisphere)",
+  ages_subset = seq(45, 80, by = 5),
+  centiles = c("p10", "p25", "p50", "p75", "p90")
+)
+```
+
+\clearpage
+
+```{r}
+#| label: supp-tbl-lv-centiles-female
+#| tbl-cap: "Lateral ventricular volume normative centiles for females by hemisphere (ICV-controlled)."
+format_centile_hemisphere_gt(
+  norm_tables, roi = "LV", adj = "NON", sex = "Female",
+  title = "LV Normative Centiles: Females (cc, by Hemisphere)",
+  ages_subset = seq(45, 80, by = 5),
+  centiles = c("p10", "p25", "p50", "p75", "p90")
+)
+```
+
+\clearpage
+
+```{r}
+#| label: supp-tbl-lv-centiles-male
+#| tbl-cap: "Lateral ventricular volume normative centiles for males by hemisphere (ICV-controlled)."
+format_centile_hemisphere_gt(
+  norm_tables, roi = "LV", adj = "NON", sex = "Male",
+  title = "LV Normative Centiles: Males (cc, by Hemisphere)",
+  ages_subset = seq(45, 80, by = 5),
+  centiles = c("p10", "p25", "p50", "p75", "p90")
+)
+```
+
+\clearpage
+
+```{r}
+#| label: supp-tbl-gamlss-hvr-coef
+#| tbl-cap: "GAMLSS model coefficients for HVR normative curves (transfer model without site). $\\mu$ = location (mean), $\\sigma$ = scale (variance), $\\nu$ = skewness. Bold indicates p < .05."
+
+if (!is.null(hvr_coefs)) {
+  format_gamlss_coef_gt(hvr_coefs, title = "GAMLSS Model: Hippocampal-to-Ventricle Ratio (HVR)")
+}
+```
+
+\clearpage
+
+```{r}
+#| label: supp-tbl-gamlss-hc-coef
+#| tbl-cap: "GAMLSS model coefficients for hippocampal volume normative curves (transfer model without site). $\\mu$ = location (mean), $\\sigma$ = scale (variance), $\\nu$ = skewness. Bold indicates p < .05."
+
+if (!is.null(hc_coefs)) {
+  format_gamlss_coef_gt(hc_coefs, title = "GAMLSS Model: Hippocampal Volume (HC)")
+}
+```
+
+\clearpage
+
+```{r}
+#| label: supp-tbl-measurement-invariance
+#| tbl-cap: "Measurement invariance testing for cognitive bifactor model. Delta-CFI and Delta-RMSEA within recommended thresholds at each step supports strict invariance."
+format_minv_gt(cfa_minv)
+```
+
+\clearpage
+
+```{r}
+#| label: supp-tbl-sem-paths-by-sex
+#| tbl-cap: "Brain-cognition path coefficients by sex. $\\beta$ = standardized coefficient. Bold indicates p < .05. Multi-group SEM with sex-stratified parameter estimation."
+format_sem_paths_by_sex_gt(sem_params)
+```
+
+\clearpage
+
+```{r}
+#| label: supp-tbl-sem-fit
+#| tbl-cap: "Fit indices for structural equation models. Pooled models include sex as covariate; sex-stratified models estimate parameters separately. Good fit: CFI/TLI > 0.95, RMSEA < 0.06, SRMR < 0.08."
+if (!is.null(sem_fit_dt)) {
+  format_sem_fit_gt(sem_fit_dt)
+}
+```
+
+\clearpage
+
+```{r}
+#| label: supp-tbl-sem-loadings
+#| tbl-cap: "SEM measurement model: Factor loadings by sex. $\\lambda$ = standardized loading; SE = standard error. Bold indicates p < .05. Loadings constrained to 1.0 for scale identification not shown. Memory-Specific factor showed estimation failure in females and non-significant loadings in males (factor collapse); see Limitations."
+
+if (!is.null(loadings_dt) && nrow(loadings_dt) > 0) {
+  format_sem_loadings_gt(loadings_dt, model_name = "HVR Model")
+}
+```
+
+\clearpage
+
+```{r}
+#| label: supp-tbl-sem-covariate-effects
+#| tbl-cap: "SEM covariate effects on cognitive factors. $\\beta$ = standardized coefficient; SE = standard error. Bold indicates p < .05. Memory-Specific factor not shown due to factor collapse."
+
+format_sem_covariates_gt(covar_dt, model_name = "HVR Model")
+```
+
+\clearpage
+
+```{r}
+#| label: supp-tbl-site-adjusted
+#| tbl-cap: "Sex difference effect sizes with site adjustment. ICC = intraclass correlation coefficient indicating proportion of variance attributable to site."
+if ("SITE_ADJUSTED" %in% names(sex_diff) && nrow(sex_diff$SITE_ADJUSTED) > 0) {
+  site_dt <- sex_diff$SITE_ADJUSTED[SIDE == "LR", .(ROI_LABEL, ADJ_LABEL, ICC_SITE, ESTIMATE, CI_LOWER, CI_UPPER)]
+  site_dt[ADJ_LABEL == "HVR (Self-Normalizing)", ADJ_LABEL := "Self-normalizing"]
+  site_dt[, `95% CI` := sprintf("[%.3f, %.3f]", CI_LOWER, CI_UPPER)]
+
+  site_dt[, .(ROI_LABEL, ADJ_LABEL, ICC_SITE, d = ESTIMATE, `95% CI`)] |>
+    gt(groupname_col = "ROI_LABEL", rowname_col = "ADJ_LABEL") |>
+    cols_label(ICC_SITE = "Site ICC") |>
+    fmt_number(columns = c(ICC_SITE, d), decimals = 3) |>
+    tab_spanner(label = "Effect Size", columns = c(d, `95% CI`)) |>
+    tab_header(title = "Site-Adjusted Effect Sizes") |>
+    tab_stubhead(label = "Adjustment") |>
+    gt_pdf_style()
+}
+```
+
+\clearpage
+
+```{r}
+#| label: supp-tbl-hemisphere
+#| tbl-cap: "Sex differences by hemisphere. HC/LV = ICV-residualized; HVR = self-normalizing ratio. d = Cohen's d (positive = females > males)."
+hemi_dt <- get_hemisphere_comparison(sex_diff)
+if (!is.null(hemi_dt) && nrow(hemi_dt) > 0) {
+  roi_full_names <- c("HVR" = "Hippocampal-to-Ventricle Ratio",
+                      "HC" = "Hippocampus",
+                      "LV" = "Lateral Ventricles")
+  hemi_dt[, ROI_LABEL := fifelse(ROI %in% names(roi_full_names), roi_full_names[ROI], ROI_LABEL)]
+  hemi_dt[, ROI_LABEL := factor(ROI_LABEL, levels = roi_full_names)]
+  hemi_dt[, Hemisphere := fifelse(SIDE == "L", "Left", "Right")]
+  hemi_dt[, `95% CI` := sprintf("[%.3f, %.3f]", CI_LOWER, CI_UPPER)]
+
+  hemi_dt[, .(ROI_LABEL, Hemisphere, d = ESTIMATE, `95% CI`)] |>
+    gt(groupname_col = "ROI_LABEL") |>
+    fmt_number(columns = d, decimals = 3) |>
+    tab_header(title = "Sex Differences by Hemisphere") |>
+    gt_pdf_style()
+}
+```
+
+\clearpage
+
+```{r}
+#| label: supp-tbl-sensitivity
+#| tbl-cap: "Effect sizes with and without psychiatric exclusions. Sensitivity sample includes participants with ICD-10 F00-F99 diagnoses. $\\Delta$d = difference in Cohen's d; values near zero indicate robust findings."
+sens_dt <- get_sensitivity_comparison(sex_diff)
+if (!is.null(sens_dt) && nrow(sens_dt) > 0) {
+  sens_dt[, `:=`(
+    ci_pri = sprintf("[%.3f, %.3f]", CI_LOWER_PRIMARY, CI_UPPER_PRIMARY),
+    ci_sens = sprintf("[%.3f, %.3f]", CI_LOWER_SENS, CI_UPPER_SENS)
+  )]
+
+  sens_dt[, .(ROI_LABEL, ADJ_LABEL, N_PRIMARY, d_pri = ESTIMATE_PRIMARY, ci_pri,
+              N_SENS, d_sens = ESTIMATE_SENS, ci_sens, DIFF)] |>
+    gt(groupname_col = "ROI_LABEL", rowname_col = "ADJ_LABEL") |>
+    cols_label(
+      N_PRIMARY = "N", d_pri = "d", ci_pri = "95% CI",
+      N_SENS = "N", d_sens = "d", ci_sens = "95% CI",
+      DIFF = "Δd"
+    ) |>
+    fmt_number(columns = c(N_PRIMARY, N_SENS), decimals = 0, use_seps = TRUE) |>
+    fmt_number(columns = c(d_pri, d_sens, DIFF), decimals = 3) |>
+    tab_spanner(label = "Primary Sample", columns = c(N_PRIMARY, d_pri, ci_pri)) |>
+    tab_spanner(label = "Sensitivity Sample", columns = c(N_SENS, d_sens, ci_sens)) |>
+    tab_header(
+      title = "Sensitivity Analysis: Including Psychiatric Diagnoses",
+      subtitle = "Comparing primary sample (F-codes excluded) vs. sensitivity sample (F-codes included)"
+    ) |>
+    tab_stubhead(label = "Adjustment") |>
+    gt_pdf_style()
+}
+```
+
+\clearpage
+
+# Supplementary Figures {.unnumbered}
+
+```{r}
+#| label: supp-fig-distributions
+#| fig-cap: "Distribution overlap by sex across adjustment methods. Left column: full sample. Right column: head-size matched sample (age $\\pm 1$ year, intracranial volume $\\pm 25$ cc)."
+#| fig-width: 5
+#| fig-height: 7
+fig_distribution_overlap(brain_data, matched_brain_data, show_matched = TRUE)
+```
+
+\clearpage
+
+```{r}
+#| label: supp-fig-gamlss-calibration
+#| fig-cap: "Calibration plots for normative generalized additive models for location, scale, and shape. Points represent observed vs. expected proportions in held-out test data. Diagonal line indicates perfect calibration."
+#| fig-width: 7
+#| fig-height: 3.5
+
+if (!is.null(gamlss_calib)) {
+  fig_gamlss_validation_combined(gamlss_calib)
+}
+```
+
+\clearpage
+
+```{r}
+#| label: supp-fig-hemisphere
+#| fig-cap: "Sex differences in residualized brain volumes by hemisphere. Faded error bars indicate non-significant effects. Right panel shows the right minus left difference with 95% confidence interval, colored by overall sex advantage direction (red = female advantage, blue = male advantage; faded = non-significant difference)."
+#| fig-width: 7
+#| fig-height: 3.5
+fig_hemisphere_comparison(sex_diff)
+```
+
+\clearpage
+
+```{r}
+#| label: supp-fig-sensitivity
+#| fig-cap: "Sensitivity analysis comparing primary (strict exclusions) vs. expanded sample. Faded points indicate non-significant effects. Right panel shows the primary minus sensitivity difference with 95% confidence interval."
+#| fig-width: 7
+#| fig-height: 4.7
+fig_sensitivity_comparison(sex_diff)
+```

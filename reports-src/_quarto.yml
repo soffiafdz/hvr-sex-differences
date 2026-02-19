@@ -1,0 +1,11 @@
+project:
+  type: default
+  output-dir: ../outputs/reports
+  render:
+    - "manuscript.qmd"
+    - "supplementary.qmd"
+
+execute:
+  echo: false
+  warning: false
+  message: false

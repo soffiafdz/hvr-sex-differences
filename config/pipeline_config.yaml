@@ -1,0 +1,367 @@
+general:
+  project_name: hvr-sex-differences
+  random_seed: 1618
+  log_level: INFO
+  n_cores: 4
+scripts:
+  force_regenerate:
+    # Keys must match script short names (e.g., 06_cognitive_factors -> cognitive_factors)
+    parse_volumes: yes
+    quality_control: yes
+    parse_covariates: yes
+    clean_ses_cognitive: yes
+    adjust_headsize: yes
+    cognitive_factors: yes
+    demographics: yes
+    normative_tables: yes
+    sex_differences: yes
+    hvr_comparison: yes
+    sem_analysis: yes
+    manuscript_objects: yes
+  adjust_headsize:
+    rematch_samples: no
+    shuffle_before_match: no  # Shuffle males before matching to reduce order-dependency
+    matching_tolerance:
+      age: 1
+      icc: 25
+      offset: 1
+  cfa:
+    ses_subset: yes
+    refit_models: yes  # Force refit to fix duplicate EID issue
+  ses_factors:
+    refit_models: no
+  demographics:
+    redo_tables: yes
+    bilateral: yes
+    network: LPP_CNN
+  gamlss:
+    redo_tables: yes
+    redo_plots: yes
+    force_refit: no
+    force_transfer: no
+    network: LPP_CNN
+  sex_differences:
+    redo_plots: yes
+    redo_tables: yes
+    network: LPP_CNN
+    sensitivity_f_codes: yes  # SENS sample now available from Script 05
+  hvr_comparison:
+    redo_plots: yes
+    network: LPP_CNN
+  sem:
+    refit_models: yes  # Rerun: AGE_sq covariate added
+    redo_tables: yes
+    redo_plots: yes
+    bootstrap: yes  # Enabled for final results (2000 samples)
+    bootstrap_samples: 2000
+    include_zscore: no
+    network: LPP_CNN
+data:
+  raw:
+    pp_vols_dir: data/raw/pp_vols
+    darq_qc: data/lists/darq_out_20240408_lng_r152.csv
+    assemblynet_fst: data/fst/ukb_assemblynet.fst
+    ukb_dataset: data/raw/ukb676574
+    fields_tsv: data/raw/fields.tsv
+    fields_yaml: data/raw/fields.yaml
+    exclude_ids: data/lists/exclude_id.txt
+  processed:
+    icc_scale: data/raw/ukb-lng_icc-scale.csv
+    qc_combined: data/derivatives/qc_darq-assemblynet.rds
+    metadata: data/derivatives/metadata.rds
+    notes: data/derivatives/notes.rds
+    covars_fst: data/fst/ukb_covars.fst
+    ses_data: data/derivatives/ses_data.rds
+    cog_tests: data/derivatives/cog-tests.rds
+    cog_metadata: data/derivatives/cog-tests_metadata.rds
+    hclvag_segmentations: data/derivatives/hclvag_segmentations.csv
+    hc_hvr_adjusted: data/derivatives/hc-hvr_adj.rds
+    matching_pairs: data/derivatives/match_sex-age-icc.rds
+    lat-cog_values: data/derivatives/lat-cog_vals.rds
+    cog_reliability: data/derivatives/cog_reliability.rds
+    lat-ses_values: data/derivatives/lat-ses_vals.rds
+    norm_tables: data/derivatives/norm_tables.rds
+    z_scores: data/derivatives/z_scores.rds
+    sex_differences: data/derivatives/sex_differences.rds
+    gamlss_fits: models/fits/gamlss.rds
+    sem_analysis: models/fits/sem_analysis.rds
+    hvr_hc_comparison: models/results/hvr_hc_comparison.rds
+    manuscript_env: data/derivatives/manuscript_env.rds
+  demographics:
+    data: data/derivatives/demog_data.rds
+    t-tests: data/derivatives/demog_t-tests.rds
+  models:
+    definition:
+      cfa_cog: models/lavaan/cfa_cog.txt
+      cfa-lng_cog: models/lavaan/cfa-lng_cog.txt
+      cfa_ses: models/lavaan/cfa_ses.txt
+      sem_hc_cog: models/lavaan/sem_hc_cog.txt
+      sem_hc_obs_cog: models/lavaan/sem_hc_obs_cog.txt
+      sem_roi_cog: models/lavaan/sem_roi_cog.txt
+      sem_hvr_cog: models/lavaan/sem_hvr_cog.txt
+      sem_hc_hvr_comparison: models/lavaan/sem_hc_hvr_comparison.txt
+      sem_hc_res_cog: models/lavaan/sem_hc_res_cog.txt  # Sensitivity: residualized HC
+      # Pooled models (main effects, SEX as covariate)
+      sem_hc_cog_pooled: models/lavaan/sem_hc_cog_pooled.txt
+      sem_hvr_cog_pooled: models/lavaan/sem_hvr_cog_pooled.txt
+      sem_hc_res_cog_pooled: models/lavaan/sem_hc_res_cog_pooled.txt
+    fit:
+      cfa_cog: models/fits/cfa_cog.rds
+      cfa-minv_cog: models/fits/cfa-minv_cog.rds
+      cfa_ses: models/fits/cfa_ses.rds
+      cfa-minv_ses: models/fits/cfa-minv_ses.rds
+      gamlss: models/fits/gamlss.rds  # Transfer models (no SITE) for external use
+      gamlss_site: models/fits/gamlss_site.rds  # Site-controlled models for within-UKB use
+      sem_analysis: models/fits/sem_analysis.rds
+      sem_pooled: models/fits/sem_pooled.rds
+    results:
+      cfa-minv_cog: models/results/cfa-minv_cog.rds
+      cfa-minv_ses: models/results/cfa-minv_ses.rds
+      sem_params: models/results/sem_params.rds
+      sem_fit_measures: models/results/sem_fit_measures.rds
+      sem_invariance: models/results/sem_invariance.rds
+      hvr_hc_comparison: models/results/hvr_hc_comparison.rds
+    diagnostics:
+      gamlss: models/diagnostics/gamlss.rds
+      zscore: models/diagnostics/zscore.rds
+  # All tables and figures now go to consolidated output directories
+  # See output.figures, output.tables, output.documents
+parameters:
+  qc:
+    darq_threshold: 0.25
+    assemblynet_rating: A
+    outlier_sd_threshold: 3.0
+  exclusions:
+    # ICD-10 exclusion patterns:
+    #   F = Mental/behavioral disorders (F00-F99): depression, anxiety, schizophrenia, etc.
+    #   G = Nervous system diseases (G00-G99): Parkinson's, epilepsy, MS, etc.
+    #   Q0 = CNS malformations (Q00-Q07): anencephaly, spina bifida, etc.
+    icd10_patterns: F|G|Q0  # Primary sample: exclude all psychiatric/neurological conditions
+    icd10_patterns_sensitivity: G|Q0  # Sensitivity sample: include psychiatric (F-codes), exclude only neurological/malformations
+  cognitive:
+    memory:
+    - PRS_mean_time
+    - PRS_mean_inc
+    - NUM
+    - PRMEM_res_n
+    exec_func:
+    - FLINT
+    - MATS_corr
+    - TRLS_alnum_time
+    - TOWER_corr
+    proc_speed:
+    - REACT
+    - TRLS_num_time
+    - SYM_corr
+    - SYM_try
+  cfa:
+    estimator: MLR
+    group_invariance: Strict
+    scaled_scores: yes
+    # Measurement invariance thresholds (Chen, 2007; Cheung & Rensvold, 2002)
+    invariance_thresholds:
+      delta_cfi: 0.01     # Maximum acceptable change in CFI
+      delta_rmsea: 0.015  # Maximum acceptable change in RMSEA
+      delta_srmr: 0.03    # Maximum acceptable change in SRMR (metric level)
+  ses:
+    components:
+    - EDUC
+    - EMPL
+    - HLTH
+    - HOUS
+    - INCM
+  education:
+    None of the above: 7
+    CSEs or equivalent: 10
+    O levels/GCSEs or equivalent: 11
+    NVQ or HND or HNC or equivalent: 12.5
+    A levels/AS levels or equivalent: 13
+    'Other professional qualifications eg: nursing, teaching': 14.5
+    College or University degree: 16
+    Prefer not to answer: NA
+  adjustment_methods:
+    NON: Unadjusted
+    PRP: Proportions
+    STX: Stereotaxic
+    RES: Residuals
+  rois:
+    HC: Hippocampus
+    LV: Lateral Ventricles
+    HVR: Hippocampus-to-Ventricle ratio
+  gamlss:
+    # Normative tables for clinical use: Only generate for these ROI-adjustment combinations
+    # HVR is self-normalizing; HC/LV use ICV as covariate (NON adjustment)
+    # Other adjustments (PRP, STX, RES) are analyzed in sex_differences but not provided as clinical norms
+    normative_combinations:
+      - {roi: HVR, adj: NON}  # HVR is self-normalizing, no adjustment needed
+      - {roi: HC, adj: NON}   # Raw HC with ICV as covariate in model
+      - {roi: LV, adj: NON}   # Raw LV with ICV as covariate in model
+    families:
+      HC:
+      - BCCG
+      - 'NO'
+      LV:
+      - BCCG
+      - 'NO'
+      HVR:
+      - BCCG
+      - 'NO'
+    age_range:
+    - 46
+    - 82
+    age_bin: 5
+    centiles:
+    - 0.01
+    - 0.025
+    - 0.05
+    - 0.1
+    - 0.25
+    - 0.5
+    - 0.75
+    - 0.9
+    - 0.95
+    - 0.975
+    - 0.99
+    summary_centiles:
+    - 0.01
+    - 0.025
+    - 0.05
+    - 0.25
+    - 0.5
+    - 0.75
+    - 0.95
+    - 0.975
+    - 0.99
+  sem:
+    fit_indices:
+    - aic
+    - bic
+    - cfi
+    - tli
+    - rmsea
+    - srmr
+    estimator: MLR
+output:
+  # Consolidated output directories
+  base: outputs
+  figures: outputs/figures
+  tables: outputs/tables
+  documents: outputs/reports
+
+  # Default settings
+  tables_formats: [html, tex]
+  plots_dpi: 300
+  plots_format: png
+
+# Manuscript figures and tables with submission-ready naming
+manuscript:
+  figures:
+    # Main manuscript figures
+    fig1_distribution_overlap:
+      script: sex_differences
+      width: 10
+      height: 6
+    fig2_effect_sizes:
+      script: sex_differences
+      width: 10
+      height: 5
+    fig3_age_trajectory:
+      script: sex_differences
+      width: 10
+      height: 7
+    fig4_hvr_centiles:
+      script: gamlss
+      width: 9
+      height: 6
+    fig5_sem_forest:
+      script: sem
+      width: 10
+      height: 8
+    # Supplementary figures
+    sfig_hc_centiles_female:
+      script: gamlss
+      width: 8
+      height: 5
+    sfig_hc_centiles_male:
+      script: gamlss
+      width: 8
+      height: 5
+    sfig_lv_centiles:
+      script: gamlss
+      width: 8
+      height: 5
+    sfig_calibration_hvr:
+      script: gamlss
+      width: 7
+      height: 6
+    sfig_calibration_hc:
+      script: gamlss
+      width: 7
+      height: 6
+    sfig_calibration_lv:
+      script: gamlss
+      width: 7
+      height: 6
+    sfig_hemisphere_comparison:
+      script: sex_differences
+      width: 8
+      height: 5
+    sfig_sensitivity_comparison:
+      script: sex_differences
+      width: 9
+      height: 6
+  tables:
+    # Main manuscript tables
+    table1_demographics:
+      script: demographics
+    table2_hc_effect_sizes:
+      script: sex_differences
+    table3_hvr_effect_size:
+      script: sex_differences
+    table4_sem_comparison:
+      script: sem
+    table5_age_sex_interactions:
+      script: hvr_comparison
+    # Supplementary tables
+    stbl_hvr_icv_validation:
+      script: sex_differences
+    stbl_site_adjusted:
+      script: sex_differences
+    stbl_matched_comparison:
+      script: sex_differences
+    stbl_age_stratified:
+      script: sex_differences
+    stbl_incremental_r2:
+      script: hvr_comparison
+    stbl_memory_comparison:
+      script: hvr_comparison
+    stbl_sem_fit:
+      script: sem
+    stbl_measurement_invariance:
+      script: cfa
+    stbl_hemisphere_comparison:
+      script: sex_differences
+    stbl_sensitivity:
+      script: sex_differences
+packages:
+  required:
+  - here
+  - data.table
+  - dplyr
+  - stringr
+  - yaml
+  - fst
+  - duckdb
+  - lubridate
+  - progress
+  - lavaan
+  - effsize
+  - gamlss
+  - gamlss.add
+  - gt
+  - ggplot2
+  - GGally
+  - ggtext
+  - ggnewscale
+  - ggsignif
+  optional: semhelpinghands
