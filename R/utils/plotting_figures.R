@@ -6,11 +6,6 @@
 # Part of the R/utils/ module system.
 # =============================================================================
 
-# Source dependencies if not already loaded
-if (!exists("theme_publication")) {
-  source(here::here("R/utils/plotting_core.R"))
-}
-
 #' Compute confidence interval for the difference between two estimates
 #' Uses SE derived from individual CIs: SE = (CI_UPPER - CI_LOWER) / 3.92
 #' Assumes independence between estimates for SE_diff = sqrt(SE_A^2 + SE_B^2)

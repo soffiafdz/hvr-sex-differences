@@ -5,11 +5,6 @@
 # Part of the R/utils/ module system.
 # =============================================================================
 
-# Source dependencies
-if (!exists("get_roi_labels")) {
-  source(here::here("R/utils/tables_core.R"))
-}
-
 # ----- Normative Table Compilation -----
 
 #' Compile individual normative tables into a single LaTeX document
@@ -335,110 +330,7 @@ create_normative_table <- function(
   gt_table
 }
 
-# ----- Clinical Spanners -----
-
-#' Add clinical Z-score spanners to gt table
-#' @param gt_table gt table object
-#' @param col_names Column names (excluding SEX and AGE_BIN)
-#' @param roi_type Type of ROI ("HC", "LV", or "HVR") to determine thresholds
-#' @return Modified gt table with Z-score spanners and clinical footnotes
-#' @details Hierarchy:
-#'   Level 1 (percentiles) <- Level 2 (clinical) <- Level 3 (side)
-#' @export
-add_clinical_spanners <- function(gt_table, col_names, roi_type = "HC") {
-  # --- 1. Define Z-Score Map (Universal) ---
-  # Maps percentile numeric value -> Z-score label
-  # Note: 50th percentile is "0 SD" (Average)
-  z_map <- c(
-    "1"    = "-2.3 SD",
-    "2.5"  = "-2.0 SD",
-    "5"    = "-1.6 SD",
-    "10"   = "-1.3 SD",
-    "25"   = "-0.7 SD",
-    "50"   = "0 SD", # Median
-    "75"   = "+0.7 SD",
-    "90"   = "+1.3 SD",
-    "95"   = "+1.6 SD",
-    "97.5" = "+2.0 SD",
-    "99"   = "+2.3 SD"
-  )
-
-  # Detect whether columns have:
-  # - "SIDE_" prefix (Summary Table)
-  # - just "pXX" (Main Table)
-  has_side_prefix <- any(grepl("_[p][0-9]", col_names))
-
-  # Extract numeric values
-  if (has_side_prefix) {
-    # Format: L_p1, R_p99
-    p_vals <- unique(sub(".*_p", "", col_names))
-    sides <- unique(sub("_p.*", "", col_names))
-  } else {
-    # Format: p1, p99 (Main Table)
-    p_vals <- unique(sub("^p", "", col_names))
-    sides <- "dummy" # No side prefix to span
-  }
-
-  # Filter map to only what exists in data
-  z_map <- z_map[names(z_map) %in% p_vals]
-
-  # Apply Spanners
-  for (pz in names(z_map)) {
-    lbl <- z_map[[pz]]
-
-    if (has_side_prefix) {
-      for (side in sides) {
-        target <- paste0(side, "_p", pz)
-        if (target %in% col_names) {
-          gt_table <- gt_table |>
-            tab_spanner(
-              label = lbl,
-              columns = all_of(target),
-              level = 2,
-              id = paste0(side, pz)
-            )
-        }
-      }
-    } else {
-      # Main table (no side prefix)
-      target <- paste0("p", pz)
-      if (target %in% col_names) {
-        gt_table <- gt_table |>
-          tab_spanner(
-            label = lbl,
-            columns = all_of(target),
-            level = 2,
-            id = paste0("z", pz)
-          )
-      }
-    }
-  }
-
-  # --- Add Clinical Interpretation Footnotes ---
-  # This keeps the header clean but provides the clinical context requested.
-
-  if (roi_type %in% c("HC", "HVR")) {
-    # ATROPHY (Low values are bad)
-    note_text <- md(paste(
-      "**Clinical Interpretation (Atrophy):**",
-      "&lt;1% (-2.3 SD): Severe;",
-      "&lt;2.5% (-2.0 SD): Abnormal;",
-      "&lt;5% (-1.6 SD): Borderline."
-    ))
-  } else {
-    # ENLARGEMENT (High values are bad)
-    note_text <- md(paste(
-      "**Clinical Interpretation (Enlargement):**",
-      "&gt;99% (+2.3 SD): Severe;",
-      "&gt;97.5% (+2.0 SD): Abnormal;",
-      "&gt;95% (+1.6 SD): Borderline."
-    ))
-  }
-
-  gt_table <- gt_table |> tab_source_note(source_note = note_text)
-
-  return(gt_table)
-}
+# NOTE: add_clinical_spanners() is defined in tables_core.R — do not duplicate here.
 
 # ----- Summary Normative Table -----
 

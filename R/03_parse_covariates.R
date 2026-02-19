@@ -18,7 +18,7 @@
 # ----- Libraries -----
 library(here)
 library(data.table)
-# library(stringr)
+library(stringr)
 library(duckdb)
 library(yaml)
 

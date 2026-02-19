@@ -9,11 +9,6 @@
 
 library(here)
 
-# Source config.R for get_output_path, get_script_figures, etc.
-if (!exists("get_output_path", mode = "function")) {
-  source(here("R/utils/config.R"))
-}
-
 #' Check if _common.R is loaded
 #'
 #' @return TRUE if _common.R functions are available

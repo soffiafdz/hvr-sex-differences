@@ -67,11 +67,6 @@ gt_pdf_style <- function(gt_tbl) {
   style_manuscript_table(gt_tbl, table_type = "main")
 }
 
-# Source dependencies if not already loaded
-if (!exists("format_pval")) {
-  source(here::here("R/utils/tables_core.R"))
-}
-
 #' Format centile table for display with gt
 #' @param centile_dt Centile data.table from get_centile_table()
 #' @param title Table title
@@ -427,11 +422,6 @@ format_hvr_hc_sem_gt <- function(comparison_dt) {
     return(gt(data.table(Message = "HVR vs HC comparison data not available")))
   }
 
-  # Source formatting functions if needed
-  if (!exists("format_p")) {
-    source(here::here("R/utils/formatting.R"))
-  }
-
   # Parameter labels
   param_labels <- c(
     "diff_g" = "D(HVR - HC) -> g",
@@ -472,11 +462,6 @@ format_hvr_hc_sem_gt <- function(comparison_dt) {
 format_hemisphere_gt <- function(hemi_dt) {
   if (is.null(hemi_dt) || nrow(hemi_dt) == 0) {
     return(gt(data.table(Message = "Hemisphere data not available")))
-  }
-
-  # Source ordering constants if needed
-  if (!exists("ROI_ORDER")) {
-    source(here::here("R/utils/tables_data.R"))
   }
 
   # Make a copy and apply ROI ordering
@@ -538,11 +523,6 @@ format_age_stratified_gt <- function(age_dt) {
 format_sensitivity_gt <- function(sens_dt) {
   if (is.null(sens_dt) || nrow(sens_dt) == 0) {
     return(gt(data.table(Message = "Sensitivity data not available")))
-  }
-
-  # Source ordering constants if needed
-  if (!exists("ROI_ORDER")) {
-    source(here::here("R/utils/tables_data.R"))
   }
 
   # Make a copy to avoid modifying original

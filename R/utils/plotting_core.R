@@ -20,13 +20,9 @@ get_palette <- function(type = "default") {
       Female = "darkred",
       Male = "midnightblue"
     ),
-    sex_md = c(
-      Female = "<span style='color: darkred;'>Females</span>",
-      Male = "<span style='color: midnightblue;'>Males</span>"
-    ),
     roi = c(
       HC = "#0072B2",
-      LV = "#D55E00",  # Lateral Ventricles (was incorrectly labeled VC)
+      LV = "#D55E00",  # Lateral Ventricles
       HVR = "#009E73",
       ICC = "#999999"
     ),

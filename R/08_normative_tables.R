@@ -497,7 +497,7 @@ if (check_files_exist(gamlss.path, stop_on_missing = FALSE)) {
         paste(
           "%s — %s (%s): Different families for L/R fit (%.0f vs %.0f)",
           "is not significantly better (+10 AIC);",
-          "Constrainig to same family."
+          "Constraining to same family."
         ),
         sex, roi, adj, aic_free, aic_same
       )

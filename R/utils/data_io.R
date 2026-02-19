@@ -262,16 +262,6 @@ ensure_directory <- function(dir_path) {
 # =============================================================================
 # High-level functions for loading analysis outputs with validation
 
-# Source formatting utilities if not already loaded
-if (!exists("safe_round")) {
-  source(here("R/utils/formatting.R"))
-}
-
-# Source config utilities if not already loaded
-if (!exists("get_data_path")) {
-  source(here("R/utils/config.R"))
-}
-
 #' Load primary analysis data with validation
 #' Returns a list with all commonly needed datasets
 #' @return List with demog_data, sex_diff, sem_fit, sem_params, cfa_minv, gamlss
