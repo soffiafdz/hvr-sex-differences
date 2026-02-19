@@ -1,11 +1,13 @@
 # Data and outputs (not distributed; see README for data access)
 # .gitkeep files are tracked to preserve directory structure on clone.
+# lavaan model definitions (*.txt) are source files and ARE tracked.
 data/*
 !data/**/
 !data/**/.gitkeep
-models/*
-!models/**/
-!models/**/.gitkeep
+models/fits/
+models/results/
+models/diagnostics/
+!models/lavaan/
 outputs/*
 !outputs/**/
 !outputs/**/.gitkeep

@@ -1,0 +1,83 @@
+# === Measurement models - Longitudinal ===
+# Latent factors will be constructed using both instances
+# Loadings will be constrained to remain the same
+# i.e. single CFA for All cognitive data
+
+# ==== General factor ====
+g_t1 =~ 1*PRS_mean_time_t1 + 1*FLINT_t1 + 1*REACT_t1 + 
+        c(gf1, gm1)*PRS_mean_inc_t1 + c(gf2, gm2)*NUM_t1 + c(gf3, gm3)*PRMEM_res_n_t1 +
+        c(gf4, gm4)*MATS_corr_t1 + c(gf5, gm5)*TRLS_alnum_time_t1 + c(gf6, gm6)*TOWER_corr_t1 +
+        c(gf7, gm7)*TRLS_num_time_t1 + c(gf8, gm8)*SYM_corr_t1 + c(gf9, gm9)*SYM_try_t1
+
+g_t2 =~ 1*PRS_mean_time_t2 + 1*FLINT_t2 + 1*REACT_t2 +
+        c(gf1, gm1)*PRS_mean_inc_t2 + c(gf2, gm2)*NUM_t2 + c(gf3, gm3)*PRMEM_res_n_t2 +
+        c(gf4, gm4)*MATS_corr_t2 + c(gf5, gm5)*TRLS_alnum_time_t2 + c(gf6, gm6)*TOWER_corr_t2 +
+        c(gf7, gm7)*TRLS_num_time_t2 + c(gf8, gm8)*SYM_corr_t2 + c(gf9, gm9)*SYM_try_t2
+
+
+# ==== Specific factors ==== 
+# --- Memory ---
+# - Pair matching: Time & Errors (Average; Inverse)
+# - Numeric memory: Digits remembered (Max)
+# - Prospective memory result: Incorrect < 2nd attempt < 1st attempt (Ordinal, 0:2)
+MEM_t1  =~ c(mf1, mm1)*PRS_mean_time_t1 + c(mf2, mm2)*PRS_mean_inc_t1 + c(mf3, mm3)*NUM_t1 + c(mf4, mm4)*PRMEM_res_n_t1
+MEM_t2  =~ c(mf1, mm1)*PRS_mean_time_t2 + c(mf2, mm2)*PRS_mean_inc_t2 + c(mf3, mm3)*NUM_t2 + c(mf4, mm4)*PRMEM_res_n_t2
+
+
+# --- Processing Speed ---
+# - Reaction time: Time to identify matches (Average, Inversed)
+# - Trail making (num): Duration to finish (Inversed)
+# - Symbol-digit substitution: Correct & Attempts (Count)
+PRSP_t1 =~ c(pf1, pm1)*REACT_t1 + c(pf2, pm2)*TRLS_num_time_t1 + c(pf3, pm3)*SYM_corr_t1 + c(pf4, pm4)*SYM_try_t1
+PRSP_t2 =~ c(pf1, pm1)*REACT_t2 + c(pf2, pm2)*TRLS_num_time_t2 + c(pf3, pm3)*SYM_corr_t2 + c(pf4, pm4)*SYM_try_t2
+
+# --- Executive function ---
+# - Fluid intelligence: Score
+# - Matrix pattern recognition: Solved puzzles (Count)
+# - Trail making (alpha-numeric): Duration to finish (Inverse)
+# - Tower rearranging: Correct puzzles (Count)
+#EXEC_t1 =~ c(ef1, em1)*FLINT_t1 + c(ef2, em2)*MATS_corr_t1 + c(ef3, em3)*TRLS_alnum_time_t1 + c(ef4, em4)*TOWER_corr_t1
+#EXEC_t2 =~ c(ef1, em1)*FLINT_t2 + c(ef2, em2)*MATS_corr_t2 + c(ef3, em3)*TRLS_alnum_time_t2 + c(ef4, em4)*TOWER_corr_t2
+
+# ==== Orthogonally constraints ====
+g_t1    ~~ 0*MEM_t1
+g_t1    ~~ 0*PRSP_t1
+MEM_t1  ~~ 0*PRSP_t1
+
+g_t2    ~~ 0*MEM_t2
+g_t2    ~~ 0*PRSP_t2
+MEM_t2  ~~ 0*PRSP_t2
+
+# ==== Residual covariances ====
+# covariances between:
+# - residuals of the same factor/item across time
+# - residuals of items from the same test
+# -- factors
+g_t1    ~~ g_t2
+MEM_t1  ~~ MEM_t2
+PRSP_t1 ~~ PRSP_t2
+# -- Pairs matching
+PRS_mean_time_t1 ~~ PRS_mean_time_t2
+PRS_mean_inc_t1  ~~ PRS_mean_inc_t2
+PRS_mean_time_t1 ~~ PRS_mean_inc_t1
+PRS_mean_time_t2 ~~ PRS_mean_inc_t2
+# -- Numeric memory
+NUM_t1 ~~ NUM_t2
+# -- Prospective memory
+PRMEM_res_n_t1 ~~ PRMEM_res_n_t2
+# -- Reaction time
+REACT_t1 ~~ REACT_t2
+# -- Trails
+TRLS_num_time_t1 ~~ TRLS_num_time_t2
+TRLS_alnum_time_t1 ~~ TRLS_alnum_time_t2
+# -- Fluid intelligence
+FLINT_t1 ~~ FLINT_t2
+# -- Matrices
+MATS_corr_t1 ~~ MATS_corr_t2
+# -- Tower
+TOWER_corr_t1 ~~ TOWER_corr_t2
+# -- Symbol/digits
+SYM_corr_t1 ~~ SYM_corr_t2
+SYM_try_t1 ~~ SYM_try_t2
+SYM_corr_t1 ~~ SYM_try_t1
+SYM_corr_t2 ~~ SYM_try_t2

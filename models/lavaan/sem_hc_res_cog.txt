@@ -1,0 +1,59 @@
+# =============================================================================
+# SEM Sensitivity: HC-Residualized Brain-Cognition (SENSITIVITY ANALYSIS)
+# =============================================================================
+# Joint measurement and structural model
+# Tests: HC_RES (ICV-residualized HC) → Cognition (bifactor: g + MEM_s + PRSP_s)
+# Controls: Age, Age², EDUC, IMDP (deprivation), ICV (for model identification)
+# Multi-group: Fit separately by sex
+# Reference: O'Brien et al. (2011) - residual method for ICV correction
+# Rationale: Sensitivity analysis comparing residualized HC to HVR
+#            If HVR outperforms HC_RES despite HC_RES having r=0 with ICV,
+#            it suggests residualization overcorrects by removing meaningful variance
+# =============================================================================
+
+# --- Measurement Models ---
+
+# HC_RES is OBSERVED residualized bilateral HC
+# Residualized within sex against ICV - no ICV covariate needed
+# No latent structure - direct measurement
+
+# IMDP (Index of Multiple Deprivation) - observed variable for England only
+# No latent SES - using composite deprivation index directly
+
+# Bifactor Cognitive Model (general + specific factors)
+g =~ 1*PRS_mean_time + PRS_mean_inc + NUM + PRMEM_res_n +
+     1*FLINT + MATS_corr + TRLS_alnum_time + TOWER_corr +
+     1*REACT + TRLS_num_time + SYM_corr + SYM_try
+
+MEM_s  =~ PRS_mean_time + PRS_mean_inc + NUM + PRMEM_res_n
+PRSP_s =~ REACT + TRLS_num_time + SYM_corr + SYM_try
+
+# Orthogonal constraints (bifactor structure)
+g      ~~ 0*MEM_s + 0*PRSP_s
+MEM_s  ~~ 0*PRSP_s
+
+# --- Structural Model ---
+
+# HC_RES predicted by age, age², ICV, education (EDUC), and deprivation (IMDP)
+# NOTE: ICV included for model identification even though r(HC_RES, ICV) = 0 by construction
+HC_RES ~ c(b_age_hc_f, b_age_hc_m)*AGE + c(b_age2_hc_f, b_age2_hc_m)*AGE_sq + c(b_ivc_hc_f, b_ivc_hc_m)*ICV + c(b_edu_hc_f, b_edu_hc_m)*EDUC + c(b_imdp_hc_f, b_imdp_hc_m)*IMDP
+
+# Cognition predicted by HC_RES, age, age², ICV, education (EDUC), and deprivation (IMDP)
+g      ~ c(b_hc_g_f, b_hc_g_m)*HC_RES + c(b_age_g_f, b_age_g_m)*AGE + c(b_age2_g_f, b_age2_g_m)*AGE_sq + c(b_ivc_g_f, b_ivc_g_m)*ICV + c(b_edu_g_f, b_edu_g_m)*EDUC + c(b_imdp_g_f, b_imdp_g_m)*IMDP
+MEM_s  ~ c(b_hc_mem_f, b_hc_mem_m)*HC_RES + c(b_age_mem_f, b_age_mem_m)*AGE + c(b_age2_mem_f, b_age2_mem_m)*AGE_sq + c(b_ivc_mem_f, b_ivc_mem_m)*ICV + c(b_edu_mem_f, b_edu_mem_m)*EDUC + c(b_imdp_mem_f, b_imdp_mem_m)*IMDP
+PRSP_s ~ c(b_hc_prs_f, b_hc_prs_m)*HC_RES + c(b_age_prs_f, b_age_prs_m)*AGE + c(b_age2_prs_f, b_age2_prs_m)*AGE_sq + c(b_ivc_prs_f, b_ivc_prs_m)*ICV + c(b_edu_prs_f, b_edu_prs_m)*EDUC + c(b_imdp_prs_f, b_imdp_prs_m)*IMDP
+
+# --- Residual Covariances ---
+
+# Cognitive test method effects
+PRS_mean_time ~~ PRS_mean_inc
+SYM_corr ~~ SYM_try
+TRLS_num_time ~~ TRLS_alnum_time
+
+# --- Defined Parameters: Sex Differences in Paths ---
+
+# Test whether brain-cognition paths differ by sex
+# Positive values = males have stronger path; Negative = females stronger
+diff_hc_g   := b_hc_g_m - b_hc_g_f
+diff_hc_mem := b_hc_mem_m - b_hc_mem_f
+diff_hc_prs := b_hc_prs_m - b_hc_prs_f

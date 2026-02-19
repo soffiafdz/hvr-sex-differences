@@ -1,0 +1,41 @@
+# === Measurement models ===
+# ==== General factor ====
+g =~ 1*PRS_mean_time + PRS_mean_inc + NUM + PRMEM_res_n +
+     1*FLINT + MATS_corr + TRLS_alnum_time + TOWER_corr +
+     1*REACT + TRLS_num_time + SYM_corr + SYM_try
+
+# ==== Specific factors ==== 
+# --- Memory ---
+# - Pair matching: Time & Errors (Average; Inverse)
+# - Numeric memory: Digits remembered (Max)
+# - Prospective memory result: Incorrect < 2nd attempt < 1st attempt (Ordinal, 0:2)
+MEM  =~ PRS_mean_time + PRS_mean_inc + NUM + PRMEM_res_n
+
+# --- Processing Speed ---
+# - Reaction time: Time to identify matches (Average, Inversed)
+# - Trail making (num): Duration to finish (Inversed)
+# - Symbol-digit substitution: Correct & Attempts (Count)
+PRSP =~ REACT + TRLS_num_time + SYM_corr + SYM_try
+
+# --- Executive function ---
+# - Fluid intelligence: Score
+# - Matrix pattern recognition: Solved puzzles (Count)
+# - Trail making (alpha-numeric): Duration to finish (Inverse)
+# - Tower rearranging: Correct puzzles (Count)
+#EXEC =~ FLINT + MATS_corr + TRLS_alnum_time + TOWER_corr
+
+# ==== Orthogonally constraints ====
+g     ~~ 0*MEM
+g     ~~ 0*PRSP
+MEM   ~~ 0*PRSP
+#g     ~~ 0*EXEC
+#MEM   ~~ EXEC
+#EXEC  ~~ PRSP
+
+# ==== Residual covariances ====
+# -- Pairs matching
+PRS_mean_time ~~ PRS_mean_inc
+# -- Symbol/digit substitution
+SYM_corr ~~ SYM_try
+# -- Tail Making
+TRLS_num_time ~~ TRLS_alnum_time

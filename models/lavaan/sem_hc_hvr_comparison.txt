@@ -1,0 +1,61 @@
+# =============================================================================
+# SEM Model: HVR vs HC Cognitive Validity Comparison
+# =============================================================================
+# Joint measurement and structural model with BOTH brain measures
+# Tests: Whether HVR predicts cognition better than HC_OBS
+# Method: Defined contrasts (diff := b_hvr - b_hc) with bootstrap CIs
+# Reference: Klopp (2020), Paternoster et al. (1998)
+# =============================================================================
+
+# --- Measurement Model ---
+
+# Bifactor Cognitive Model (general + specific factors)
+g =~ 1*PRS_mean_time + PRS_mean_inc + NUM + PRMEM_res_n +
+     1*FLINT + MATS_corr + TRLS_alnum_time + TOWER_corr +
+     1*REACT + TRLS_num_time + SYM_corr + SYM_try
+
+MEM_s  =~ PRS_mean_time + PRS_mean_inc + NUM + PRMEM_res_n
+PRSP_s =~ REACT + TRLS_num_time + SYM_corr + SYM_try
+
+# Orthogonal constraints (bifactor structure)
+g      ~~ 0*MEM_s + 0*PRSP_s
+MEM_s  ~~ 0*PRSP_s
+
+# --- Structural Model ---
+
+# Both brain measures predict cognition simultaneously
+# This allows direct comparison of path coefficients
+# Labels enable defined parameter contrasts
+
+# General cognition (g)
+g ~ b_hc_g*HC_OBS + b_hvr_g*HVR + b_age_g*AGE + b_icv_g*ICV + b_edu_g*EDUC
+
+# Memory-specific factor
+MEM_s ~ b_hc_mem*HC_OBS + b_hvr_mem*HVR + b_age_mem*AGE + b_icv_mem*ICV + b_edu_mem*EDUC
+
+# Processing speed-specific factor
+PRSP_s ~ b_hc_prs*HC_OBS + b_hvr_prs*HVR + b_age_prs*AGE + b_icv_prs*ICV + b_edu_prs*EDUC
+
+# --- Residual Covariances ---
+
+# Cognitive test method effects
+PRS_mean_time ~~ PRS_mean_inc
+SYM_corr ~~ SYM_try
+TRLS_num_time ~~ TRLS_alnum_time
+
+# --- Defined Contrasts: HVR vs HC ---
+
+# Difference in path coefficients (HVR - HC)
+# Positive = HVR is stronger predictor
+# Bootstrap CIs test if difference is significant
+diff_g   := b_hvr_g - b_hc_g
+diff_mem := b_hvr_mem - b_hc_mem
+diff_prs := b_hvr_prs - b_hc_prs
+
+# Individual path coefficients (for reporting)
+path_hc_g   := b_hc_g
+path_hvr_g  := b_hvr_g
+path_hc_mem := b_hc_mem
+path_hvr_mem := b_hvr_mem
+path_hc_prs := b_hc_prs
+path_hvr_prs := b_hvr_prs

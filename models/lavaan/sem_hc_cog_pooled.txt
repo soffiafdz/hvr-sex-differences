@@ -1,0 +1,50 @@
+# =============================================================================
+# SEM Model: HC Brain-Cognition POOLED (Main Effects)
+# =============================================================================
+# Joint measurement and structural model - POOLED across sex
+# Tests: HC (bilateral total) → Cognition (bifactor: g + MEM_s + PRSP_s)
+# Controls: Age, ICV (head size), SEX, EDUC, IMDP (deprivation)
+# Note: Age² excluded due to multicollinearity with raw HC + ICV
+# Purpose: Estimate main effects on full sample before testing sex differences
+# Reference: Mak et al. (2017) - bilateral HC = sum of L + R
+# =============================================================================
+
+# --- Measurement Models ---
+
+# HC is OBSERVED bilateral sum (L + R total hippocampal volume)
+# No latent structure - direct measurement
+
+# IMDP (Index of Multiple Deprivation) - observed variable for England only
+# No latent SES - using composite deprivation index directly
+
+# Bifactor Cognitive Model (general + specific factors)
+g =~ 1*PRS_mean_time + PRS_mean_inc + NUM + PRMEM_res_n +
+     1*FLINT + MATS_corr + TRLS_alnum_time + TOWER_corr +
+     1*REACT + TRLS_num_time + SYM_corr + SYM_try
+
+MEM_s  =~ PRS_mean_time + PRS_mean_inc + NUM + PRMEM_res_n
+PRSP_s =~ REACT + TRLS_num_time + SYM_corr + SYM_try
+
+# Orthogonal constraints (bifactor structure)
+g      ~~ 0*MEM_s + 0*PRSP_s
+MEM_s  ~~ 0*PRSP_s
+
+# --- Structural Model ---
+# Note: AGE_sq (quadratic age) excluded from HC model due to multicollinearity
+# between raw HC, ICV, and age terms. HVR and HC_RES models include AGE_sq
+# because they are self-normalizing/residualized (no ICV correlation).
+
+# HC predicted by age, head size (ICV), sex, education (EDUC), and deprivation (IMDP)
+HC ~ AGE + ICV + SEX + EDUC + IMDP
+
+# Cognition predicted by HC, age, ICV, sex, education (EDUC), and deprivation (IMDP)
+g      ~ b_hc_g*HC + AGE + ICV + SEX + EDUC + IMDP
+MEM_s  ~ b_hc_mem*HC + AGE + ICV + SEX + EDUC + IMDP
+PRSP_s ~ b_hc_prs*HC + AGE + ICV + SEX + EDUC + IMDP
+
+# --- Residual Covariances ---
+
+# Cognitive test method effects
+PRS_mean_time ~~ PRS_mean_inc
+SYM_corr ~~ SYM_try
+TRLS_num_time ~~ TRLS_alnum_time

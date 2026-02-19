@@ -1,0 +1,58 @@
+# =============================================================================
+# SEM Model 1b: HC-Observed Brain-Cognition Mediation (CONTROL MODEL)
+# =============================================================================
+# Joint measurement and structural model
+# Tests: HC_OBS (observed bilateral average) → Cognition (bifactor: g + MEM_s + PRSP_s)
+# Controls: Age, ICV (head size), IMDP (deprivation)
+# Multi-group: Fit separately by sex
+# Rationale: Control for latent variable scaling issues - uses same HC data as Model 1
+#            but as observed variable instead of latent factor
+# =============================================================================
+
+# --- Measurement Models ---
+
+# HC_OBS is OBSERVED bilateral average from subfields (HC_head + HC_body + HC_tail)/3
+# No latent structure - direct measurement
+
+# IMDP (Index of Multiple Deprivation) - observed variable for England only
+# No latent SES - using composite deprivation index directly
+
+# Bifactor Cognitive Model (general + specific factors)
+g =~ 1*PRS_mean_time + PRS_mean_inc + NUM + PRMEM_res_n +
+     1*FLINT + MATS_corr + TRLS_alnum_time + TOWER_corr +
+     1*REACT + TRLS_num_time + SYM_corr + SYM_try
+
+MEM_s  =~ PRS_mean_time + PRS_mean_inc + NUM + PRMEM_res_n
+PRSP_s =~ REACT + TRLS_num_time + SYM_corr + SYM_try
+
+# Orthogonal constraints (bifactor structure)
+g      ~~ 0*MEM_s + 0*PRSP_s
+MEM_s  ~~ 0*PRSP_s
+
+# Constrain PRSP_s variance to 0 in females (group 1), free in males (group 2)
+PRSP_s ~~ c(0, NA)*PRSP_s
+
+# --- Structural Model ---
+
+# HC_OBS predicted by age, head size (ICV), education (EDUC), and deprivation (IMDP)
+HC_OBS ~ c(b_age_hc_f, b_age_hc_m)*AGE + c(b_ivc_hc_f, b_ivc_hc_m)*ICV + c(b_edu_hc_f, b_edu_hc_m)*EDUC + c(b_imdp_hc_f, b_imdp_hc_m)*IMDP
+
+# Cognition predicted by HC_OBS, age, ICV, education (EDUC), and deprivation (IMDP)
+g      ~ c(b_hc_g_f, b_hc_g_m)*HC_OBS + c(b_age_g_f, b_age_g_m)*AGE + c(b_ivc_g_f, b_ivc_g_m)*ICV + c(b_edu_g_f, b_edu_g_m)*EDUC + c(b_imdp_g_f, b_imdp_g_m)*IMDP
+MEM_s  ~ c(b_hc_mem_f, b_hc_mem_m)*HC_OBS + c(b_age_mem_f, b_age_mem_m)*AGE + c(b_ivc_mem_f, b_ivc_mem_m)*ICV + c(b_edu_mem_f, b_edu_mem_m)*EDUC + c(b_imdp_mem_f, b_imdp_mem_m)*IMDP
+PRSP_s ~ c(b_hc_prs_f, b_hc_prs_m)*HC_OBS + c(b_age_prs_f, b_age_prs_m)*AGE + c(b_ivc_prs_f, b_ivc_prs_m)*ICV + c(b_edu_prs_f, b_edu_prs_m)*EDUC + c(b_imdp_prs_f, b_imdp_prs_m)*IMDP
+
+# --- Residual Covariances ---
+
+# Cognitive test method effects
+PRS_mean_time ~~ PRS_mean_inc
+SYM_corr ~~ SYM_try
+TRLS_num_time ~~ TRLS_alnum_time
+
+# --- Defined Parameters: Sex Differences in Paths ---
+
+# Test whether brain-cognition paths differ by sex
+# Positive values = males have stronger path; Negative = females stronger
+diff_hc_g   := b_hc_g_m - b_hc_g_f
+diff_hc_mem := b_hc_mem_m - b_hc_mem_f
+diff_hc_prs := b_hc_prs_m - b_hc_prs_f
