@@ -6,18 +6,18 @@ general:
 scripts:
   force_regenerate:
     # Keys must match script short names (e.g., 06_cognitive_factors -> cognitive_factors)
-    parse_volumes: yes
-    quality_control: yes
-    parse_covariates: yes
-    clean_ses_cognitive: yes
-    adjust_headsize: yes
-    cognitive_factors: yes
-    demographics: yes
-    normative_tables: yes
-    sex_differences: yes
-    hvr_comparison: yes
-    sem_analysis: yes
-    manuscript_objects: yes
+    parse_volumes: no
+    quality_control: no
+    parse_covariates: no
+    clean_ses_cognitive: no
+    adjust_headsize: no
+    cognitive_factors: no
+    demographics: no
+    normative_tables: no
+    sex_differences: no
+    hvr_comparison: no
+    sem_analysis: no
+    manuscript_objects: no
   adjust_headsize:
     rematch_samples: no
     shuffle_before_match: no  # Shuffle males before matching to reduce order-dependency
