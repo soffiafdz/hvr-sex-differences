@@ -21,7 +21,6 @@ logs/*
 .RData
 .RDataTmp
 .Ruserdata
-.Rprofile
 .Renviron
 
 # renv library cache (only renv.lock is tracked)

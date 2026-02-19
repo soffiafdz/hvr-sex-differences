@@ -62,6 +62,9 @@ bibliography: references.bib
 #| label: setup
 #| include: false
 
+# Activate renv (quarto runs R with --vanilla, skipping .Rprofile)
+renv::load(file.path(getwd(), ".."))
+
 library(here)
 library(data.table)
 library(gt)
