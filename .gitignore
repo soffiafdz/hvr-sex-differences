@@ -1,8 +1,17 @@
 # Data and outputs (not distributed; see README for data access)
-data/
-models/
-outputs/
-logs/
+# .gitkeep files are tracked to preserve directory structure on clone.
+data/*
+!data/**/
+!data/**/.gitkeep
+models/*
+!models/**/
+!models/**/.gitkeep
+outputs/*
+!outputs/**/
+!outputs/**/.gitkeep
+logs/*
+!logs/**/
+!logs/**/.gitkeep
 
 # R session files
 .Rhistory
