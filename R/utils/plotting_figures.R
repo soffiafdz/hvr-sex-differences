@@ -514,15 +514,15 @@ fig_sem_forest <- function(sem_params, models_to_include = c("HC_COG", "HC_RES_C
   all_paths[is.na(Brain_Label), Brain_Label := rhs][is.na(Cog_Label), Cog_Label := lhs]
 
   # Create Y-axis label with arrow symbol
-  all_paths[, Y_LABEL := paste0(Brain_Label, " \u2192 ", Cog_Label)]
+  all_paths[, Y_LABEL := paste0(Brain_Label, " -> ", Cog_Label)]
   all_paths[is.na(pvalue), pvalue := 1][, SIGN := pvalue < 0.05]
   all_paths <- all_paths[!is.na(est.std)]
   if (nrow(all_paths) == 0) return(ggplot() + annotate("text", x = 0.5, y = 0.5, label = "No valid path estimates"))
 
   # Define Y-axis order (paths grouped logically) with arrow symbol
-  y_order <- c("HVR \u2192 g", "HVR \u2192 Speed",
-               "HC (Res) \u2192 g", "HC (Res) \u2192 Speed",
-               "HC \u2192 g", "HC \u2192 Speed")
+  y_order <- c("HVR -> g", "HVR -> Speed",
+               "HC (Res) -> g", "HC (Res) -> Speed",
+               "HC -> g", "HC -> Speed")
   all_paths[, Y_LABEL := factor(Y_LABEL, levels = rev(y_order))]
   all_paths[, Sex := factor(Sex, levels = c("Combined", "Female", "Male"))]
   sex_colors <- c("Female" = "darkred", "Male" = "midnightblue", "Combined" = "#7F7F7F")

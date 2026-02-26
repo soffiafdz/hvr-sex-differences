@@ -464,33 +464,19 @@ format_hemisphere_gt <- function(hemi_dt) {
     return(gt(data.table(Message = "Hemisphere data not available")))
   }
 
-  # Make a copy and apply ROI ordering
   dt <- copy(hemi_dt)
-  if ("ROI" %in% names(dt)) {
-    dt <- apply_roi_order(dt, "ROI")
-    # Create ROI_LABEL if not present, using correct order
-    if (!"ROI_LABEL" %in% names(dt)) {
-      dt[, ROI_LABEL := fifelse(ROI %in% names(ROI_LABELS), ROI_LABELS[ROI], as.character(ROI))]
-    }
-  }
 
-  # Ensure ROI_LABEL follows ROI order
-  if ("ROI" %in% names(dt)) {
-    dt[, ROI_LABEL := factor(ROI_LABEL, levels = unique(ROI_LABEL))]
-  }
+  roi_full_names <- c("HVR" = "Hippocampal-to-Ventricle Ratio",
+                      "HC" = "Hippocampus",
+                      "LV" = "Lateral Ventricles")
+  dt[, ROI_LABEL := fifelse(ROI %in% names(roi_full_names), roi_full_names[ROI], ROI_LABEL)]
+  dt[, ROI_LABEL := factor(ROI_LABEL, levels = roi_full_names)]
+  dt[, Hemisphere := fifelse(SIDE == "L", "Left", "Right")]
+  dt[, `95% CI` := sprintf("[%.3f, %.3f]", CI_LOWER, CI_UPPER)]
 
-  # Reshape to wide format
-  dt_wide <- dcast(dt, ROI_LABEL ~ SIDE, value.var = c("ESTIMATE", "CI_LOWER", "CI_UPPER"))
-
-  dt_wide[, .(
-    Region = ROI_LABEL,
-    `Left d` = round(ESTIMATE_L, 2),
-    `Left 95% CI` = sprintf("[%.2f, %.2f]", CI_LOWER_L, CI_UPPER_L),
-    `Right d` = round(ESTIMATE_R, 2),
-    `Right 95% CI` = sprintf("[%.2f, %.2f]", CI_LOWER_R, CI_UPPER_R),
-    `L-R Diff` = round(ESTIMATE_L - ESTIMATE_R, 2)
-  )] |>
-    gt() |>
+  dt[, .(ROI_LABEL, Hemisphere, d = ESTIMATE, `95% CI`)] |>
+    gt(groupname_col = "ROI_LABEL") |>
+    fmt_number(columns = d, decimals = 3) |>
     tab_header(title = "Sex Differences by Hemisphere") |>
     gt_pdf_style()
 }
@@ -525,46 +511,30 @@ format_sensitivity_gt <- function(sens_dt) {
     return(gt(data.table(Message = "Sensitivity data not available")))
   }
 
-  # Make a copy to avoid modifying original
   dt <- copy(sens_dt)
 
-  # Apply ROI ordering
-  if ("ROI" %in% names(dt)) {
-    dt <- apply_roi_order(dt, "ROI")
-  }
-  # Apply ADJ ordering
-  if ("ADJ" %in% names(dt)) {
-    dt <- apply_adj_order(dt, "ADJ")
-  }
+  dt[, `:=`(
+    ci_pri = sprintf("[%.3f, %.3f]", CI_LOWER_PRIMARY, CI_UPPER_PRIMARY),
+    ci_sens = sprintf("[%.3f, %.3f]", CI_LOWER_SENS, CI_UPPER_SENS)
+  )]
 
-  # Handle column name variations (ESTIMATE_ALL vs ESTIMATE_PRIMARY)
-  prim_col <- if ("ESTIMATE_ALL" %in% names(dt)) "ESTIMATE_ALL" else "ESTIMATE_PRIMARY"
-  diff_col <- if ("DIFF" %in% names(dt)) "DIFF" else {
-    # Calculate difference if not present
-    dt[, DIFF_CALC := get(prim_col) - ESTIMATE_SENS]
-    "DIFF_CALC"
-  }
-
-  # Check for required label columns and create display labels
-  if ("ROI" %in% names(dt) && !"ROI_LABEL" %in% names(dt)) {
-    dt[, ROI_LABEL := fifelse(ROI %in% names(ROI_LABELS), ROI_LABELS[ROI], as.character(ROI))]
-  }
-  if ("ADJ" %in% names(dt) && !"ADJ_LABEL" %in% names(dt)) {
-    dt[, ADJ_LABEL := fifelse(ADJ %in% names(ADJ_LABELS), ADJ_LABELS[ADJ], as.character(ADJ))]
-  }
-
-  roi_col <- if ("ROI_LABEL" %in% names(dt)) "ROI_LABEL" else "ROI"
-  adj_col <- if ("ADJ_LABEL" %in% names(dt)) "ADJ_LABEL" else "ADJ"
-
-  dt[, .(
-    Region = get(roi_col),
-    Method = get(adj_col),
-    `Primary d` = round(get(prim_col), 2),
-    `Sensitivity d` = round(ESTIMATE_SENS, 2),
-    `Difference` = round(get(diff_col), 3)
-  )] |>
-    gt() |>
-    tab_header(title = "Primary vs Sensitivity Sample") |>
+  dt[, .(ROI_LABEL, ADJ_LABEL, N_PRIMARY, d_pri = ESTIMATE_PRIMARY, ci_pri,
+         N_SENS, d_sens = ESTIMATE_SENS, ci_sens, DIFF)] |>
+    gt(groupname_col = "ROI_LABEL", rowname_col = "ADJ_LABEL") |>
+    cols_label(
+      N_PRIMARY = "N", d_pri = "d", ci_pri = "95% CI",
+      N_SENS = "N", d_sens = "d", ci_sens = "95% CI",
+      DIFF = "\u0394d"
+    ) |>
+    fmt_number(columns = c(N_PRIMARY, N_SENS), decimals = 0, use_seps = TRUE) |>
+    fmt_number(columns = c(d_pri, d_sens, DIFF), decimals = 3) |>
+    tab_spanner(label = "Primary Sample", columns = c(N_PRIMARY, d_pri, ci_pri)) |>
+    tab_spanner(label = "Sensitivity Sample", columns = c(N_SENS, d_sens, ci_sens)) |>
+    tab_header(
+      title = "Sensitivity Analysis: Including Psychiatric Diagnoses",
+      subtitle = "Comparing primary sample (F-codes excluded) vs. sensitivity sample (F-codes included)"
+    ) |>
+    tab_stubhead(label = "Adjustment") |>
     gt_pdf_style()
 }
 
@@ -1359,4 +1329,259 @@ format_sem_covariates_fields_gt <- function(fields_dt,
   }
 
   gt_tbl |> gt_pdf_style()
+}
+
+# =============================================================================
+# Manuscript & Supplementary Inline Table Functions
+# =============================================================================
+
+#' Format demographics table for display
+#'
+#' Computes sample statistics (n, age, ICV by sex) for each sample and
+#' combines them into a single gt table with row groups.
+#'
+#' @param all_demog Primary sample data.table (must have SEX, AGE, ICC columns)
+#' @param eng_demog England subsample data.table
+#' @param mtch_demog Matched sample data.table
+#' @param lng_demog Longitudinal sample data.table (optional; deduplicated by EID internally)
+#' @return gt table object
+#' @export
+format_demographics_gt <- function(all_demog, eng_demog, mtch_demog, lng_demog = NULL) {
+  # Helper function to compute stats for a sample
+  get_sample_stats <- function(dt, sample_name) {
+    n_f <- dt[SEX == "Female", .N]
+    n_m <- dt[SEX == "Male", .N]
+    age_f <- dt[SEX == "Female", .(m = mean(AGE), sd = sd(AGE))]
+    age_m <- dt[SEX == "Male", .(m = mean(AGE), sd = sd(AGE))]
+    icv_f <- dt[SEX == "Female", .(m = mean(ICC), sd = sd(ICC))]
+    icv_m <- dt[SEX == "Male", .(m = mean(ICC), sd = sd(ICC))]
+
+    # Pooled SD for Cohen's d
+    age_pooled <- sqrt(((n_f - 1) * age_f$sd^2 + (n_m - 1) * age_m$sd^2) / (n_f + n_m - 2))
+    icv_pooled <- sqrt(((n_f - 1) * icv_f$sd^2 + (n_m - 1) * icv_m$sd^2) / (n_f + n_m - 2))
+
+    data.table(
+      Sample = sample_name,
+      Characteristic = c("n", "Age, years", "ICV, cc"),
+      Female = c(format(n_f, big.mark = ","),
+                 sprintf("%.1f (%.1f)", age_f$m, age_f$sd),
+                 sprintf("%.0f (%.0f)", icv_f$m, icv_f$sd)),
+      Male = c(format(n_m, big.mark = ","),
+               sprintf("%.1f (%.1f)", age_m$m, age_m$sd),
+               sprintf("%.0f (%.0f)", icv_m$m, icv_m$sd)),
+      d = c("\u2014",
+            sprintf("%.2f", (age_f$m - age_m$m) / age_pooled),
+            sprintf("%.2f", (icv_f$m - icv_m$m) / icv_pooled))
+    )
+  }
+
+  # Deduplicate longitudinal data if provided
+  if (!is.null(lng_demog)) {
+    lng_demog <- lng_demog[!duplicated(EID)]
+  }
+
+  # Build table for all samples
+  demog_tbl <- rbindlist(list(
+    get_sample_stats(all_demog, "Primary"),
+    get_sample_stats(eng_demog, "England"),
+    get_sample_stats(mtch_demog, "Matched"),
+    if (!is.null(lng_demog)) get_sample_stats(lng_demog, "Longitudinal") else NULL
+  ))
+
+  # Set sample order
+  demog_tbl[, Sample := factor(Sample, levels = c("Primary", "England", "Matched", "Longitudinal"))]
+
+  demog_tbl |>
+    gt(groupname_col = "Sample", rowname_col = "Characteristic") |>
+    cols_label(d = md("*d*")) |>
+    tab_header(title = "Participant Characteristics") |>
+    gt_pdf_style()
+}
+
+#' Format matched-pair comparison table
+#'
+#' Shows effect sizes in full vs. matched samples with difference and CIs.
+#'
+#' @param comparison_dt data.table from sex_diff$COMPARISON
+#' @param n_matched_pairs Number of matched pairs
+#' @return gt table object
+#' @export
+format_matched_comparison_gt <- function(comparison_dt, n_matched_pairs) {
+  if (is.null(comparison_dt) || nrow(comparison_dt) == 0) {
+    return(gt(data.table(Message = "Comparison data not available")))
+  }
+
+  if (all(c("CI_LOWER_ALL", "CI_UPPER_ALL", "CI_LOWER_MTCH", "CI_UPPER_MTCH") %in% names(comparison_dt))) {
+    match_dt <- comparison_dt[, .(ROI_LABEL, ADJ_LABEL,
+                                   ESTIMATE_ALL, CI_LOWER_ALL, CI_UPPER_ALL,
+                                   ESTIMATE_MTCH, CI_LOWER_MTCH, CI_UPPER_MTCH)]
+    # Simplify HVR label
+    match_dt[ADJ_LABEL == "HVR (Self-Normalizing)", ADJ_LABEL := "Self-normalizing"]
+
+    # Calculate difference (Full - Matched) with CI
+    match_dt[, `:=`(
+      DIFF = ESTIMATE_ALL - ESTIMATE_MTCH,
+      SE_ALL = (CI_UPPER_ALL - CI_LOWER_ALL) / 3.92,
+      SE_MTCH = (CI_UPPER_MTCH - CI_LOWER_MTCH) / 3.92
+    )]
+    match_dt[, SE_DIFF := sqrt(SE_ALL^2 + SE_MTCH^2)]
+    match_dt[, `:=`(
+      CI_LOWER_DIFF = DIFF - 1.96 * SE_DIFF,
+      CI_UPPER_DIFF = DIFF + 1.96 * SE_DIFF
+    )]
+
+    # Separate d and 95% CI columns
+    match_dt[, `:=`(
+      d_full = round(ESTIMATE_ALL, 3),
+      ci_full = sprintf("[%.3f, %.3f]", CI_LOWER_ALL, CI_UPPER_ALL),
+      d_mtch = round(ESTIMATE_MTCH, 3),
+      ci_mtch = sprintf("[%.3f, %.3f]", CI_LOWER_MTCH, CI_UPPER_MTCH),
+      d_diff = round(DIFF, 3),
+      ci_diff = sprintf("[%.3f, %.3f]", CI_LOWER_DIFF, CI_UPPER_DIFF)
+    )]
+
+    match_dt[, .(ROI_LABEL, ADJ_LABEL, d_full, ci_full, d_mtch, ci_mtch, d_diff, ci_diff)] |>
+      gt(groupname_col = "ROI_LABEL", rowname_col = "ADJ_LABEL") |>
+      cols_label(
+        d_full = "d", ci_full = "95% CI",
+        d_mtch = "d", ci_mtch = "95% CI",
+        d_diff = "\u0394d", ci_diff = "95% CI"
+      ) |>
+      tab_spanner(label = "Full Sample", columns = c(d_full, ci_full)) |>
+      tab_spanner(label = "Matched Sample", columns = c(d_mtch, ci_mtch)) |>
+      tab_spanner(label = "Difference", columns = c(d_diff, ci_diff)) |>
+      tab_header(
+        title = "Full vs. Matched Sample Comparison",
+        subtitle = md(sprintf("Matched sample: N = %s pairs (age \u00b11 yr, ICV \u00b125 cc)",
+                          format(n_matched_pairs, big.mark = ",")))
+      ) |>
+      tab_stubhead(label = "Adjustment") |>
+      gt_pdf_style()
+  } else {
+    # Fallback without CI columns
+    match_dt <- comparison_dt[, .(ROI_LABEL, ADJ_LABEL, ESTIMATE_ALL, ESTIMATE_MTCH)]
+    match_dt[ADJ_LABEL == "HVR (Self-Normalizing)", ADJ_LABEL := "Self-normalizing"]
+    match_dt[, DIFF := ESTIMATE_ALL - ESTIMATE_MTCH]
+
+    match_dt |>
+      gt(groupname_col = "ROI_LABEL", rowname_col = "ADJ_LABEL") |>
+      cols_label(
+        ESTIMATE_ALL = "Full d",
+        ESTIMATE_MTCH = "Matched d",
+        DIFF = "\u0394d"
+      ) |>
+      fmt_number(columns = c(ESTIMATE_ALL, ESTIMATE_MTCH, DIFF), decimals = 3) |>
+      tab_header(
+        title = "Full vs. Matched Sample Comparison",
+        subtitle = md(sprintf("Matched sample: N = %s pairs (age \u00b11 yr, ICV \u00b125 cc)",
+                          format(n_matched_pairs, big.mark = ",")))
+      ) |>
+      tab_stubhead(label = "Adjustment") |>
+      gt_pdf_style()
+  }
+}
+
+#' Format pooled SEM paths table
+#'
+#' Extracts brain -> g and brain -> Speed_s paths from pooled SEM models and
+#' formats them as a gt table with row groups by brain measure.
+#'
+#' @param sem_params SEM parameters list from load_analysis_data()
+#' @param hvr_g Pre-extracted HVR -> g path (from manuscript env)
+#' @param hc_res_g Pre-extracted HC_RES -> g path (from manuscript env)
+#' @param hc_g Pre-extracted HC -> g path (from manuscript env)
+#' @return gt table object
+#' @export
+format_pooled_sem_paths_gt <- function(sem_params, hvr_g, hc_res_g, hc_g) {
+  # Local helper
+  get_path <- function(model, lhs_var, rhs_var) {
+    get_sem_path(sem_params, model, lhs_var, rhs_var)
+  }
+
+  pooled_paths <- data.table(
+    Model = c("HVR", "HVR",
+              "HC (Residualized)", "HC (Residualized)",
+              "HC (Unadjusted)", "HC (Unadjusted)"),
+    Path = rep(c("\u2192 g", "\u2192 Speed\u209b"), 3),
+    `β` = c(
+      safe_round(hvr_g$est.std, 3),
+      safe_round(get_path("HVR_COG_POOLED", "PRSP_s", "HVR")$est.std, 3),
+      safe_round(hc_res_g$est.std, 3),
+      safe_round(get_path("HC_RES_COG_POOLED", "PRSP_s", "HC_RES")$est.std, 3),
+      safe_round(hc_g$est.std, 3),
+      safe_round(get_path("HC_COG_POOLED", "PRSP_s", "HC")$est.std, 3)
+    ),
+    `95% CI` = c(
+      safe_ci(hvr_g$ci.lower, hvr_g$ci.upper),
+      safe_ci(get_path("HVR_COG_POOLED", "PRSP_s", "HVR")$ci.lower,
+              get_path("HVR_COG_POOLED", "PRSP_s", "HVR")$ci.upper),
+      safe_ci(hc_res_g$ci.lower, hc_res_g$ci.upper),
+      safe_ci(get_path("HC_RES_COG_POOLED", "PRSP_s", "HC_RES")$ci.lower,
+              get_path("HC_RES_COG_POOLED", "PRSP_s", "HC_RES")$ci.upper),
+      safe_ci(hc_g$ci.lower, hc_g$ci.upper),
+      safe_ci(get_path("HC_COG_POOLED", "PRSP_s", "HC")$ci.lower,
+              get_path("HC_COG_POOLED", "PRSP_s", "HC")$ci.upper)
+    ),
+    p = c(
+      safe_pvalue(hvr_g$pvalue),
+      safe_pvalue(get_path("HVR_COG_POOLED", "PRSP_s", "HVR")$pvalue),
+      safe_pvalue(hc_res_g$pvalue),
+      safe_pvalue(get_path("HC_RES_COG_POOLED", "PRSP_s", "HC_RES")$pvalue),
+      safe_pvalue(hc_g$pvalue),
+      safe_pvalue(get_path("HC_COG_POOLED", "PRSP_s", "HC")$pvalue)
+    )
+  )
+
+  # Identify significant rows for bolding
+  sig_rows <- which(c(
+    hvr_g$pvalue, get_path("HVR_COG_POOLED", "PRSP_s", "HVR")$pvalue,
+    hc_res_g$pvalue, get_path("HC_RES_COG_POOLED", "PRSP_s", "HC_RES")$pvalue,
+    hc_g$pvalue, get_path("HC_COG_POOLED", "PRSP_s", "HC")$pvalue
+  ) < 0.05)
+
+  gt_tbl <- pooled_paths |>
+    gt() |>
+    tab_header(
+      title = "Brain-Cognition Structural Paths",
+      subtitle = "Standardized coefficients from pooled models with sex as covariate"
+    ) |>
+    tab_row_group(label = "HVR", rows = 1:2) |>
+    tab_row_group(label = "HC (Residualized)", rows = 3:4) |>
+    tab_row_group(label = "HC (Unadjusted)", rows = 5:6) |>
+    row_group_order(groups = c("HVR", "HC (Residualized)", "HC (Unadjusted)")) |>
+    cols_hide(columns = Model) |>
+    gt_pdf_style()
+
+  if (length(sig_rows) > 0) {
+    gt_tbl <- gt_tbl |>
+      tab_style(style = cell_text(weight = "bold"),
+                locations = cells_body(columns = c(`β`, `95% CI`, p), rows = sig_rows))
+  }
+  gt_tbl
+}
+
+#' Format site-adjusted effect sizes table
+#'
+#' Shows sex difference effect sizes after site adjustment, with site ICC.
+#'
+#' @param site_dt data.table from sex_diff$SITE_ADJUSTED
+#' @return gt table object
+#' @export
+format_site_adjusted_gt <- function(site_dt) {
+  if (is.null(site_dt) || nrow(site_dt) == 0) {
+    return(gt(data.table(Message = "Site-adjusted data not available")))
+  }
+
+  dt <- copy(site_dt[SIDE == "LR", .(ROI_LABEL, ADJ_LABEL, ICC_SITE, ESTIMATE, CI_LOWER, CI_UPPER)])
+  dt[ADJ_LABEL == "HVR (Self-Normalizing)", ADJ_LABEL := "Self-normalizing"]
+  dt[, `95% CI` := sprintf("[%.3f, %.3f]", CI_LOWER, CI_UPPER)]
+
+  dt[, .(ROI_LABEL, ADJ_LABEL, ICC_SITE, d = ESTIMATE, `95% CI`)] |>
+    gt(groupname_col = "ROI_LABEL", rowname_col = "ADJ_LABEL") |>
+    cols_label(ICC_SITE = "Site ICC") |>
+    fmt_number(columns = c(ICC_SITE, d), decimals = 3) |>
+    tab_spanner(label = "Effect Size", columns = c(d, `95% CI`)) |>
+    tab_header(title = "Site-Adjusted Effect Sizes") |>
+    tab_stubhead(label = "Adjustment") |>
+    gt_pdf_style()
 }

@@ -98,6 +98,9 @@ registerS3method("knit_print", "gt_tbl", function(x, ...) {
     latex_code <- gsub("\u00B2", "\\\\textsuperscript{2}", latex_code)  # ² → ^2
     latex_code <- gsub("\u2264", "$\\\\leq$", latex_code)    # ≤
     latex_code <- gsub("\u2265", "$\\\\geq$", latex_code)    # ≥
+    latex_code <- gsub("\u2192", "$\\\\rightarrow$", latex_code)  # → → $\rightarrow$
+    latex_code <- gsub("\u209b", "\\\\textsubscript{s}", latex_code)  # ₛ → \textsubscript{s}
+    latex_code <- gsub("\u2014", "---", latex_code)          # — → ---
 
     # 4. Fix footnote/source note minipage width (constrain to table width)
     #    gt wraps footnotes in \minipage{\linewidth} which spans full page.

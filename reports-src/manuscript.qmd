@@ -18,7 +18,7 @@ author:
     affiliations:
       - ref: bic
       - ref: ipn
-  - name: Louis D. Collins
+  - name: D. Louis Collins
     affiliations:
       - ref: bic
       - ref: ipn
@@ -90,6 +90,8 @@ format:
         \renewcommand\Authfont{\normalsize}
         \renewcommand\Affilfont{\small\itshape}
         % Force tables to appear exactly where placed (prevent float drift)
+        \usepackage{tikz}
+        \usetikzlibrary{shapes.geometric, arrows.meta, positioning}
         \usepackage{float}
         \floatplacement{table}{H}
         % Center longtables
@@ -132,10 +134,6 @@ list2env(ms$scalars, envir = environment())
 list2env(ms$data, envir = environment())
 list2env(ms$tables, envir = environment())
 
-# Local alias for tbl-sem-paths chunk (uses get_path shorthand)
-get_path <- function(model, lhs_var, rhs_var) {
-  get_sem_path(sem_params, model, lhs_var, rhs_var)
-}
 ```
 
 # Introduction
@@ -146,7 +144,7 @@ Hippocampal atrophy rates predict conversion from mild cognitive impairment to d
 
 Multiple adjustment methods exist, each with different assumptions: proportions (V/ICV) assumes perfect allometric scaling, residualization (V $-$ $\beta \times$ ICV) removes linear ICV association, and stereotaxic normalization applies spatial transformation to a template. These methods can yield contradictory conclusions about the same brain regions [@wang_comparison_2024]. For hippocampus, reported sex differences range from males larger (unadjusted; @ruigrok_meta-analysis_2014) to females larger (proportions; @sanchis-segura_effects_2020) to no difference (residualized; @obrien_statistical_2011). The proportions method can produce biologically implausible results, while residualization yields more consistent estimates [@wang_comparison_2024]. No consensus exists on the correct method, and conclusions depend on analytical choices.
 
-The hippocampal-to-ventricle ratio (HVR), defined as HC / (HC + LV) where HC denotes total hippocampal volume and LV denotes the volume of the temporal horns of the lateral ventricles, offers a potential solution. Both structures scale with head size, making their ratio self-normalizing. HVR captures the relationship between hippocampal and ventricular volumes, which show opposite patterns with age—smaller hippocampus and larger ventricles. Schoemaker and colleagues introduced HVR and showed that it provides stronger associations with age and memory than standard hippocampal volume in healthy aging [@schoemaker_hippocampal_ventricle_2019]. Subsequent work shows HVR provides higher effect sizes for distinguishing AD from controls compared to HC alone [@fernandez-lozano_enhanced_2025]. However, properties of HVR in healthy populations and across adjustment methods remain unexplored.
+The hippocampal-to-ventricle ratio (HVR), defined as HC / (HC + LV) where HC denotes total hippocampal volume and LV denotes the volume of the temporal horns of the lateral ventricles, offers a potential solution. Both structures scale with head size, making their ratio self-normalizing. HVR captures the relationship between hippocampal and ventricular volumes, which show opposite patterns with age—smaller hippocampus and larger ventricles. Schoemaker and colleagues introduced HVR and showed that it provides stronger associations with age and memory than standard hippocampal volume in healthy aging [@schoemaker_hippocampal-ventricle_2019]. Subsequent work shows HVR provides higher effect sizes for distinguishing AD from controls compared to HC alone [@fernandez-lozano_enhanced_2025]. However, properties of HVR in healthy populations and across adjustment methods remain unexplored.
 
 Age-related ventricular expansion reflects concurrent loss of surrounding gray and white matter tissue [@madsen_mapping_2015], and this expansion occurs earlier in males, with abnormal enlargement appearing in the seventies and preferentially affecting the frontal horns [@curra_ventricular_2019]. These sex-differential ventricular trajectories suggest that a ratio incorporating both hippocampal and ventricular volumes may capture sex differences in brain aging that individual volumes miss. Furthermore, brain structure–cognition associations themselves may differ by sex: grey matter volumes predict cognitive profiles with different strength and spatial specificity in older males versus females [@jockwitz_differential_2024], and hippocampal volume predicts associative memory in older women but not men [@zheng_sex_2017]. Whether HVR shows similar sex-differential cognitive associations remains unknown.
 
@@ -164,31 +162,72 @@ Data were obtained from UK Biobank (Application 45551) [@sudlow_uk_2015; @miller
 
 Participants were excluded if they had any of the following ICD-10 diagnoses recorded in linked hospital records: F00-F99 (mental and behavioral disorders including dementia, mood disorders, schizophrenia, and anxiety disorders, which are associated with hippocampal volume alterations [@schmaal_subcortical_2016]); G00-G99 (neurological diseases including Parkinson's disease, multiple sclerosis, epilepsy, and cerebrovascular disease, which directly affect brain structure [@van_erp_subcortical_2016]); and Q00-Q07 (congenital CNS malformations affecting normal brain development). This exclusion strategy selected a sample of cognitively healthy adults without conditions known to affect hippocampal morphometry. The full exclusion flow is shown in @fig-prisma.
 
-```{mermaid}
-%%| label: fig-prisma
-%%| fig-cap: "PRISMA-style flow diagram showing participant selection."
-%%| fig-width: 4.5
-%%| fig-height: 6.5
+::: {#fig-prisma}
 
-flowchart TB
-    A["UK Biobank Imaging Cohort<br>(N = 47,398)"] --> B{"QC Filter"}
-    B --> C["Excluded<br>(n = 8,831)"]
-    B --> D["Passed All Processing<br>(n = 38,567)"]
-    D --> E{"ICD10 Filter:<br>G/Q codes"}
-    E --> F["Excluded<br>(n = 8,535)"]
-    E --> S["Sensitivity Sample<br>(N = 30,032)"]
-    S --> G{"ICD10 Filter:<br>F codes"}
-    G --> H["Excluded<br>(n = 2,352)"]
-    G --> I["Primary Sample<br>(N = 27,680)"]
+```{=latex}
+\centering
+\begin{tikzpicture}[
+  node distance=1.4cm and 2.8cm,
+  every node/.style={font=\small},
+  process/.style={rectangle, draw=black!70, thick, text width=4.2cm,
+                  minimum height=0.9cm, align=center, rounded corners=3pt},
+  decision/.style={rectangle, draw=black!70, thick, text width=3.2cm,
+                   minimum height=0.9cm, align=center, rounded corners=3pt,
+                   fill=black!5},
+  excluded/.style={rectangle, draw=black!70, thick, text width=3.2cm,
+                   minimum height=0.9cm, align=center, rounded corners=3pt,
+                   fill=black!8, text=black!70},
+  sample/.style={rectangle, draw=black!70, very thick, text width=4.2cm,
+                 minimum height=0.9cm, align=center, rounded corners=3pt},
+  arrow/.style={-{Stealth[length=5pt]}, thick, black!70}
+]
+  % Main flow (top to bottom)
+  \node[process] (initial)
+    {UK Biobank Imaging Cohort\\[2pt]\textbf{N\,=\,47,398}};
 
-    style A fill:#e1f5fe
-    style D fill:#e1f5fe
-    style I fill:#c8e6c9
-    style S fill:#fff3e0
-    style C fill:#ffcdd2
-    style F fill:#ffcdd2
-    style H fill:#ffcdd2
+  \node[decision, below=of initial] (qc)
+    {Quality control filter};
+
+  \node[process, below=of qc] (passed)
+    {Passed all processing\\[2pt]\textbf{n\,=\,38,567}};
+
+  \node[decision, below=of passed] (gq)
+    {ICD-10 exclusion:\\G00--G99, Q00--Q07};
+
+  \node[sample, below=of gq] (sensitivity)
+    {Sensitivity sample\\[2pt]\textbf{N\,=\,30,032}};
+
+  \node[decision, below=of sensitivity] (f)
+    {ICD-10 exclusion:\\F00--F99};
+
+  \node[sample, below=of f] (primary)
+    {\textbf{Primary sample}\\[2pt]\textbf{N\,=\,27,680}};
+
+  % Exclusion boxes (right side)
+  \node[excluded, right=of qc] (exc1)
+    {Excluded\\[2pt]n\,=\,8,831};
+
+  \node[excluded, right=of gq] (exc2)
+    {Excluded\\[2pt]n\,=\,8,535};
+
+  \node[excluded, right=of f] (exc3)
+    {Excluded\\[2pt]n\,=\,2,352};
+
+  % Arrows
+  \draw[arrow] (initial) -- (qc);
+  \draw[arrow] (qc) -- (passed);
+  \draw[arrow] (qc) -- (exc1);
+  \draw[arrow] (passed) -- (gq);
+  \draw[arrow] (gq) -- (sensitivity);
+  \draw[arrow] (gq) -- (exc2);
+  \draw[arrow] (sensitivity) -- (f);
+  \draw[arrow] (f) -- (primary);
+  \draw[arrow] (f) -- (exc3);
+\end{tikzpicture}
 ```
+
+PRISMA-style flow diagram showing participant selection.
+:::
 
 ### Quality Control
 
@@ -288,7 +327,7 @@ The HC~RES~ model serves as a benchmark representing the methodological standard
 A quadratic age term (age²) was included in HVR and HC~RES~ models but excluded from the HC model because the combination of raw hippocampal volume, ICV, and quadratic age created multicollinearity that prevented model convergence. Age was centered within sex groups before squaring to reduce collinearity (uncentered r $\approx$ 0.997; after centering r $\approx$ 0.01). All structural variables were z-standardized within sex groups to address scale differences (e.g., ICV ~1500 mL vs. HVR ~0.75). Covariates are summarized in `r S("tbl-sem-covariates-fields")`.
 
 
-Comparing brain-cognition associations across sexes requires that the cognitive measurement model is equivalent across groups. Measurement invariance of the bifactor structure was therefore tested following standard multi-group CFA procedures [@putnick_measurement_2016]. Four nested models were tested: (1) configural invariance (same factor structure), (2) metric invariance (equal loadings), (3) scalar invariance (equal intercepts), and (4) strict invariance (equal residuals). Invariance was evaluated using $\Delta$CFI $\leq$ 0.01 [@cheung_goodness_2002] and $\Delta$RMSEA $\leq$ 0.015 [@chen_sensitivity_2007]. At minimum, metric invariance is required to compare structural paths across groups.
+Comparing brain-cognition associations across sexes requires that the cognitive measurement model is equivalent across groups. Measurement invariance of the bifactor structure was therefore tested following standard multi-group CFA procedures [@putnick_measurement_2016]. Four nested models were tested: (1) configural invariance (same factor structure), (2) metric invariance (equal loadings), (3) scalar invariance (equal intercepts), and (4) strict invariance (equal residuals). Invariance was evaluated using $\Delta$CFI $\leq$ 0.01 [@cheung_evaluating_2002] and $\Delta$RMSEA $\leq$ 0.015 [@chen_sensitivity_2007]. At minimum, metric invariance is required to compare structural paths across groups.
 
 Given adequate measurement invariance, three SEM specifications were estimated. First, pooled models included SEX as a covariate to estimate main effects across the combined sample. Second, multi-group models estimated separate parameters for females and males to test sex differences in brain-cognition paths. Third, inference used bootstrap confidence intervals (2,000 resamples), with path coefficient comparisons based on CI overlap [@cumming_inference_2005].
 
@@ -322,53 +361,8 @@ Effect sizes are reported as Cohen's d for sex difference comparisons (positive 
 #| label: tbl-demographics
 #| tbl-cap: "Participant characteristics by sex and sample. Values are M (SD). d = Cohen's d (Female − Male). England = English assessment centres (SEM analyses). Matched = age $\\pm 1$ yr, ICV $\\pm 25$ cc. Longitudinal = participants with repeat imaging."
 
-# Helper function to compute stats for a sample
-get_sample_stats <- function(dt, sample_name) {
-  n_f <- dt[SEX == "Female", .N]
-  n_m <- dt[SEX == "Male", .N]
-  age_f <- dt[SEX == "Female", .(m = mean(AGE), sd = sd(AGE))]
-  age_m <- dt[SEX == "Male", .(m = mean(AGE), sd = sd(AGE))]
-  icv_f <- dt[SEX == "Female", .(m = mean(ICC), sd = sd(ICC))]
-  icv_m <- dt[SEX == "Male", .(m = mean(ICC), sd = sd(ICC))]
-
-  # Pooled SD for Cohen's d
-  age_pooled <- sqrt(((n_f - 1) * age_f$sd^2 + (n_m - 1) * age_m$sd^2) / (n_f + n_m - 2))
-  icv_pooled <- sqrt(((n_f - 1) * icv_f$sd^2 + (n_m - 1) * icv_m$sd^2) / (n_f + n_m - 2))
-
-  data.table(
-    Sample = sample_name,
-    Characteristic = c("n", "Age, years", "ICV, cc"),
-    Female = c(format(n_f, big.mark = ","),
-               sprintf("%.1f (%.1f)", age_f$m, age_f$sd),
-               sprintf("%.0f (%.0f)", icv_f$m, icv_f$sd)),
-    Male = c(format(n_m, big.mark = ","),
-             sprintf("%.1f (%.1f)", age_m$m, age_m$sd),
-             sprintf("%.0f (%.0f)", icv_m$m, icv_m$sd)),
-    d = c("—",
-          sprintf("%.2f", (age_f$m - age_m$m) / age_pooled),
-          sprintf("%.2f", (icv_f$m - icv_m$m) / icv_pooled))
-  )
-}
-
-# Get longitudinal data
 lng_demog <- if ("LNG" %in% names(demog_data)) demog_data$LNG else NULL
-
-# Build table for all samples
-demog_tbl <- rbindlist(list(
-  get_sample_stats(all_demog, "Primary"),
-  get_sample_stats(eng_demog, "England"),
-  get_sample_stats(mtch_demog, "Matched"),
-  if (!is.null(lng_demog)) get_sample_stats(lng_demog[!duplicated(EID)], "Longitudinal") else NULL
-))
-
-# Set sample order
-demog_tbl[, Sample := factor(Sample, levels = c("Primary", "England", "Matched", "Longitudinal"))]
-
-demog_tbl |>
-  gt(groupname_col = "Sample", rowname_col = "Characteristic") |>
-  cols_label(d = md("*d*")) |>
-  tab_header(title = "Participant Characteristics") |>
-  gt_pdf_style()
+format_demographics_gt(all_demog, eng_demog, mtch_demog, lng_demog)
 ```
 
 The final sample comprised `r format(n_primary, big.mark=",")` participants (`r pct_female`% female). Females were slightly older on average (M = `r age_mean_f`, SD = `r age_sd_f`) than males (M = `r age_mean_m`, SD = `r age_sd_m`). Males had larger ICV than females (@tbl-demographics).
@@ -379,62 +373,7 @@ The final sample comprised `r format(n_primary, big.mark=",")` participants (`r 
 #| label: tbl-hvr-validation
 #| tbl-cap: "Correlation of brain measures with intracranial volume (ICV). An ideal self-normalizing measure shows r(ICV) near zero. Primary sample excludes psychiatric diagnoses; Sensitivity sample includes them."
 
-# Build comparison table: HVR vs all HC adjustment methods
-# Data comes from hvr_icv which now includes HC, HC_PRP, HC_STX, HC_RES, LV, HVR
-# If SAMPLE column exists, show both Primary and Sensitivity samples
-
-# Check if SAMPLE column exists (for backwards compatibility)
-has_sample_col <- "SAMPLE" %in% names(hvr_icv)
-
-if (has_sample_col) {
-  # Multi-sample version: show Primary and Sensitivity
-  validation_dt <- hvr_icv[VARIABLE %in% c("HC", "HC_PRP", "HC_STX", "HC_RES", "HVR"),
-                           .(SAMPLE, VARIABLE, CORRELATION, CI_LOWER, CI_UPPER)]
-} else {
-  # Legacy version: single sample
-  validation_dt <- hvr_icv[VARIABLE %in% c("HC", "HC_PRP", "HC_STX", "HC_RES", "HVR"),
-                           .(VARIABLE, CORRELATION, CI_LOWER, CI_UPPER)]
-  validation_dt[, SAMPLE := "Primary"]
-}
-
-# Add readable labels
-validation_dt[, Measure := fcase(
-  VARIABLE == "HC", "Unadjusted",
-  VARIABLE == "HC_PRP", "Proportions",
-  VARIABLE == "HC_STX", "Stereotaxic",
-  VARIABLE == "HC_RES", "Residualized",
-  VARIABLE == "HVR", "Self-normalizing"
-)]
-
-# Add ROI grouping with full names
-validation_dt[, ROI := fifelse(VARIABLE == "HVR", "Hippocampal-to-Ventricle Ratio", "Hippocampus")]
-
-# Format CI
-validation_dt[, `95% CI` := sprintf("[%.3f, %.3f]", CI_LOWER, CI_UPPER)]
-
-# Order for display
-validation_dt[, Measure := factor(Measure, levels = c(
-  "Unadjusted", "Proportions", "Stereotaxic", "Residualized", "Self-normalizing"
-))]
-validation_dt[, SAMPLE := factor(SAMPLE, levels = c("Primary", "Sensitivity"))]
-setorder(validation_dt, SAMPLE, Measure)
-
-# Build table with sample as row group if both samples present
-if (validation_dt[, uniqueN(SAMPLE)] > 1) {
-  validation_dt[, .(SAMPLE, ROI, Measure, `r(ICV)` = round(CORRELATION, 3), `95% CI`)] |>
-    gt(groupname_col = "SAMPLE") |>
-    tab_header(
-      title = "HVR Self-Normalizing Validation"
-    ) |>
-    gt_pdf_style()
-} else {
-  validation_dt[, .(ROI, Measure, `r(ICV)` = round(CORRELATION, 3), `95% CI`)] |>
-    gt(groupname_col = "ROI") |>
-    tab_header(
-      title = "HVR Self-Normalizing Validation"
-    ) |>
-    gt_pdf_style()
-}
+format_hvr_validation_gt(hvr_icv)
 ```
 
 Unadjusted HC showed strong positive correlation with ICV (r = `r round(hvr_icv_primary[VARIABLE == "HC", CORRELATION], 3)`), while proportions-adjusted HC showed moderate negative correlation (r = `r round(hvr_icv_primary[VARIABLE == "HC_PRP", CORRELATION], 3)`), indicating over-correction (@tbl-hvr-validation). Residualization eliminated ICV association by construction (r $\approx$ 0). HVR's correlation with ICV (r = `r round(hvr_icv_primary[VARIABLE == "HVR", CORRELATION], 3)`) was smaller in magnitude than raw HC (r = `r round(hvr_icv_primary[VARIABLE == "HC", CORRELATION], 3)`) but remained negative, unlike residualized HC (r $\approx$ 0). This represents a `r round((1 - abs(hvr_icv_primary[VARIABLE == "HVR", CORRELATION]) / abs(hvr_icv_primary[VARIABLE == "HC", CORRELATION])) * 100, 0)`% reduction in absolute ICV association. The negative direction mirrors the LV-ICV relationship (r = `r round(hvr_icv_primary[VARIABLE == "LV", CORRELATION], 3)`), indicating that the HVR-ICV association reflects the ventricular component's scaling with head size (see Discussion).
@@ -464,80 +403,8 @@ Distribution overlap between sexes across adjustment methods is shown in `r S("f
 ```{r}
 #| label: tbl-matched
 #| tbl-cap: "Effect sizes in full vs. matched samples. Matching on age ($\\pm 1$ yr) and ICV ($\\pm 25$ cc) eliminates head-size confounding."
-if ("COMPARISON" %in% names(sex_diff)) {
-  # Add CI columns if available, otherwise use point estimates only
-  if (all(c("CI_LOWER_ALL", "CI_UPPER_ALL", "CI_LOWER_MTCH", "CI_UPPER_MTCH") %in% names(sex_diff$COMPARISON))) {
-    match_dt <- sex_diff$COMPARISON[, .(ROI_LABEL, ADJ_LABEL,
-                                         ESTIMATE_ALL, CI_LOWER_ALL, CI_UPPER_ALL,
-                                         ESTIMATE_MTCH, CI_LOWER_MTCH, CI_UPPER_MTCH)]
-    # Simplify HVR label
-    match_dt[ADJ_LABEL == "HVR (Self-Normalizing)", ADJ_LABEL := "Self-normalizing"]
-
-    # Calculate difference (Full - Matched) with CI
-    match_dt[, `:=`(
-      DIFF = ESTIMATE_ALL - ESTIMATE_MTCH,
-      SE_ALL = (CI_UPPER_ALL - CI_LOWER_ALL) / 3.92,
-      SE_MTCH = (CI_UPPER_MTCH - CI_LOWER_MTCH) / 3.92
-    )]
-    match_dt[, SE_DIFF := sqrt(SE_ALL^2 + SE_MTCH^2)]
-    match_dt[, `:=`(
-      CI_LOWER_DIFF = DIFF - 1.96 * SE_DIFF,
-      CI_UPPER_DIFF = DIFF + 1.96 * SE_DIFF
-    )]
-
-    # Separate d and 95% CI columns
-    match_dt[, `:=`(
-      d_full = round(ESTIMATE_ALL, 3),
-      ci_full = sprintf("[%.3f, %.3f]", CI_LOWER_ALL, CI_UPPER_ALL),
-      d_mtch = round(ESTIMATE_MTCH, 3),
-      ci_mtch = sprintf("[%.3f, %.3f]", CI_LOWER_MTCH, CI_UPPER_MTCH),
-      d_diff = round(DIFF, 3),
-      ci_diff = sprintf("[%.3f, %.3f]", CI_LOWER_DIFF, CI_UPPER_DIFF)
-    )]
-
-    match_dt[, .(ROI_LABEL, ADJ_LABEL, d_full, ci_full, d_mtch, ci_mtch, d_diff, ci_diff)] |>
-      gt(groupname_col = "ROI_LABEL", rowname_col = "ADJ_LABEL") |>
-      cols_label(
-        d_full = "d", ci_full = "95% CI",
-        d_mtch = "d", ci_mtch = "95% CI",
-        d_diff = "Δd", ci_diff = "95% CI"
-      ) |>
-      tab_spanner(label = "Full Sample", columns = c(d_full, ci_full)) |>
-      tab_spanner(label = "Matched Sample", columns = c(d_mtch, ci_mtch)) |>
-      tab_spanner(label = "Difference", columns = c(d_diff, ci_diff)) |>
-      tab_header(
-        title = "Full vs. Matched Sample Comparison",
-        subtitle = md(sprintf("Matched sample: N = %s pairs (age ±1 yr, ICV ±25 cc)",
-                          format(n_matched_pairs, big.mark = ",")))
-      ) |>
-      tab_stubhead(label = "Adjustment") |>
-      gt_pdf_style()
-  } else {
-    # Fallback without CI columns
-    match_dt <- sex_diff$COMPARISON[, .(ROI_LABEL, ADJ_LABEL, ESTIMATE_ALL, ESTIMATE_MTCH)]
-    # Simplify HVR label
-    match_dt[ADJ_LABEL == "HVR (Self-Normalizing)", ADJ_LABEL := "Self-normalizing"]
-
-    # Calculate difference
-    match_dt[, DIFF := ESTIMATE_ALL - ESTIMATE_MTCH]
-
-    match_dt |>
-      gt(groupname_col = "ROI_LABEL", rowname_col = "ADJ_LABEL") |>
-      cols_label(
-        ESTIMATE_ALL = "Full d",
-        ESTIMATE_MTCH = "Matched d",
-        DIFF = "Δd"
-      ) |>
-      fmt_number(columns = c(ESTIMATE_ALL, ESTIMATE_MTCH, DIFF), decimals = 3) |>
-      tab_header(
-        title = "Full vs. Matched Sample Comparison",
-        subtitle = md(sprintf("Matched sample: N = %s pairs (age ±1 yr, ICV ±25 cc)",
-                          format(n_matched_pairs, big.mark = ",")))
-      ) |>
-      tab_stubhead(label = "Adjustment") |>
-      gt_pdf_style()
-  }
-}
+if ("COMPARISON" %in% names(sex_diff))
+  format_matched_comparison_gt(sex_diff$COMPARISON, n_matched_pairs)
 ```
 
 HVR sex differences were consistent between full (d = `r round(hvr_non$ESTIMATE, 3)`) and matched (d = `r round(matched_hvr$ESTIMATE_MTCH, 3)`) samples, supporting its validity as a head-size-independent measure.
@@ -596,68 +463,7 @@ The cognitive bifactor model showed acceptable fit at all invariance levels, wit
 #| label: tbl-sem-paths
 #| tbl-cap: "Structural paths from brain measures to cognitive factors (pooled models). Beta = standardized path coefficient; CI from 2000 bootstrap resamples. Memory-specific factor paths not shown due to factor collapse."
 
-# Extract and format pooled model paths (excluding Memory_s due to factor collapse)
-# Order: HVR, HC (Residualized), HC (Unadjusted) - matching Figure 9
-pooled_paths <- data.table(
-  Model = c("HVR", "HVR",
-            "HC (Residualized)", "HC (Residualized)",
-            "HC (Unadjusted)", "HC (Unadjusted)"),
-  Path = rep(c("\u2192 g", "\u2192 Speed\u209b"), 3),
-  `β` = c(
-    safe_round(hvr_g$est.std, 3),
-    safe_round(get_path("HVR_COG_POOLED", "PRSP_s", "HVR")$est.std, 3),
-    safe_round(hc_res_g$est.std, 3),
-    safe_round(get_path("HC_RES_COG_POOLED", "PRSP_s", "HC_RES")$est.std, 3),
-    safe_round(hc_g$est.std, 3),
-    safe_round(get_path("HC_COG_POOLED", "PRSP_s", "HC")$est.std, 3)
-  ),
-  `95% CI` = c(
-    safe_ci(hvr_g$ci.lower, hvr_g$ci.upper),
-    safe_ci(get_path("HVR_COG_POOLED", "PRSP_s", "HVR")$ci.lower,
-            get_path("HVR_COG_POOLED", "PRSP_s", "HVR")$ci.upper),
-    safe_ci(hc_res_g$ci.lower, hc_res_g$ci.upper),
-    safe_ci(get_path("HC_RES_COG_POOLED", "PRSP_s", "HC_RES")$ci.lower,
-            get_path("HC_RES_COG_POOLED", "PRSP_s", "HC_RES")$ci.upper),
-    safe_ci(hc_g$ci.lower, hc_g$ci.upper),
-    safe_ci(get_path("HC_COG_POOLED", "PRSP_s", "HC")$ci.lower,
-            get_path("HC_COG_POOLED", "PRSP_s", "HC")$ci.upper)
-  ),
-  p = c(
-    safe_pvalue(hvr_g$pvalue),
-    safe_pvalue(get_path("HVR_COG_POOLED", "PRSP_s", "HVR")$pvalue),
-    safe_pvalue(hc_res_g$pvalue),
-    safe_pvalue(get_path("HC_RES_COG_POOLED", "PRSP_s", "HC_RES")$pvalue),
-    safe_pvalue(hc_g$pvalue),
-    safe_pvalue(get_path("HC_COG_POOLED", "PRSP_s", "HC")$pvalue)
-  )
-)
-
-# Identify significant rows for bolding
-sig_rows <- which(c(
-  hvr_g$pvalue, get_path("HVR_COG_POOLED", "PRSP_s", "HVR")$pvalue,
-  hc_res_g$pvalue, get_path("HC_RES_COG_POOLED", "PRSP_s", "HC_RES")$pvalue,
-  hc_g$pvalue, get_path("HC_COG_POOLED", "PRSP_s", "HC")$pvalue
-) < 0.05)
-
-gt_tbl <- pooled_paths |>
-  gt() |>
-  tab_header(
-    title = "Brain-Cognition Structural Paths",
-    subtitle = "Standardized coefficients from pooled models with sex as covariate"
-  ) |>
-  tab_row_group(label = "HVR", rows = 1:2) |>
-  tab_row_group(label = "HC (Residualized)", rows = 3:4) |>
-  tab_row_group(label = "HC (Unadjusted)", rows = 5:6) |>
-  row_group_order(groups = c("HVR", "HC (Residualized)", "HC (Unadjusted)")) |>
-  cols_hide(columns = Model) |>
-  gt_pdf_style()
-
-if (length(sig_rows) > 0) {
-  gt_tbl <- gt_tbl |>
-    tab_style(style = cell_text(weight = "bold"),
-              locations = cells_body(columns = c(`β`, `95% CI`, p), rows = sig_rows))
-}
-gt_tbl
+format_pooled_sem_paths_gt(sem_params, hvr_g, hc_res_g, hc_g)
 ```
 
 All three brain measures showed significant positive associations with general cognition (*g*; @tbl-sem-paths). Unadjusted HC showed $\beta$ = `r safe_round(hc_g$est.std, 3)` [95% CI: `r safe_round(hc_g$ci.lower, 3)`, `r safe_round(hc_g$ci.upper, 3)`], HVR showed $\beta$ = `r safe_round(hvr_g$est.std, 3)` [`r safe_round(hvr_g$ci.lower, 3)`, `r safe_round(hvr_g$ci.upper, 3)`], and HC~RES~ showed $\beta$ = `r safe_round(hc_res_g$est.std, 3)` [`r safe_round(hc_res_g$ci.lower, 3)`, `r safe_round(hc_res_g$ci.upper, 3)`], all p < .001. Confidence intervals overlapped substantially, indicating no significant differences in predictive validity between measures. HVR showed numerically the strongest association with *g*, despite requiring no head-size adjustment.
@@ -734,7 +540,7 @@ The `r hvr_reduction_pct`% reduction in effect size from full to matched samples
 
 ## Measurement Invariance
 
-The successful establishment of strict measurement invariance for the cognitive bifactor model (`r S("tbl-measurement-invariance")`) is a prerequisite for the brain-cognition analyses. Without measurement invariance, apparent sex differences in brain-cognition paths could reflect measurement artifacts rather than true structural differences [@chen_sensitivity_2007; @putnick_measurement_2016]. The $\Delta$CFI $\leq$ 0.01 and $\Delta$RMSEA $\leq$ 0.015 at each invariance level [@cheung_goodness_2002; @chen_sensitivity_2007] confirms that the same cognitive constructs (*g*, Memory~s~, Speed~s~) exist in both sexes, that factor loadings are equivalent (meaning the tests measure constructs with equal precision), that intercepts are equivalent (allowing valid comparison of factor means), and that residual variances are equivalent (confirming comparable reliability). This finding validates the use of the same factor structure for both sexes in the SEM analyses and supports the comparability of path coefficients across groups.
+The successful establishment of strict measurement invariance for the cognitive bifactor model (`r S("tbl-measurement-invariance")`) is a prerequisite for the brain-cognition analyses. Without measurement invariance, apparent sex differences in brain-cognition paths could reflect measurement artifacts rather than true structural differences [@chen_sensitivity_2007; @putnick_measurement_2016]. The $\Delta$CFI $\leq$ 0.01 and $\Delta$RMSEA $\leq$ 0.015 at each invariance level [@cheung_evaluating_2002; @chen_sensitivity_2007] confirms that the same cognitive constructs (*g*, Memory~s~, Speed~s~) exist in both sexes, that factor loadings are equivalent (meaning the tests measure constructs with equal precision), that intercepts are equivalent (allowing valid comparison of factor means), and that residual variances are equivalent (confirming comparable reliability). This finding validates the use of the same factor structure for both sexes in the SEM analyses and supports the comparability of path coefficients across groups.
 
 ## Brain-Cognition Associations
 
@@ -822,7 +628,7 @@ Males showed `r round(hvr_int$SLOPE_RATIO, 2)`× steeper age-related HVR differe
 
 # Author Contributions {.unnumbered}
 
-S.F-L. conceived the study, developed the analysis pipeline, performed all analyses, and wrote the manuscript. L.D.C. supervised the project, provided critical review, and approved the final manuscript.
+S.F-L. conceived the study, developed the analysis pipeline, performed all analyses, and wrote the manuscript. D.L.C. supervised the project, provided critical review, and approved the final manuscript.
 
 # Acknowledgments {.unnumbered}
 

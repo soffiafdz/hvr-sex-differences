@@ -3,7 +3,7 @@ title: "Supporting Information"
 subtitle: "Hippocampal-to-Ventricle Ratio as a Head-Size-Independent Biomarker: Sex Differences and Cognitive Associations in 27,680 UK Biobank Participants"
 author:
   - name: Sofia Fernandez-Lozano
-  - name: Louis D. Collins
+  - name: D. Louis Collins
 format:
   html:
     toc: true
@@ -327,20 +327,8 @@ format_sem_covariates_gt(covar_dt, model_name = "HVR Model")
 ```{r}
 #| label: supp-tbl-site-adjusted
 #| tbl-cap: "Sex difference effect sizes with site adjustment. ICC = intraclass correlation coefficient indicating proportion of variance attributable to site."
-if ("SITE_ADJUSTED" %in% names(sex_diff) && nrow(sex_diff$SITE_ADJUSTED) > 0) {
-  site_dt <- sex_diff$SITE_ADJUSTED[SIDE == "LR", .(ROI_LABEL, ADJ_LABEL, ICC_SITE, ESTIMATE, CI_LOWER, CI_UPPER)]
-  site_dt[ADJ_LABEL == "HVR (Self-Normalizing)", ADJ_LABEL := "Self-normalizing"]
-  site_dt[, `95% CI` := sprintf("[%.3f, %.3f]", CI_LOWER, CI_UPPER)]
-
-  site_dt[, .(ROI_LABEL, ADJ_LABEL, ICC_SITE, d = ESTIMATE, `95% CI`)] |>
-    gt(groupname_col = "ROI_LABEL", rowname_col = "ADJ_LABEL") |>
-    cols_label(ICC_SITE = "Site ICC") |>
-    fmt_number(columns = c(ICC_SITE, d), decimals = 3) |>
-    tab_spanner(label = "Effect Size", columns = c(d, `95% CI`)) |>
-    tab_header(title = "Site-Adjusted Effect Sizes") |>
-    tab_stubhead(label = "Adjustment") |>
-    gt_pdf_style()
-}
+if ("SITE_ADJUSTED" %in% names(sex_diff))
+  format_site_adjusted_gt(sex_diff$SITE_ADJUSTED)
 ```
 
 \clearpage
@@ -349,21 +337,8 @@ if ("SITE_ADJUSTED" %in% names(sex_diff) && nrow(sex_diff$SITE_ADJUSTED) > 0) {
 #| label: supp-tbl-hemisphere
 #| tbl-cap: "Sex differences by hemisphere. HC/LV = ICV-residualized; HVR = self-normalizing ratio. d = Cohen's d (positive = females > males)."
 hemi_dt <- get_hemisphere_comparison(sex_diff)
-if (!is.null(hemi_dt) && nrow(hemi_dt) > 0) {
-  roi_full_names <- c("HVR" = "Hippocampal-to-Ventricle Ratio",
-                      "HC" = "Hippocampus",
-                      "LV" = "Lateral Ventricles")
-  hemi_dt[, ROI_LABEL := fifelse(ROI %in% names(roi_full_names), roi_full_names[ROI], ROI_LABEL)]
-  hemi_dt[, ROI_LABEL := factor(ROI_LABEL, levels = roi_full_names)]
-  hemi_dt[, Hemisphere := fifelse(SIDE == "L", "Left", "Right")]
-  hemi_dt[, `95% CI` := sprintf("[%.3f, %.3f]", CI_LOWER, CI_UPPER)]
-
-  hemi_dt[, .(ROI_LABEL, Hemisphere, d = ESTIMATE, `95% CI`)] |>
-    gt(groupname_col = "ROI_LABEL") |>
-    fmt_number(columns = d, decimals = 3) |>
-    tab_header(title = "Sex Differences by Hemisphere") |>
-    gt_pdf_style()
-}
+if (!is.null(hemi_dt) && nrow(hemi_dt) > 0)
+  format_hemisphere_gt(hemi_dt)
 ```
 
 \clearpage
@@ -372,31 +347,8 @@ if (!is.null(hemi_dt) && nrow(hemi_dt) > 0) {
 #| label: supp-tbl-sensitivity
 #| tbl-cap: "Effect sizes with and without psychiatric exclusions. Sensitivity sample includes participants with ICD-10 F00-F99 diagnoses. $\\Delta$d = difference in Cohen's d; values near zero indicate robust findings."
 sens_dt <- get_sensitivity_comparison(sex_diff)
-if (!is.null(sens_dt) && nrow(sens_dt) > 0) {
-  sens_dt[, `:=`(
-    ci_pri = sprintf("[%.3f, %.3f]", CI_LOWER_PRIMARY, CI_UPPER_PRIMARY),
-    ci_sens = sprintf("[%.3f, %.3f]", CI_LOWER_SENS, CI_UPPER_SENS)
-  )]
-
-  sens_dt[, .(ROI_LABEL, ADJ_LABEL, N_PRIMARY, d_pri = ESTIMATE_PRIMARY, ci_pri,
-              N_SENS, d_sens = ESTIMATE_SENS, ci_sens, DIFF)] |>
-    gt(groupname_col = "ROI_LABEL", rowname_col = "ADJ_LABEL") |>
-    cols_label(
-      N_PRIMARY = "N", d_pri = "d", ci_pri = "95% CI",
-      N_SENS = "N", d_sens = "d", ci_sens = "95% CI",
-      DIFF = "Δd"
-    ) |>
-    fmt_number(columns = c(N_PRIMARY, N_SENS), decimals = 0, use_seps = TRUE) |>
-    fmt_number(columns = c(d_pri, d_sens, DIFF), decimals = 3) |>
-    tab_spanner(label = "Primary Sample", columns = c(N_PRIMARY, d_pri, ci_pri)) |>
-    tab_spanner(label = "Sensitivity Sample", columns = c(N_SENS, d_sens, ci_sens)) |>
-    tab_header(
-      title = "Sensitivity Analysis: Including Psychiatric Diagnoses",
-      subtitle = "Comparing primary sample (F-codes excluded) vs. sensitivity sample (F-codes included)"
-    ) |>
-    tab_stubhead(label = "Adjustment") |>
-    gt_pdf_style()
-}
+if (!is.null(sens_dt) && nrow(sens_dt) > 0)
+  format_sensitivity_gt(sens_dt)
 ```
 
 \clearpage
