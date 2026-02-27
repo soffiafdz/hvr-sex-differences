@@ -106,6 +106,10 @@ hc_non  <- bilateral[ROI == "HC" & ADJ == "NON"]
 hc_prp  <- bilateral[ROI == "HC" & ADJ == "PRP"]
 hc_stx  <- bilateral[ROI == "HC" & ADJ == "STX"]
 hc_res  <- bilateral[ROI == "HC" & ADJ == "RES"]
+lv_non  <- bilateral[ROI == "LV" & ADJ == "NON"]
+lv_prp  <- bilateral[ROI == "LV" & ADJ == "PRP"]
+lv_stx  <- bilateral[ROI == "LV" & ADJ == "STX"]
+lv_res  <- bilateral[ROI == "LV" & ADJ == "RES"]
 hvr_non <- bilateral[ROI == "HVR" & ADJ == "NON"]
 
 matched_hvr    <- sex_diff$COMPARISON[ROI == "HVR" & ADJ == "NON"]
@@ -115,12 +119,11 @@ matched_hc_non <- sex_diff$COMPARISON[ROI == "HC" & ADJ == "NON"]
 matched_lv_non <- sex_diff$COMPARISON[ROI == "LV" & ADJ == "NON"]
 
 # --- Derived percentages ---
-hvr_icv         <- get_hvr_icv_validation(sex_diff)
-hvr_icv_primary <- if ("SAMPLE" %in% names(hvr_icv)) hvr_icv[SAMPLE == "Primary"] else hvr_icv
+hvr_icv <- get_hvr_icv_validation(sex_diff)
 
-r_hvr_icv <- hvr_icv_primary[VARIABLE == "HVR", CORRELATION]
-r_hc_icv  <- hvr_icv_primary[VARIABLE == "HC", CORRELATION]
-r_lv_icv  <- hvr_icv_primary[VARIABLE == "LV", CORRELATION]
+r_hvr_icv <- hvr_icv[VARIABLE == "HVR", CORRELATION]
+r_hc_icv  <- hvr_icv[VARIABLE == "HC", CORRELATION]
+r_lv_icv  <- hvr_icv[VARIABLE == "LV", CORRELATION]
 icv_reduction_pct <- round((1 - abs(r_hvr_icv) / abs(r_hc_icv)) * 100, 0)
 
 hvr_d_full    <- hvr_non$ESTIMATE
@@ -315,6 +318,7 @@ ms <- list(
     age_sd_f = age_sd_f, age_sd_m = age_sd_m,
     # Effect size rows
     hc_non = hc_non, hc_prp = hc_prp, hc_stx = hc_stx, hc_res = hc_res,
+    lv_non = lv_non, lv_prp = lv_prp, lv_stx = lv_stx, lv_res = lv_res,
     hvr_non = hvr_non,
     matched_hvr = matched_hvr, matched_hc_res = matched_hc_res,
     matched_lv_res = matched_lv_res,
@@ -323,7 +327,7 @@ ms <- list(
     icv_reduction_pct = icv_reduction_pct, hvr_reduction_pct = hvr_reduction_pct,
     hc_d_range = hc_d_range,
     # HVR-ICV validation
-    hvr_icv = hvr_icv, hvr_icv_primary = hvr_icv_primary,
+    hvr_icv = hvr_icv,
     r_hvr_icv = r_hvr_icv, r_hc_icv = r_hc_icv, r_lv_icv = r_lv_icv,
     # SEM paths (pooled)
     hc_g = hc_g, hvr_g = hvr_g, hc_res_g = hc_res_g,
