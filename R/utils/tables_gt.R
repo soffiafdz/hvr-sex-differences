@@ -689,12 +689,12 @@ format_sem_loadings_gt <- function(loadings_dt, model_name = "SEM") {
   if ("Loading_fmt_Female" %in% names(dt_display)) {
     gt_tbl <- gt_tbl |>
       cols_label(Loading_fmt_Female = "λ", SE_fmt_Female = "SE", p_fmt_Female = md("*p*")) |>
-      tab_spanner(label = "Female", columns = c(Loading_fmt_Female, SE_fmt_Female, p_fmt_Female))
+      tab_spanner(label = "Females", columns = c(Loading_fmt_Female, SE_fmt_Female, p_fmt_Female))
   }
   if ("Loading_fmt_Male" %in% names(dt_display)) {
     gt_tbl <- gt_tbl |>
       cols_label(Loading_fmt_Male = "λ", SE_fmt_Male = "SE", p_fmt_Male = md("*p*")) |>
-      tab_spanner(label = "Male", columns = c(Loading_fmt_Male, SE_fmt_Male, p_fmt_Male))
+      tab_spanner(label = "Males", columns = c(Loading_fmt_Male, SE_fmt_Male, p_fmt_Male))
   }
 
   # Bold significant rows (p < 0.05)
@@ -856,12 +856,12 @@ format_sem_covariates_gt <- function(covar_dt, model_name = "SEM",
   if ("Beta_fmt_Female" %in% names(dt_display)) {
     gt_tbl <- gt_tbl |>
       cols_label(Beta_fmt_Female = "β", SE_fmt_Female = "SE", p_fmt_Female = md("*p*")) |>
-      tab_spanner(label = "Female", columns = c(Beta_fmt_Female, SE_fmt_Female, p_fmt_Female))
+      tab_spanner(label = "Females", columns = c(Beta_fmt_Female, SE_fmt_Female, p_fmt_Female))
   }
   if ("Beta_fmt_Male" %in% names(dt_display)) {
     gt_tbl <- gt_tbl |>
       cols_label(Beta_fmt_Male = "β", SE_fmt_Male = "SE", p_fmt_Male = md("*p*")) |>
-      tab_spanner(label = "Male", columns = c(Beta_fmt_Male, SE_fmt_Male, p_fmt_Male))
+      tab_spanner(label = "Males", columns = c(Beta_fmt_Male, SE_fmt_Male, p_fmt_Male))
   }
 
   # Bold significant coefficients
@@ -1006,12 +1006,12 @@ format_gamlss_coef_gt <- function(coef_dt, title = "GAMLSS Model Coefficients",
   if ("Estimate_fmt_Female" %in% names(dt_wide)) {
     gt_tbl <- gt_tbl |>
       cols_label(Estimate_fmt_Female = "Estimate", SE_fmt_Female = "SE", p_fmt_Female = md("*p*")) |>
-      tab_spanner(label = "Female", columns = c(Estimate_fmt_Female, SE_fmt_Female, p_fmt_Female), id = "spanner_female")
+      tab_spanner(label = "Females", columns = c(Estimate_fmt_Female, SE_fmt_Female, p_fmt_Female), id = "spanner_female")
   }
   if ("Estimate_fmt_Male" %in% names(dt_wide)) {
     gt_tbl <- gt_tbl |>
       cols_label(Estimate_fmt_Male = "Estimate", SE_fmt_Male = "SE", p_fmt_Male = md("*p*")) |>
-      tab_spanner(label = "Male", columns = c(Estimate_fmt_Male, SE_fmt_Male, p_fmt_Male), id = "spanner_male")
+      tab_spanner(label = "Males", columns = c(Estimate_fmt_Male, SE_fmt_Male, p_fmt_Male), id = "spanner_male")
   }
 
   # Bold significant rows (p < 0.05)
@@ -1187,8 +1187,8 @@ format_sem_paths_by_sex_gt <- function(sem_params, title = "Brain-Cognition Path
       M_p_fmt = md("*p*")
     ) |>
     fmt_number(columns = c(F_beta, M_beta), decimals = 3) |>
-    tab_spanner(label = "Female", columns = c(F_beta, F_ci, F_p_fmt), id = "spanner_female") |>
-    tab_spanner(label = "Male", columns = c(M_beta, M_ci, M_p_fmt), id = "spanner_male") |>
+    tab_spanner(label = "Females", columns = c(F_beta, F_ci, F_p_fmt), id = "spanner_female") |>
+    tab_spanner(label = "Males", columns = c(M_beta, M_ci, M_p_fmt), id = "spanner_male") |>
     fmt_markdown(columns = c(Path)) |>
     tab_header(
       title = title,
@@ -1236,50 +1236,32 @@ format_hvr_validation_gt <- function(hvr_icv_dt,
   }
 
   dt <- copy(hvr_icv_dt)
+  dt <- dt[VARIABLE %in% c("HC", "HC_PRP", "HC_STX", "HC_RES",
+                           "LV", "LV_PRP", "LV_STX", "LV_RES", "HVR")]
 
-  # Filter to relevant variables
-  dt <- dt[VARIABLE %in% c("HC", "HC_PRP", "HC_STX", "HC_RES", "HVR")]
-
-  # Check if SAMPLE column exists
-  has_sample_col <- "SAMPLE" %in% names(dt)
-  if (!has_sample_col) {
-    dt[, SAMPLE := "Primary"]
-  }
-
-  # Add readable labels
   dt[, Measure := fcase(
-    VARIABLE == "HC", "Unadjusted",
-    VARIABLE == "HC_PRP", "Proportions",
-    VARIABLE == "HC_STX", "Stereotaxic",
-    VARIABLE == "HC_RES", "Residualized",
+    VARIABLE %in% c("HC", "LV"), "Unadjusted",
+    VARIABLE %in% c("HC_PRP", "LV_PRP"), "Proportions",
+    VARIABLE %in% c("HC_STX", "LV_STX"), "Stereotaxic",
+    VARIABLE %in% c("HC_RES", "LV_RES"), "Residualized",
     VARIABLE == "HVR", "Self-normalizing"
   )]
-
-  # Add ROI grouping with full names
-  dt[, ROI := fifelse(VARIABLE == "HVR", "Hippocampal-to-Ventricle Ratio", "Hippocampus")]
-
-  # Format CI
+  dt[, ROI := fcase(
+    VARIABLE == "HVR", "Hippocampal-to-Ventricle Ratio",
+    startsWith(VARIABLE, "LV"), "Lateral Ventricles",
+    default = "Hippocampus"
+  )]
   dt[, `95% CI` := sprintf("[%.3f, %.3f]", CI_LOWER, CI_UPPER)]
-
-  # Order for display
+  dt[, ROI := factor(ROI, levels = c("Hippocampus", "Lateral Ventricles", "Hippocampal-to-Ventricle Ratio"))]
   dt[, Measure := factor(Measure, levels = c(
     "Unadjusted", "Proportions", "Stereotaxic", "Residualized", "Self-normalizing"
   ))]
-  dt[, SAMPLE := factor(SAMPLE, levels = c("Primary", "Sensitivity"))]
-  setorder(dt, SAMPLE, Measure)
+  setorder(dt, ROI, Measure)
 
-  # Build table based on whether multiple samples present
-  if (dt[, uniqueN(SAMPLE)] > 1) {
-    gt_tbl <- dt[, .(SAMPLE, ROI, Measure, `r(ICV)` = round(CORRELATION, 3), `95% CI`)] |>
-      gt(groupname_col = "SAMPLE") |>
-      tab_header(title = title, subtitle = subtitle)
-  } else {
-    gt_tbl <- dt[, .(ROI, Measure, `r(ICV)` = round(CORRELATION, 3), `95% CI`)] |>
-      gt(groupname_col = "ROI") |>
-      tab_header(title = title, subtitle = subtitle)
-  }
-
-  gt_tbl |> gt_pdf_style()
+  dt[, .(ROI, Measure, `r(ICV)` = round(CORRELATION, 3), `95% CI`)] |>
+    gt(groupname_col = "ROI") |>
+    tab_header(title = title, subtitle = subtitle) |>
+    gt_pdf_style()
 }
 
 #' Format SEM covariate fields table
@@ -1393,7 +1375,7 @@ format_demographics_gt <- function(all_demog, eng_demog, mtch_demog, lng_demog =
 
   demog_tbl |>
     gt(groupname_col = "Sample", rowname_col = "Characteristic") |>
-    cols_label(d = md("*d*")) |>
+    cols_label(Female = "Females", Male = "Males", d = md("*d*")) |>
     tab_header(title = "Participant Characteristics") |>
     gt_pdf_style()
 }
