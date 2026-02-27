@@ -172,7 +172,7 @@ fig_effect_sizes_by_adjustment <- function(sex_diff, include_matched = TRUE, bas
     labs(y = NULL, x = "Sex Difference (Cohen's d)\nPositive = Male < Female") +
     theme_publication(base_size = base_size) +
     theme(axis.text.y = element_text(size = base_size - 1),
-          legend.position = "bottom") +
+          legend.position = "top") +
     guides(shape = guide_legend(override.aes = list(size = 2)))
 
   # Add difference panel if comparison data available
@@ -192,7 +192,7 @@ fig_effect_sizes_by_adjustment <- function(sex_diff, include_matched = TRUE, bas
     diff_data[ROI == "HVR", ADJ_LABEL := "Self-normalized"]
 
     diff_panel <- plot_difference_panel(diff_data, y_order, adj_colors_full,
-                                         x_label = bquote(Delta * "d (Full - Matched)"),
+                                         x_label = bquote(Delta*"d (Full - Matched)"),
                                          base_size = base_size)
     p <- p + diff_panel + plot_layout(widths = c(3, 1.5))
   }
@@ -405,6 +405,8 @@ fig_normative_centiles_panel <- function(norm_tables) {
                "Median" = 1.1, "75th" = 0.6, "90th" = 0.5, "95th" = 0.4)
 
   # Helper: single-sex panel (Female or Male)
+  # Legend is NOT suppressed so patchwork can collect the full 7-level
+  # linetype guide from these panels (the both panel only has 3 levels).
   panel_single <- function(long, sex, ylab, show_y = TRUE, show_x = FALSE) {
     d <- long[SEX == sex]
     p <- ggplot(d, aes(x = AGE, y = Value, linetype = Centile, linewidth = Centile)) +
@@ -415,20 +417,24 @@ fig_normative_centiles_panel <- function(norm_tables) {
       labs(x = if (show_x) "Age (years)" else NULL,
            y = if (show_y) ylab else NULL) +
       base_theme +
-      theme(legend.position = "none")
+      guides(linetype = guide_legend(title = "Centile", ncol = 7,
+                                     override.aes = list(color = "grey30")))
     if (!show_y) p <- p + theme(axis.text.y = element_blank(),
                                  axis.ticks.y = element_blank())
     p
   }
 
   # Helper: overlaid both-sex panel (carries the legend aesthetics)
+  # Only median + 5th/95th bounds to reduce visual clutter
+  both_centiles <- c("5th", "Median", "95th")
   panel_both <- function(long, ylab, show_x = FALSE) {
-    ggplot(long, aes(x = AGE, y = Value, linetype = Centile, color = SEX,
+    d <- long[Centile %in% both_centiles]
+    ggplot(d, aes(x = AGE, y = Value, linetype = Centile, color = SEX,
                      linewidth = Centile)) +
       geom_line(alpha = 0.8) +
       scale_color_manual(values = sex_colors) +
-      scale_linetype_manual(values = lt_vals, drop = FALSE) +
-      scale_linewidth_manual(values = lw_vals, guide = "none") +
+      scale_linetype_manual(values = lt_vals[both_centiles], drop = FALSE) +
+      scale_linewidth_manual(values = lw_vals[both_centiles], guide = "none") +
       scale_x_continuous(breaks = seq(50, 80, 10)) +
       labs(x = if (show_x) "Age (years)" else NULL, y = NULL) +
       base_theme +
@@ -437,9 +443,8 @@ fig_normative_centiles_panel <- function(norm_tables) {
             legend.position = "bottom",
             legend.box = "horizontal",
             legend.margin = margin(0, 0, 0, 0)) +
-      guides(linetype = guide_legend(title = "Centile", ncol = 7,
-                                     override.aes = list(color = "grey30")),
-             color = guide_legend(title = "Sex", order = 1))
+      guides(linetype = "none",
+             color = "none")
   }
 
   # Build all 9 panels (3 ROIs x 3 columns)
@@ -475,7 +480,7 @@ fig_normative_centiles_panel <- function(norm_tables) {
              JKL
              mmm"
 
-  combined <- lab("Female") + lab("All") + lab("Male") +
+  combined <- lab("Females") + lab("All") + lab("Males") +
     panels[[1]] + panels[[2]] + panels[[3]] +
     panels[[4]] + panels[[5]] + panels[[6]] +
     panels[[7]] + panels[[8]] + panels[[9]] +
