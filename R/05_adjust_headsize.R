@@ -539,7 +539,10 @@ for (i in seq_along(hclv.lst)) {
       all = FALSE
     )
     # PRIMARY: MTCH sample (matched pairs from primary)
-    hclv.lst[[i]][[j]]$MTCH <- match.lst[[j]][, .(MATCH = ID, EID_m, EID_f)] |>
+    # Keep only complete pairs (both partners must have segmentation data)
+    all_eids <- unique(hclv.lst[[i]][[j]]$ALL$EID)
+    complete_pairs <- match.lst[[j]][EID_m %in% all_eids & EID_f %in% all_eids]
+    hclv.lst[[i]][[j]]$MTCH <- complete_pairs[, .(MATCH = ID, EID_m, EID_f)] |>
       melt(id = "MATCH", value = "EID") |>
       merge(hclv.lst[[i]][[j]]$ALL, by = "EID") |>
       setkey(EID, INST)

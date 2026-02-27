@@ -173,7 +173,7 @@ compute_cor_ci <- function(x, y, conf.level = 0.95) {
 
 # Get bilateral values for correlation analysis
 # HC: all adjustment methods (NON, PRP, STX, RES)
-# LV: unadjusted only (NON)
+# LV: all adjustment methods (NON, PRP, STX, RES)
 # HVR: self-normalizing (no adjustment)
 
 # Extract HC for each adjustment method
@@ -181,17 +181,19 @@ hc_by_adj.dt <- crs_data.dt[SIDE == "LR" & ROI == "HC", .(EID, ADJ, HC = VAL, IC
 hc_wide.dt <- dcast(hc_by_adj.dt, EID + ICC ~ ADJ, value.var = "HC")
 setnames(hc_wide.dt, c("NON", "PRP", "STX", "RES"), c("HC", "HC_PRP", "HC_STX", "HC_RES"))
 
-# Extract LV unadjusted
-lv_data.dt <- crs_data.dt[SIDE == "LR" & ADJ == "NON" & ROI == "LV", .(EID, LV = VAL)]
+# Extract LV for each adjustment method
+lv_by_adj.dt <- crs_data.dt[SIDE == "LR" & ROI == "LV", .(EID, ADJ, LV = VAL)]
+lv_wide.dt <- dcast(lv_by_adj.dt, EID ~ ADJ, value.var = "LV")
+setnames(lv_wide.dt, c("NON", "PRP", "STX", "RES"), c("LV", "LV_PRP", "LV_STX", "LV_RES"))
 
 # Extract HVR
 hvr_data.dt <- crs_data.dt[SIDE == "LR" & ROI == "HVR", .(EID, HVR = VAL)]
 
 # Merge all
-hvr_icv_data.dt <- hc_wide.dt[lv_data.dt, on = "EID"][hvr_data.dt, on = "EID"]
+hvr_icv_data.dt <- hc_wide.dt[lv_wide.dt, on = "EID"][hvr_data.dt, on = "EID"]
 
 # Compute correlations with ICV for all variables
-variables_to_test <- c("HC", "HC_PRP", "HC_STX", "HC_RES", "LV", "HVR")
+variables_to_test <- c("HC", "HC_PRP", "HC_STX", "HC_RES", "LV", "LV_PRP", "LV_STX", "LV_RES", "HVR")
 
 hvr_icv_results.dt <- rbindlist(lapply(variables_to_test, function(var) {
   test <- compute_cor_ci(hvr_icv_data.dt[[var]], hvr_icv_data.dt$ICC)
@@ -668,54 +670,6 @@ if (FORCE_REGENERATE || !file.exists(sex_diff_path)) {
       sens_comparison.dt[ROI == "HVR", ADJ_LABEL := "HVR (Self-Normalizing)"]
 
       log_info("Sensitivity comparison computed")
-
-      # Compute HVR-ICV validation for sensitivity sample
-      log_info("Computing HVR-ICV validation for sensitivity sample")
-
-      # Extract data for ICV correlation (same approach as primary sample)
-      sens_hc_by_adj.dt <- sens_data.dt[SIDE == "LR" & ROI == "HC", .(EID, ADJ, HC = VAL, ICC)]
-      sens_hc_wide.dt <- dcast(sens_hc_by_adj.dt, EID + ICC ~ ADJ, value.var = "HC")
-      if (all(c("NON", "PRP", "STX", "RES") %in% names(sens_hc_wide.dt))) {
-        setnames(sens_hc_wide.dt, c("NON", "PRP", "STX", "RES"), c("HC", "HC_PRP", "HC_STX", "HC_RES"))
-
-        sens_lv_data.dt <- sens_data.dt[SIDE == "LR" & ADJ == "NON" & ROI == "LV", .(EID, LV = VAL)]
-        sens_hvr_data.dt <- sens_data.dt[SIDE == "LR" & ROI == "HVR", .(EID, HVR = VAL)]
-
-        sens_hvr_icv_data.dt <- sens_hc_wide.dt[sens_lv_data.dt, on = "EID"][sens_hvr_data.dt, on = "EID"]
-
-        # Compute correlations for sensitivity sample
-        sens_hvr_icv_results.dt <- rbindlist(lapply(variables_to_test, function(var) {
-          if (var %in% names(sens_hvr_icv_data.dt)) {
-            test <- compute_cor_ci(sens_hvr_icv_data.dt[[var]], sens_hvr_icv_data.dt$ICC)
-            data.table(
-              SAMPLE = "Sensitivity",
-              VARIABLE = var,
-              CORRELATION = test$r,
-              CI_LOWER = test$ci_lower,
-              CI_UPPER = test$ci_upper,
-              P_VALUE = test$p,
-              N = test$n
-            )
-          }
-        }))
-
-        # Compute derived metrics for sensitivity sample
-        sens_hvr_icv_results.dt[, R_SQUARED := CORRELATION^2]
-        sens_hvr_icv_results.dt[, VARIANCE_EXPLAINED_PCT := R_SQUARED * 100]
-        r_hc_sens <- sens_hvr_icv_results.dt[VARIABLE == "HC", CORRELATION]
-        sens_hvr_icv_results.dt[, ICV_REDUCTION_PCT := (1 - abs(CORRELATION) / abs(r_hc_sens)) * 100]
-        sens_hvr_icv_results.dt[VARIABLE == "HC", ICV_REDUCTION_PCT := NA_real_]
-
-        # Append to primary results
-        hvr_icv_results.dt <- rbind(hvr_icv_results.dt, sens_hvr_icv_results.dt)
-
-        log_info("HVR-ICV validation for sensitivity sample computed (N = %d)",
-                 sens_hvr_icv_data.dt[, .N])
-
-        rm(sens_hc_by_adj.dt, sens_hc_wide.dt, sens_lv_data.dt, sens_hvr_data.dt, sens_hvr_icv_data.dt)
-      } else {
-        log_warn("Sensitivity sample missing required columns for HVR-ICV validation")
-      }
     } else {
       log_warn("Sensitivity data not available - skipping F-code sensitivity analysis")
     }

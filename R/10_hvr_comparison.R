@@ -87,20 +87,19 @@ log_section("Preparing comparison data")
 # Extract HVR from unadjusted (NON) - HVR is self-normalizing, only valid for NON
 hvr_non.dt <- hc_hvr.lst[[NETWORK]]$CRS$ALL[
   ADJ == "NON" & SIDE == "LR" & SUBFIELD == "total",
-  .(EID, SEX, AGE, HVR, LV)
+  .(EID, SEX, AGE, HVR)
 ]
 validate_not_empty(hvr_non.dt, "HVR (unadjusted) brain data")
 
-# Extract residualized HC (HC_RES) for comparison
-hc_res.dt <- hc_hvr.lst[[NETWORK]]$CRS$ALL[
+# Extract residualized HC and LV (RES) for comparison
+hc_lv_res.dt <- hc_hvr.lst[[NETWORK]]$CRS$ALL[
   ADJ == "RES" & SIDE == "LR" & SUBFIELD == "total",
-  .(EID, HC_RES = HC)
+  .(EID, HC = HC, LV = LV)
 ]
-validate_not_empty(hc_res.dt, "Residualized HC data")
+validate_not_empty(hc_lv_res.dt, "Residualized HC/LV data")
 
-# Merge HVR and HC_RES
-brain_res.dt <- merge(hvr_non.dt, hc_res.dt, by = "EID")
-setnames(brain_res.dt, "HC_RES", "HC")  # Rename to HC for compatibility with rest of script
+# Merge HVR with residualized HC and LV
+brain_res.dt <- merge(hvr_non.dt, hc_lv_res.dt, by = "EID")
 validate_columns(brain_res.dt, c("EID", "SEX", "AGE", "HC", "HVR", "LV"), "Brain data")
 
 # Extract cognitive scores
