@@ -3,7 +3,35 @@ title: "Supporting Information"
 subtitle: "Hippocampal-to-Ventricle Ratio as a Head-Size-Independent Biomarker: Sex Differences and Cognitive Associations in 27,680 UK Biobank Participants"
 author:
   - name: Sofia Fernandez-Lozano
+    affiliations:
+      - ref: bic
+      - ref: ipn
   - name: D. Louis Collins
+    affiliations:
+      - ref: bic
+      - ref: ipn
+      - ref: bbme
+    email: louis.collins@mcgill.ca
+    corresponding: true
+affiliations:
+  - id: bic
+    name: McConnell Brain Imaging Centre
+    department: Montreal Neurological Institute
+    city: Montreal
+    state: Quebec
+    country: Canada
+  - id: ipn
+    name: McGill University
+    department: Department of Neurology and Neurosurgery
+    city: Montreal
+    state: Quebec
+    country: Canada
+  - id: bbme
+    name: McGill University
+    department: Department of Biomedical Engineering
+    city: Montreal
+    state: Quebec
+    country: Canada
 format:
   html:
     toc: true
@@ -296,7 +324,7 @@ format_sem_paths_by_sex_gt(sem_params)
 
 ```{r}
 #| label: supp-tbl-sem-fit
-#| tbl-cap: "Fit indices for structural equation models. Pooled models include sex as covariate; sex-stratified models estimate parameters separately. Good fit: CFI/TLI > 0.95, RMSEA < 0.06, SRMR < 0.08."
+#| tbl-cap: "Fit indices for structural equation models. Pooled models include sex as covariate; sex-stratified models estimate parameters separately. The HC (unadjusted) model uses a linear age term only; quadratic age was excluded due to multicollinearity between HC, ICV, and age². Good fit: CFI/TLI > 0.95, RMSEA < 0.06, SRMR < 0.08."
 if (!is.null(sem_fit_dt)) {
   format_sem_fit_gt(sem_fit_dt)
 }
@@ -383,6 +411,7 @@ if (!is.null(gamlss_calib)) {
 #| fig-cap: "Sex differences in residualized brain volumes by hemisphere. Faded error bars indicate non-significant effects. Right panel shows the right minus left difference with 95% confidence interval, colored by overall sex advantage direction (red = female advantage, blue = male advantage; faded = non-significant difference)."
 #| fig-width: 7
 #| fig-height: 3.5
+#| dev: cairo_pdf
 fig_hemisphere_comparison(sex_diff)
 ```
 
@@ -393,5 +422,6 @@ fig_hemisphere_comparison(sex_diff)
 #| fig-cap: "Sensitivity analysis comparing primary (strict exclusions) vs. expanded sample. Faded points indicate non-significant effects. Right panel shows the primary minus sensitivity difference with 95% confidence interval."
 #| fig-width: 7
 #| fig-height: 4.7
+#| dev: cairo_pdf
 fig_sensitivity_comparison(sex_diff)
 ```
