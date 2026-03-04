@@ -238,7 +238,7 @@ Participants were excluded if they had any of the following ICD-10 diagnoses rec
 \end{tikzpicture}
 ```
 
-PRISMA-style flow diagram showing participant selection. Dashed boxes indicate analytic subsamples derived from the primary sample.
+**Participant selection flow.** Dashed boxes indicate analytic subsamples derived from the primary sample.
 :::
 
 ### Quality Control
@@ -429,7 +429,7 @@ The primary sample comprised `r format(n_primary, big.mark=",")` participants (`
 
 ```{r}
 #| label: tbl-demographics
-#| tbl-cap: "Participant characteristics by sex and sample. Values are M (SD). d = Cohen's d (Female − Male). England = English assessment centres (SEM analyses). Matched = age $\\pm 1$ yr, ICV $\\pm 25$ cc. Longitudinal = participants with repeat imaging."
+#| tbl-cap: "**Participant characteristics by sex and sample.** Values are M (SD). d = Cohen's d (Female − Male). England = English assessment centres (SEM analyses). Matched = age $\\pm 1$ yr, ICV $\\pm 25$ cc. Longitudinal = participants with repeat imaging."
 
 lng_demog <- if ("LNG" %in% names(demog_data)) demog_data$LNG else NULL
 format_demographics_gt(all_demog, eng_demog, mtch_demog, lng_demog)
@@ -441,7 +441,7 @@ Unadjusted HC showed strong positive correlation with ICV (r = `r round(hvr_icv[
 
 ```{r}
 #| label: tbl-hvr-validation
-#| tbl-cap: "Correlation of brain measures with intracranial volume (ICV). An ideal self-normalizing measure shows r(ICV) near zero."
+#| tbl-cap: "**Brain measure correlations with ICV.** An ideal self-normalizing measure shows r(ICV) near zero."
 
 format_hvr_validation_gt(hvr_icv)
 ```
@@ -464,8 +464,8 @@ HVR showed a consistent female advantage: d = `r round(hvr_non$ESTIMATE, 2)` [95
 
 ```{r}
 #| label: fig-effect-sizes
-#| fig-cap: "Sex differences (Cohen's d) in hippocampal volume, lateral ventricular volume, and hippocampal-to-ventricle ratio by head-size adjustment method. Circles = full sample; triangles = ICV-matched sample. Faded points indicate non-significant effects (95% confidence interval crosses zero). Right panel shows $\\Delta d$ = $d_{\\text{full}}$ $-$ $d_{\\text{matched}}$, representing the change in effect size after removing head-size confounding; values near zero indicate head-size-independent effects."
-#| fig-width: 7
+#| fig-cap: "**Sex differences by adjustment method.** Circles = full sample; triangles = ICV-matched sample. Faded points indicate non-significant effects (95% confidence interval crosses zero). Right panel shows $\\Delta d$ = $d_{\\text{full}}$ $-$ $d_{\\text{matched}}$, representing the change in effect size after removing head-size confounding; values near zero indicate head-size-independent effects."
+#| fig-width: 6.5
 #| fig-height: 5.6
 #| dev: cairo_pdf
 fig_effect_sizes_by_adjustment(sex_diff, include_matched = TRUE)
@@ -477,7 +477,7 @@ Matching on age and ICV (N = `r format(n_matched_pairs * 2, big.mark=",")`; `r f
 
 ```{r}
 #| label: tbl-matched
-#| tbl-cap: "Effect sizes in full vs. matched samples. Matching on age ($\\pm 1$ yr) and ICV ($\\pm 25$ cc) eliminates head-size confounding."
+#| tbl-cap: "**Full vs. matched sample effect sizes.** Matching on age ($\\pm 1$ yr) and ICV ($\\pm 25$ cc) eliminates head-size confounding."
 if ("COMPARISON" %in% names(sex_diff))
   format_matched_comparison_gt(sex_diff$COMPARISON, n_matched_pairs)
 ```
@@ -490,8 +490,8 @@ Age × sex interactions were significant for all three measures. HC showed males
 
 ```{r}
 #| label: fig-age-trajectory
-#| fig-cap: "Age trajectories of sex differences in hippocampal volume, lateral ventricular volume, and hippocampal-to-ventricle ratio across adjustment methods. Solid line = hippocampal-to-ventricle ratio; dashed lines = hippocampal/ventricular volume. White-filled points = non-significant (95% confidence interval crosses zero)."
-#| fig-width: 7
+#| fig-cap: "**Age trajectories of sex differences.** Solid line = hippocampal-to-ventricle ratio; dashed lines = hippocampal/ventricular volume. White-filled points = non-significant (95% confidence interval crosses zero)."
+#| fig-width: 6.5
 #| fig-height: 4.5
 fig_age_trajectory(sex_diff)
 ```
@@ -502,9 +502,9 @@ fig_age_trajectory(sex_diff)
 
 ```{r}
 #| label: fig-normative-centiles
-#| fig-cap: "Sex-specific normative centile curves for hippocampal-to-ventricle ratio (top), hippocampal volume (middle), and lateral ventricular volume (bottom). Left and right columns show female and male centiles separately; the centre column overlays both sexes for direct comparison. Hippocampal and ventricular volume models include intracranial volume as a covariate."
-#| fig-width: 8
-#| fig-height: 9
+#| fig-cap: "**Sex-specific normative centile curves.** Hippocampal-to-ventricle ratio (top), hippocampal volume (middle), and lateral ventricular volume (bottom). Left and right columns show female and male centiles separately; the centre column overlays both sexes for direct comparison. Hippocampal and ventricular volume models include intracranial volume as a covariate."
+#| fig-width: 6.5
+#| fig-height: 8
 fig_normative_centiles_panel(norm_tables)
 ```
 
@@ -536,7 +536,7 @@ For processing speed (Speed~s~), HC showed the strongest effect ($\beta$ = `r sa
 
 ```{r}
 #| label: tbl-sem-paths
-#| tbl-cap: "Structural paths from brain measures to cognitive factors (pooled models). Beta = standardized path coefficient; CI from 2000 bootstrap resamples. Memory-specific factor paths not shown due to factor collapse."
+#| tbl-cap: "**Pooled brain-cognition path coefficients.** Beta = standardized path coefficient; CI from 2000 bootstrap resamples. Memory-specific factor paths not shown due to factor collapse."
 
 format_pooled_sem_paths_gt(sem_params, hvr_g, hc_res_g, hc_g)
 ```
@@ -549,8 +549,8 @@ For general cognition (*g*), HC~RES~ → *g* was not significant in males (p = `
 
 ```{r}
 #| label: fig-sem-forest
-#| fig-cap: "Brain-cognition path coefficients by sex. Points represent standardized coefficients; lines show 95% bootstrap confidence intervals. White-filled points indicate non-significant effects."
-#| fig-width: 7
+#| fig-cap: "**Brain-cognition paths by sex.** Points represent standardized coefficients; lines show 95% bootstrap confidence intervals. White-filled points indicate non-significant effects."
+#| fig-width: 6.5
 #| fig-height: 4.4
 fig_sem_forest(sem_params)
 ```
