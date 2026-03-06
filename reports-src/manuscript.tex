@@ -233,7 +233,7 @@ University, Montreal, Quebec, Canada}
 \affil[3]{Department of Biomedical Engineering, McGill
 University, Montreal, Quebec, Canada}
 
-\date{2026-03-03}
+\date{2026-03-06}
 
 \begin{document}
 \maketitle
@@ -254,11 +254,11 @@ across analytical choices. In contrast, HVR showed a consistent female
 advantage (\(d = 0.52\)) that persisted in ICV-matched samples
 (\(d = 0.19\)), confirming this effect is not a head-size artifact.
 Males exhibited steeper cross-sectional age-related HVR decline
-(\(1.7\times\) female rate, \(p < 10^{-50}\)), consistent with
-earlier-onset male ventricular expansion. Structural equation modeling
-revealed that HVR predicted general cognitive ability comparably to
-hippocampal volume (\(\beta = 0.04\), overlapping CIs), and unlike
-residualized hippocampal volume, HVR maintained significant
+(\(1.7\times\) female rate, \(p < 10^{-50}\)), consistent with males
+showing ventricular expansion at younger ages. Structural equation
+modeling revealed that HVR predicted general cognitive ability
+comparably to hippocampal volume (\(\beta = 0.04\), overlapping CIs),
+and unlike residualized hippocampal volume, HVR maintained significant
 brain-cognition associations in both sexes. We provide sex-specific
 normative centile curves for clinical application. These findings
 indicate that apparent hippocampal sex differences largely reflect
@@ -584,9 +584,10 @@ head-size adjustment was applied.
 
 \subsubsection{Test Battery}\label{test-battery}
 
-Cognitive data were collected at the imaging visit using a
-touchscreen-based battery of 12 indicators spanning memory, processing
-speed, executive function, and reasoning domains (Table S1):
+Cognitive data were collected at the imaging visit using the UK Biobank
+touchscreen-based cognitive battery {[}Sudlow et al., 2015{]},
+comprising 12 indicators spanning memory, processing speed, executive
+function, and reasoning domains (Table S1):
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -696,10 +697,12 @@ for males, and their ratio quantified the relative rate of
 cross-sectional age-related differences. Separate models were fit for
 HC\textsubscript{RES} and LV\textsubscript{RES} (both residualized
 against ICV; Equation~\ref{eq-res}) and HVR (self-normalizing;
-Equation~\ref{eq-hvr}). While age trajectories may be non-linear (as
-captured by the GAMLSS normative models below), linear interaction
-models were used here to provide interpretable summary statistics for
-sex-differential aging rates.
+Equation~\ref{eq-hvr}). Scanner site was not included as a random effect
+given the low site ICCs (\textless{} 0.05; Analysis 6), indicating
+minimal site contribution to variance. While age trajectories may be
+non-linear (as captured by the GAMLSS normative models below), linear
+interaction models were used here to provide interpretable summary
+statistics for sex-differential aging rates.
 
 \subsubsection{Analysis 4: Normative
 Modeling}\label{analysis-4-normative-modeling}
@@ -811,10 +814,13 @@ where \(\eta_k \in \{g, \text{Memory}_s, \text{Speed}_s\}\) denotes
 latent cognitive factors and \(\zeta\) denotes residual terms. A
 quadratic age term was included in the HVR and HC\textsubscript{RES}
 models but not in the HC model, where the combination of raw hippocampal
-volume, ICV, and quadratic age produced multicollinearity. Age was
-centered within sex groups before squaring. All structural variables
-were z-standardized within sex groups to address scale differences.
-Covariates are summarized in Table S2.
+volume, ICV, and quadratic age produced multicollinearity. This
+difference in model specification means that brain-cognition path
+comparisons between HC and the other measures should be interpreted with
+this constraint in mind, as the HC model captures only linear age
+effects. Age was centered within sex groups before squaring. All
+structural variables were z-standardized within sex groups to address
+scale differences. Covariates are summarized in Table S2.
 
 The HC\textsubscript{RES} model serves as a benchmark representing the
 methodological standard for removing head-size confounding. Comparing
@@ -1200,14 +1206,15 @@ brain measure.
 
 GAMLSS model coefficients for the transfer models (excluding site random
 effects) are provided in Table S10 and Table S11. These transfer models
-can be applied to external datasets for computing individual centile
-scores.
+enable researchers to compute individual centile scores in external
+datasets where UK Biobank site identifiers are not applicable.
 
 \subsection{Brain-Cognition Associations (Analysis
 5)}\label{brain-cognition-associations-analysis-5}
 
-SEM analyses were restricted to the England subsample (N = 25,172) for
-comparability of the Index of Multiple Deprivation (IMDP) covariate.
+SEM analyses were restricted to the England subsample (N = 25,172) to
+ensure comparability of the Index of Multiple Deprivation (IMDP)
+covariate.
 
 \subsubsection{Measurement Invariance}\label{measurement-invariance-1}
 
@@ -1281,7 +1288,7 @@ For general cognition (\emph{g}), HC\textsubscript{RES} → \emph{g} was
 not significant in males (p = 0.227) while remaining significant in
 females. In contrast, HVR showed the opposite pattern: males exhibited
 stronger HVR-cognition associations (\(\beta\) = 0.045) than females
-(\(\beta\) = 0.036), though both were significant. For processing speed
+(\(\beta\) = 0.036), with both significant. For processing speed
 (Speed\textsubscript{s}), males showed significant HC and
 HC\textsubscript{RES} associations (\(\beta\) = 0.068 and 0.057,
 respectively) while females showed none, suggesting sex-differential
@@ -1310,20 +1317,18 @@ Table S16.
 
 \paragraph{Non-Linear Age Effects}\label{non-linear-age-effects}
 
-Quadratic age terms were included in HVR and HC\textsubscript{RES}
-models to capture non-linear cross-sectional age patterns. Raw
-hippocampal volume (HC) models were fit without the age² term because
-the combination of HC, ICV, and age² produced multicollinearity
-(information matrix not invertible); fit indices for the HC model (Table
-S14) therefore reflect this linear-age specification. Both brain
-measures and cognitive factors showed significant negative quadratic age
-effects (all p \textless{} .001; Table S16), indicating steeper
-cross-sectional differences at older ages. For brain measures, HVR
-showed \(\beta\) = -0.134 and HC\textsubscript{RES} showed \(\beta\) =
--0.075. For cognitive factors, \emph{g} showed \(\beta\) = -0.078 in the
-HVR model and \(\beta\) = -0.081 in the HC\textsubscript{RES} model,
-while Speed\textsubscript{s} showed \(\beta\) = -0.046 and \(\beta\) =
--0.046 respectively. The stronger quadratic effect for HVR compared to
+As described in Methods, quadratic age terms were included in HVR and
+HC\textsubscript{RES} models but not in the HC model due to
+multicollinearity; fit indices for the HC model (Table S14) therefore
+reflect this linear-age specification. Both brain measures and cognitive
+factors showed significant negative quadratic age effects (all p
+\textless{} .001; Table S16), indicating steeper cross-sectional
+differences at older ages. For brain measures, HVR showed \(\beta\) =
+-0.134 and HC\textsubscript{RES} showed \(\beta\) = -0.075. For
+cognitive factors, \emph{g} showed \(\beta\) = -0.078 in the HVR model
+and \(\beta\) = -0.081 in the HC\textsubscript{RES} model, while
+Speed\textsubscript{s} showed \(\beta\) = -0.046 and \(\beta\) = -0.046
+respectively. The stronger quadratic effect for HVR compared to
 HC\textsubscript{RES} suggests that HVR captures both hippocampal
 atrophy and ventricular expansion, both of which accelerate with age.
 
@@ -1354,8 +1359,8 @@ non-significant (d = −0.01 {[}−0.03, 0.02{]}).
 (F-Codes)}\label{inclusion-of-psychiatric-diagnoses-f-codes}
 
 Effect sizes remained stable when including participants with
-psychiatric diagnoses (Table S19, Figure S4), demonstrating robustness
-of findings to exclusion criteria.
+psychiatric diagnoses (N = 30,032; Table S19, Figure S4), demonstrating
+robustness of findings to exclusion criteria.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -1365,513 +1370,213 @@ of findings to exclusion criteria.
 
 In 27,680 UK Biobank participants, we evaluated HVR as a
 self-normalizing biomarker that bypasses conventional head-size
-correction. HVR showed weak negative correlation with ICV (r = -0.252),
-representing a 58\% reduction in ICV dependence compared to unadjusted
-HC; the residual negative correlation may reflect ventricular scaling
-rather than incomplete normalization. Hippocampal sex differences ranged
-from d = -0.89 (males larger) to d = 0.58 (females larger) depending
-solely on the adjustment method, whereas HVR consistently showed females
-higher than males (d = 0.52), an effect replicated in ICV-matched
+correction. HVR showed weak correlation with ICV, substantially reducing
+head-size dependence compared to unadjusted HC. Hippocampal sex
+differences ranged from d = -0.89 (males larger) to d = 0.58 (females
+larger) depending solely on the adjustment method, whereas HVR
+consistently showed a female advantage replicated in ICV-matched
 samples. HVR predicted general cognitive ability comparably to
-hippocampal volume (overlapping confidence intervals). Males showed
-steeper age-related HVR differences (1.66× female slope), with the
-female advantage widening at older ages (d = 0.23 at 45-55y to d = 0.66
-at 75+y).
+hippocampal volume, and males showed steeper age-related HVR differences
+(1.66× female slope), with the female advantage widening at older ages
+(d = 0.23 at 45-55y to d = 0.66 at 75+y).
 
 \subsection{HVR Self-Normalizing Properties (Analysis
 1)}\label{hvr-self-normalizing-properties-analysis-1-1}
 
 HVR achieves head-size independence through its mathematical
 construction: both numerator (HC) and denominator (HC + LV) scale with
-head size, so their ratio largely normalizes out this confound
-{[}Schoemaker et al., 2019{]}. In two healthy aging cohorts (N = 50 and
-N = 88), Schoemaker et al. {[}2019{]} demonstrated that HVR yielded
-stronger correlations with both age and memory performance than absolute
+head size, so their ratio largely normalizes out this confound.
+Schoemaker et al. {[}2019{]} demonstrated that HVR yielded stronger
+correlations with both age and memory performance than absolute
 hippocampal volume, supporting its utility as an integrity index. In the
 present sample, HVR achieved a 58\% reduction in ICV correlation
-compared to unadjusted HC (r = -0.252 vs.~r = 0.605). This
-self-normalizing approach complements other linear ratio measures used
-in clinical neuroimaging, such as the Evans' index for ventricular
-assessment {[}Currà et al., 2019{]}, and avoids the well-documented
-pitfalls of proportional ICV correction, which produces biologically
-implausible results when brain structures scale non-isometrically with
-head size {[}Pintzka et al., 2015; Sanchis-Segura et al., 2020; Wang et
-al., 2024{]}.
-
-The residual negative correlation between HVR and ICV (r = -0.252)
-likely reflects ventricular scaling rather than incomplete
-normalization. Lateral ventricular volume shows positive correlation
-with ICV (r = 0.462), and the relative size of the ventricles increases
-with increasing ICV {[}Pintzka et al., 2015{]}. This disproportionate
-scaling is confirmed by allometric analyses showing that hippocampal
-volume scales hypoallometrically with ICV (\(\alpha\) = 0.60), while the
-lateral ventricles scale near-isometrically (\(\alpha\) \(\approx\) 1.0;
-Jong et al. {[}2017{]}). Since HVR = HC/(HC+LV), and larger heads have
-disproportionately larger ventricles relative to hippocampal volume,
-larger ICV naturally produces lower HVR. The negative HVR-ICV
-correlation thus mirrors the positive LV-ICV relationship, capturing the
-non-isometric scaling of ventricular volume with head size. Unlike
-residualization, which removes \emph{all} ICV association by
-construction (r \(\approx\) 0), HVR preserves morphological variation
-related to how ventricular space scales with overall brain size. This
-may be advantageous for applications where the distinction between
-``large head with typical ventricles'' and ``large head with enlarged
-ventricles'' carries clinical significance.
+compared to unadjusted HC (r = -0.252 vs.~r = 0.605). This approach
+complements other ratio measures in clinical neuroimaging, such as the
+Evans' index {[}Currà et al., 2019{]}, and avoids the pitfalls of
+proportional ICV correction when brain structures scale
+non-isometrically with head size {[}Pintzka et al., 2015; Wang et al.,
+2024{]}. The residual negative HVR-ICV correlation likely reflects
+ventricular scaling: the hippocampus scales hypoallometrically with ICV
+while lateral ventricles scale near-isometrically {[}Jong et al.,
+2017{]}, so larger heads have disproportionately larger ventricles
+relative to hippocampal volume, naturally producing lower HVR. Unlike
+residualization, which removes all ICV association by construction, HVR
+preserves morphological variation related to how ventricular space
+scales with brain size.
 
 \subsection{Sex Differences in Brain Measures (Analysis
 2)}\label{sex-differences-in-brain-measures-analysis-2}
 
-\subsubsection{Hippocampal Sex Differences as Methodological
-Artifacts}\label{hippocampal-sex-differences-as-methodological-artifacts}
-
-The reversal of HC sex differences across adjustment methods indicates
-that these differences reflect head-size confounding rather than
-underlying biology. Effect sizes ranged from d = -0.89 (males larger,
-unadjusted) to d = 0.58 (females larger, proportions-adjusted)---a swing
-of 1.47 standard deviations depending solely on analytical choices. This
-reversal is well-replicated: Pintzka et al. {[}2015{]} found unadjusted
-hippocampal volumes significantly larger in males that reversed to
-females larger under proportional correction; Voevodskaya et al.
-{[}2014{]} observed the identical pattern in the PIVUS cohort (N = 406);
-and Fjell et al. {[}2009{]}, in a multisample study of 1,143 healthy
-participants, reported that unadjusted hippocampal volumes favoring
-males (z = −0.72) reversed to favor females when corrected for total
-brain volume (z = 0.13). In all cases, residualization eliminated the
-sex difference entirely.
-
-This over-correction reflects allometric scaling: the medial temporal
-lobe (including hippocampus) scales at \(\alpha\) = 0.60 relative to ICV
-{[}95\% CI: 0.56-0.64{]}, not isometrically {[}Jong et al., 2017{]}, and
-83\% of brain measures in the UK Biobank show similar non-isometric
-scaling {[}Williams et al., 2021{]}. Because the regression of
-hippocampal volume on ICV does not pass through the origin, dividing by
-ICV systematically overestimates relative volume in smaller heads
-{[}Pintzka et al., 2015; Voevodskaya et al., 2014{]}. The near-zero
-effect with residualization (d = 0.022, 95\% CI crossing zero) suggests
-that after appropriate statistical control, hippocampal volume does not
-meaningfully differ between sexes.
-
-These results converge with other large-scale studies. Ritchie et al.
-{[}2018{]} reported that unadjusted hippocampal sex differences in 5,216
-UK Biobank participants (d \(\approx\) −0.55) dropped to near-zero
-(\(|\)d\(|\) \textless{} 0.03) after regression-based adjustment for
-total brain volume. ICV-matched UK Biobank analyses similarly show sex
-effects approaching zero {[}Brzezinski-Rittner et al., 2025{]},
-brain-based sex classification drops from \textgreater80\% to
-\textasciitilde60\% after head-size adjustment {[}Sanchis-Segura et al.,
-2020{]}, and individual brains are better characterized as mosaics of
-features than categorically sexed {[}Joel et al., 2018{]}. While total
-hippocampal volume sex differences appear methodologically determined,
-sex-specific developmental trajectories in hippocampal subregions {[}Mu
-et al., 2020{]} and structural connectivity patterns {[}Ingalhalikar et
-al., 2014{]} suggest that meaningful differences may exist at finer
-spatial scales.
-
-\subsubsection{Lateral Ventricle Sex
-Differences}\label{lateral-ventricle-sex-differences}
-
-Unlike hippocampal volume, lateral ventricles showed males
-\textgreater{} females across all adjustment methods
-(Figure~\ref{fig-effect-sizes}). This directional consistency is
-well-established: unadjusted ventricular volumes are larger in males
-across multiple cohorts {[}Fjell et al., 2009; Pintzka et al., 2015;
-Voevodskaya et al., 2014{]}, and---critically---the male advantage
-persists or even increases after head-size correction. Fjell et al.
-{[}2009{]} reported that the ventricular sex difference (z = −0.32
-unadjusted) actually increased after total brain volume correction (z =
-−0.56), and males show 28--128\% greater risk of abnormal ventricular
-enlargement indices across age {[}Currà et al., 2019{]}. Under
-proportional adjustment, ventricles remain larger in males
-because---unlike the hippocampus---the LV-ICV regression has a negative
-y-intercept, meaning proportional correction under-corrects rather than
-over-corrects ventricular volumes {[}Pintzka et al., 2015; Voevodskaya
-et al., 2014{]}. This mathematical property explains why proportional
-adjustment reverses the hippocampal sex difference (positive y-intercept
-→ over-correction) while preserving the ventricular sex difference
-(negative y-intercept → under-correction), with Pintzka et al.
-{[}2015{]} demonstrating that the sign of the y-intercept predicted the
-direction of proportional sex differences with 100\% accuracy.
-
-Smaller studies have reported that residualization eliminates
-ventricular sex differences {[}Fjell et al., 2009; Voevodskaya et al.,
-2014{]}, though Pintzka et al. {[}2015{]} found that inferior lateral
-ventricle differences persisted even after residualization. In our
-substantially larger sample (N = 27,680), residualized LV sex
-differences remained significant (d = -0.16), suggesting that the null
-findings in prior studies may reflect insufficient power. The consistent
-male ventricular advantage across adjustment methods contrasts sharply
-with the reversals observed for HC, indicating that this sex difference
-is not a head-size artifact. Since HVR = HC/(HC+LV), the female HVR
-advantage arises from two converging factors: relatively larger
-head-size-adjusted hippocampi and relatively smaller ventricles. This
-dual sensitivity makes HVR particularly informative for sex differences
-in cross-sectional brain aging patterns.
-
-\subsubsection{Matched-Pair Comparison and
-HVR}\label{matched-pair-comparison-and-hvr}
+The reversal of HC sex differences across adjustment methods---from d =
+-0.89 (males larger, unadjusted) to d = 0.58 (females larger,
+proportions-adjusted), a swing of 1.47 SD---indicates these differences
+reflect head-size confounding rather than biology. This over-correction
+arises because the hippocampus scales hypoallometrically with ICV
+(\(\alpha\) = 0.60; Jong et al. {[}2017{]}), so dividing by ICV
+systematically overestimates relative volume in smaller heads {[}Pintzka
+et al., 2015; Voevodskaya et al., 2014{]}. The pattern replicates across
+multiple cohorts {[}Fjell et al., 2009; Pintzka et al., 2015;
+Voevodskaya et al., 2014{]}, and Ritchie et al. {[}2018{]} reported that
+unadjusted hippocampal sex differences in the UK Biobank dropped to
+near-zero after regression-based adjustment. The near-zero residualized
+effect (d = 0.022) suggests no meaningful sex difference after
+appropriate statistical control. While total hippocampal volume sex
+differences appear methodologically determined, sex-specific
+trajectories in hippocampal subregions {[}Mu et al., 2020{]} and
+structural connectivity patterns {[}Ingalhalikar et al., 2014{]} suggest
+meaningful differences may exist at finer spatial scales. Lateral
+ventricles, by contrast, showed a consistent male advantage across all
+methods (Figure~\ref{fig-effect-sizes}). Because the LV-ICV regression
+has a negative y-intercept, proportional correction under-corrects
+rather than over-corrects ventricular volumes---the opposite of what
+occurs for HC {[}Pintzka et al., 2015{]}. The male advantage persists or
+increases after correction {[}Fjell et al., 2009{]}, and in our large
+sample, residualized LV differences remained significant (d = -0.16),
+suggesting that null findings in smaller studies may reflect
+insufficient power. The consistent male ventricular advantage contrasts
+sharply with the method-dependent HC reversals, indicating this sex
+difference is not a head-size artifact.
 
 The matched-pair analysis (Table~\ref{tbl-matched}) provides the
-strongest evidence for HVR's validity as a head-size-independent
-measure. Matching on age and ICV has been advocated as a ``gold standard
-benchmark'' for disentangling sex from brain size {[}Brzezinski-Rittner
-et al., 2025{]}, as it eliminates head-size variation without the
-mathematical assumptions of statistical correction {[}Nordenskjöld et
-al., 2015; Voevodskaya et al., 2014{]}. When females and males were
-matched on age (\(\pm 1\) year) and ICV (\(\pm 25\) cc), the HC sex
-difference collapsed to d = -0.038 (effectively zero), while HVR
-retained a significant female advantage (d = 0.183). This hippocampal
-convergence replicates prior matched-sample findings: Pintzka et al.
-{[}2015{]} found non-significant HC differences in 152 ICV-matched
-pairs, and Voevodskaya et al. {[}2014{]} reported that no hippocampal
-differences remained in their ICV-matched subsample. Conversely, males
-retained significantly larger ventricles (d = -0.2) even after ICV
-matching---consistent with both Pintzka et al. {[}2015{]} and
-Voevodskaya et al. {[}2014{]}, who found that ventricular sex
-differences (third ventricle in both studies) survived strict ICV
-matching when hippocampal differences did not. The convergence of
-residualized HC and HVR effect sizes in matched samples provides
-converging evidence that both approaches successfully remove head-size
-confounding, though through different mechanisms: residualization
-statistically removes ICV variance, while HVR leverages the shared
-scaling of hippocampal and ventricular volumes.
-
-The consistent female HVR advantage across full (d = 0.52) and matched
-(d = 0.18) samples supports a sex difference in the
-hippocampus-to-ventricle balance. The 65\% reduction in effect size from
-full to matched samples indicates that most of the HVR sex difference is
-attributable to head-size differences, but a significant residual effect
-persists. This residual could reflect greater relative hippocampal
-volume in females after accounting for ventricular size, smaller
-relative ventricular volume in females (as confirmed by the
-matched-sample analysis showing LV d = -0.2 favoring males even after
-ICV matching), or sex differences in the relationship between
-hippocampal size and ventricular size across ages.
+strongest test of head-size independence. Matching on age and ICV
+eliminates head-size variation without the mathematical assumptions of
+statistical correction {[}Brzezinski-Rittner et al., 2025{]}. When
+matched, the HC sex difference collapsed to d = -0.038 (effectively
+zero), replicating prior matched-sample findings {[}Pintzka et al.,
+2015; Voevodskaya et al., 2014{]}, while LV retained a male advantage (d
+= -0.2) and HVR retained a significant female advantage (d = 0.183). The
+HVR effect decreased 65\% from full to matched samples, indicating that
+most of the sex difference is attributable to head-size variation, but a
+significant residual persists. Since HVR = HC/(HC+LV), the female
+advantage arises from two converging factors: comparable hippocampal
+volumes after size matching and relatively smaller female ventricles.
+This convergence---HC collapsing while LV and HVR effects survive ICV
+matching---confirms that the female HVR advantage reflects genuine sex
+differences in the hippocampus-to-ventricle balance, not head-size
+confounding.
 
 \subsection{Age × Sex Interactions (Analysis
 3)}\label{age-sex-interactions-analysis-3}
 
-The steeper male HVR differences with age suggests sex differences in
-age-related patterns of hippocampal and ventricular volumes. The age ×
-sex interaction analyses revealed a consistent pattern across all
-measures: males showed 1.66× steeper HVR cross-sectional differences (p
-= 2e-61), 1.63× steeper HC differences (p = 3.1e-10), and 1.87× steeper
-LV differences (p = 4.6e-80). Steeper male subcortical volume decline is
-consistent with Ritchie et al. {[}2018{]}, who reported significant age
-× sex interactions for hippocampal volume in 5,216 UK Biobank
-participants. For ventricular volumes, Fjell et al. {[}2009{]} found
-that global CSF expansion showed a steeper age correlation in males (r =
-0.50) than females (r = 0.36) after ICV correction.
+Males showed steeper cross-sectional differences across all measures:
+1.66× for HVR (p = 2e-61), 1.63× for HC, and 1.87× for LV, consistent
+with steeper male subcortical decline reported by Ritchie et al.
+{[}2018{]} and steeper male CSF expansion by Fjell et al. {[}2009{]}.
+The greater sex disparity in ventricular differences (1.87×) compared to
+hippocampal differences (1.63×) explains HVR's intermediate ratio: HVR
+captures both processes, and steeper male ventricular expansion
+amplifies hippocampal differences. Males also show earlier ventricular
+abnormality signatures, with ventricular enlargement accelerating in the
+seventies {[}Currà et al., 2019{]}, consistent with the steeper male HVR
+differences observed here. However, Brzezinski-Rittner et al. {[}2025{]}
+found that hippocampal age × sex interactions disappeared in a
+TIV-matched subsample, suggesting that some sex-differential aging
+trajectories may be byproducts of initial brain size differences.
 
-The greater sex disparity in ventricular age-related differences (1.87×)
-compared to hippocampal differences (1.63×) explains why HVR shows
-intermediate ratios (1.66×): HVR captures both processes, and the
-steeper male ventricular differences amplify the already steeper
-hippocampal differences. However, these interactions should be
-interpreted cautiously: Brzezinski-Rittner et al. {[}2025{]} found that
-hippocampal age × sex interactions present in the full UK Biobank sample
-disappeared entirely in a TIV-matched subsample (N = 11,294), suggesting
-that some apparent sex-differential aging trajectories may be
-mathematical byproducts of initial brain size differences. Whether HVR
-age × sex interactions similarly reflect head-size confounding or
-genuine biological sex differences remains to be tested in matched
-longitudinal designs.
-
-Several mechanisms may explain these sex-differential patterns.
-Cumulative estrogen exposure is protective: women with longer
-reproductive spans show younger brain ages (0.32 years per year of
-earlier menarche; Luders et al. {[}2025{]}), and earlier HRT initiation
-near menopause is associated with less evident brain aging in APOE ε4
-carriers {[}Lange et al., 2020{]}. Estrogen promotes hippocampal
-neurogenesis, synaptic plasticity, mitochondrial function, and
-neuroinflammation reduction {[}Diaz Brinton, 2008; Jett et al., 2022;
-Sundermann et al., 2016{]}, with the ``critical period hypothesis''
-proposing that continuous exposure is necessary for neuroprotection.
-Menopause status may also moderate sex differences in tau pathology
-burden, with amyloid-related atrophy more strongly affecting women---an
-association likely mediated by higher tau accumulation {[}Bachmann et
-al., 2023{]}.
-
-Males also show earlier ventricular abnormality signatures, with
-ventricular enlargement accelerating in the seventies and preferential
-frontal horn involvement {[}Currà et al., 2019{]}. This earlier male
-ventricular expansion is consistent with the 1.66× steeper male HVR
-decline observed here, suggesting that accelerated ventricular
-expansion---rather than differential hippocampal aging alone---drives
-the sex-differential HVR trajectory. The prognostic relevance of such
-trajectory differences is supported by evidence that steeper hippocampal
-volume loss during MCI predicts conversion to Alzheimer's dementia
-{[}Rajagopal et al., 2024{]}.
-
-However, the female advantage is not universal: female APOE ε4 carriers
-show 2.3× faster hippocampal volume loss than male carriers in aMCI
-{[}Park et al., 2025{]}, indicating that genetic risk can modulate or
-reverse typical sex-differential patterns. Other large studies have
+The prognostic relevance of trajectory differences is supported by
+evidence that steeper hippocampal volume loss predicts dementia
+conversion {[}Rajagopal et al., 2024{]}. Cumulative estrogen exposure
+may contribute to the female advantage, as longer reproductive spans are
+associated with younger brain ages {[}Luders et al., 2025{]} and
+estrogen promotes hippocampal neurogenesis and synaptic plasticity
+{[}Jett et al., 2022{]}. However, the female advantage is not universal:
+female APOE ε4 carriers show faster hippocampal loss than male carriers
+in aMCI {[}Park et al., 2025{]}, indicating that genetic risk can
+modulate typical sex-differential patterns. Other large studies have
 found no significant sex differences in hippocampal age slopes {[}Fjell
-et al., 2009; Pintzka et al., 2015{]}, underscoring that the presence
-and magnitude of age × sex interactions depends on sample size, age
-range, and head-size adjustment method. These cross-sectional patterns
-cannot establish true individual trajectories and may be confounded by
-cohort effects or differential survival. Longitudinal validation is
-essential.
+et al., 2009; Pintzka et al., 2015{]}, underscoring that the presence of
+age × sex interactions depends on sample size, age range, and head-size
+adjustment method. These cross-sectional patterns cannot establish true
+individual trajectories and may be confounded by cohort effects or
+differential survival; longitudinal validation is essential.
 
 \subsection{Normative Modeling (Analysis
 4)}\label{normative-modeling-analysis-4-1}
 
 The sex-specific centile curves (Figure~\ref{fig-normative-centiles})
-extend the growing literature on normative brain charts {[}Bethlehem et
-al., 2022; Dima et al., 2022; Ge et al., 2024{]} by providing the first
-sex-specific reference values for HVR alongside its component measures.
-While prior work has generated sex-stratified centiles for hippocampal
-volume {[}Dima et al., 2022; Ge et al., 2024{]} and global brain tissue
-volumes {[}Bethlehem et al., 2022{]}, none have modeled the
-hippocampus-to-ventricle ratio. Our use of GAMLSS aligns with the
-methodological framework adopted by Bethlehem et al. {[}2022{]} and Dima
-et al. {[}2022{]}, which allows flexible modeling of both non-linear age
-trends in the median and age-related changes in between-subject
-variability---a critical advantage over conventional models given the
-increasing variance observed at older ages, particularly for ventricular
-volumes.
-
-Sex-specific norms are essential to avoid misclassification: a male at
-the 50th percentile for his sex would fall below the 25th percentile
-using female norms, potentially leading to false-positive concerns. This
-is consistent with recommendations from Williams et al. {[}2021{]}, who
-found that males exhibit greater variance in volumetric measures and
-concluded that ``investigations of neuroanatomical deviance should
-always take sex into account,'' and with Ge et al. {[}2024{]}, who
-developed sex-specific models for 150 brain measures because sex
-accounts for a considerable proportion of morphological variance. For
-HC, after residualization, sex differences in hippocampal centiles are
-minimal, consistent with the near-zero Cohen's d for residualized
-volumes, supporting the use of combined norms when proper ICV adjustment
-is applied. For LV, both sexes show larger ventricular volumes at older
-ages, but cross-sectional patterns and variability differ, with males
-showing greater ventricular variability at older ages---potentially
-reflecting greater heterogeneity in aging-related patterns.
-
-The GAMLSS calibration plots (Figure S2) confirm that these centile
-estimates are well-calibrated, with observed proportions closely
-matching expected proportions in held-out test data. Individualized
-centile scores have demonstrated clinical utility in detecting
-case-control differences across neurological disorders and in
-quantitatively predicting diagnostic transition from MCI to Alzheimer's
-disease {[}Bethlehem et al., 2022; Dima et al., 2022{]}. Values below
-the 5th centile may warrant clinical follow-up, and longitudinal decline
-of more than one major centile band (e.g., 50th to 25th) may indicate
-accelerating age-related change.
+extend normative brain charts {[}Bethlehem et al., 2022; Dima et al.,
+2022; Ge et al., 2024{]} by providing the first sex-specific reference
+values for HVR. Our GAMLSS approach aligns with Bethlehem et al.
+{[}2022{]} and Dima et al. {[}2022{]}, flexibly modeling both non-linear
+age trends and age-related variability changes. Sex-specific norms are
+essential to avoid misclassification, consistent with recommendations
+from Williams et al. {[}2021{]} and Ge et al. {[}2024{]}, who found that
+sex accounts for a considerable proportion of morphological variance.
+For residualized HC, sex differences in centiles are minimal, consistent
+with the near-zero Cohen's d for residualized volumes, supporting
+combined norms when proper ICV adjustment is applied. For LV, males show
+greater ventricular variability at older ages, potentially reflecting
+greater heterogeneity in aging-related patterns. Well-calibrated centile
+estimates (Figure S2) have demonstrated clinical utility in detecting
+case-control differences and predicting diagnostic transition from MCI
+to Alzheimer's disease {[}Bethlehem et al., 2022; Dima et al., 2022{]}.
 
 \subsection{Brain-Cognition Associations (Analysis
 5)}\label{brain-cognition-associations-analysis-5-1}
 
-\subsubsection{Measurement Invariance}\label{measurement-invariance-2}
+Strict measurement invariance for the cognitive bifactor model
+(\(\Delta\)CFI \(\leq\) 0.01 and \(\Delta\)RMSEA \(\leq\) 0.015 at each
+level; Table S12) confirmed that the same cognitive constructs
+(\emph{g}, Memory\textsubscript{s}, Speed\textsubscript{s}) exist in
+both sexes with equivalent loadings, intercepts, and residual variances
+{[}Chen, 2007; Putnick and Bornstein, 2016{]}, validating cross-sex
+comparison of brain-cognition paths. In pooled models, HVR predicted
+general cognition comparably to HC without requiring head-size
+adjustment (HVR → \emph{g} \(\beta\) = 0.043 vs.~HC → \emph{g} \(\beta\)
+= 0.04, overlapping CIs), with all effects small---consistent with the
+modest brain-cognition associations typically observed in large healthy
+samples {[}Ritchie et al., 2018; Wang et al., 2024{]}. The restricted
+cognitive range in healthy volunteer samples likely attenuates these
+associations {[}Bachmann et al., 2023{]}. Multigroup analyses revealed
+sex-differential patterns: HC\textsubscript{RES} predicted cognition in
+females but not males (\(\beta\) = 0.013, p = 0.227), consistent with
+stronger female hippocampal-cognition associations reported elsewhere
+{[}Jockwitz et al., 2024; Zheng et al., 2017{]}. Raw HC showed
+significant associations in both sexes but with a female advantage
+(\(\beta\) = 0.048 vs.~0.027). HVR showed the opposite pattern, with
+males exhibiting stronger associations (\(\beta\) = 0.045 vs.~0.036),
+though both sexes reached significance.
 
-The successful establishment of strict measurement invariance for the
-cognitive bifactor model (Table S12) is a prerequisite for the
-brain-cognition analyses. Without measurement invariance, apparent sex
-differences in brain-cognition paths could reflect measurement artifacts
-rather than true structural differences {[}Chen, 2007; Putnick and
-Bornstein, 2016{]}. The \(\Delta\)CFI \(\leq\) 0.01 and \(\Delta\)RMSEA
-\(\leq\) 0.015 at each invariance level {[}Chen, 2007; Cheung and
-Rensvold, 2002{]} confirms that the same cognitive constructs (\emph{g},
-Memory\textsubscript{s}, Speed\textsubscript{s}) exist in both sexes,
-that factor loadings are equivalent (meaning the tests measure
-constructs with equal precision), that intercepts are equivalent
-(allowing valid comparison of factor means), and that residual variances
-are equivalent (confirming comparable reliability). This finding
-validates the use of the same factor structure for both sexes in the SEM
-analyses and supports the comparability of path coefficients across
-groups.
-
-\subsubsection{Pooled and Sex-Stratified
-Paths}\label{pooled-and-sex-stratified-paths}
-
-HVR predicted cognition as well as HC. Pooled model estimates with
-bootstrap CIs showed: HC → \emph{g} \(\beta\) = 0.04 {[}0.023, 0.056{]};
-HVR → \emph{g} \(\beta\) = 0.043 {[}0.027, 0.058{]};
-HC\textsubscript{RES} → \emph{g} \(\beta\) = 0.028 {[}0.014, 0.042{]}.
-HVR showed a numerically larger (though with overlapping CIs)
-association with general cognition despite requiring no head-size
-adjustment. These effect sizes are consistent with the small structural
-brain-cognition associations typically observed in large healthy
-samples: Ritchie et al. {[}2018{]} reported all brain-cognitive
-correlations below r = 0.20 in 5,216 UK Biobank participants, Wang et
-al. {[}2024{]} found adjusted hippocampal → fluid intelligence
-coefficients of \(\beta\) = 0.055 in 41,964 participants, and
-hippocampal volume-cognition associations in healthy aging cohorts are
-often non-significant at smaller sample sizes {[}Bachmann et al., 2023;
-Schoemaker et al., 2019{]}. The restricted cognitive range in healthy
-volunteer samples likely attenuates these associations {[}Bachmann et
-al., 2023{]}.
-
-Multigroup analyses indicated sex differences in brain-cognition
-associations. Residualized hippocampal volume (HC\textsubscript{RES})
-was not significantly associated with cognition in males (\(\beta\) =
-0.013, 95\% CI {[}-0.008, 0.035{]}, p = 0.227), while remaining
-significant in females (\(\beta\) = 0.036, p \textless{} .001). This
-female-selective hippocampal-cognition association is consistent with
-Zheng et al. {[}2017{]}, who found that hippocampal gray matter volume
-predicted associative memory in older women (r = 0.62) but not men, and
-with Jockwitz et al. {[}2024{]}, who found that brain structure
-predicted cognitive profiles more strongly in females than males. Raw HC
-showed significant associations in both sexes but with a female
-advantage (\(\beta\) = 0.048 vs.~0.027). However, Ritchie et al.
-{[}2018{]} found no significant sex differences in brain-cognition
-correlations for verbal-numerical reasoning and reaction time,
-suggesting that sex-differential associations may be domain-specific.
-
-HVR showed the opposite pattern: males exhibited \emph{stronger}
-HVR-cognition associations (\(\beta\) = 0.045) than females (\(\beta\) =
-0.036), though both reached significance. HVR captures the
-hippocampus-to-ventricle balance, and the male-stronger association
-suggests that this ratio may be more cognitively relevant in males,
-perhaps because males show steeper cross-sectional HVR differences
-(1.66× female rate) making individual differences more consequential.
-
-For processing speed (Speed\textsubscript{s}), males showed strong HC
-and HC\textsubscript{RES} associations (\(\beta\) = 0.068 and 0.057)
-while females showed none---suggesting sex-differential neural
-substrates for processing speed.
-
-\subsubsection{Implications for the HVR
-Thesis}\label{implications-for-the-hvr-thesis}
-
-These sex-differential patterns support HVR in several ways. Unlike
-HC\textsubscript{RES}, which loses predictive validity in males for
-general cognition, HVR maintains significant associations in both sexes.
-Schoemaker et al. {[}2019{]} similarly found that HVR explained more
-variance in memory scores than absolute hippocampal volume (40\%
-vs.~32\% in their first cohort), with HC failing to reach significance
-as a predictor in models where HVR was significant. Fernandez-Lozano et
-al. {[}2025{]} extended this finding to clinical populations, showing
-that HVR associations with cognition were significant across healthy,
-MCI, and AD groups and were comparable in magnitude to hippocampal
-volume. Given that males show steeper cross-sectional HVR differences
-with age and stronger HVR-cognition associations, HVR may be useful for
-tracking brain aging in males. The differential patterns between
-HC\textsubscript{RES} and HVR across sexes indicate HVR is not simply
-``residualized HC by another means'' but captures distinct information
-related to the hippocampus-ventricle coupling. The association with
-general cognition (\emph{g}) rather than domain-specific factors may
-reflect that lateral ventricular volume acts as a marker for widespread
-tissue loss beyond the medial temporal lobe: Bachmann et al. {[}2023{]}
-found that ventricular volume was exclusively associated with executive
-function rather than episodic memory, suggesting that HVR's ventricular
-component captures cognitive-relevant variance beyond hippocampal
-integrity.
-
-\subsubsection{Model Stability and Non-Linear Age
-Effects}\label{model-stability-and-non-linear-age-effects}
-
-SEM analyses indicated that raw hippocampal volume (HC) required a
-linear-age-only specification because the combination of HC, ICV, and
-age² produced multicollinearity (information matrix not invertible). In
-contrast, both HVR and residualized HC (HC\textsubscript{RES})
-successfully incorporated quadratic age terms, which were significant
-predictors of both brain structure and cognition (all p \textless{}
-.001). Quadratic age effects were: HVR \textasciitilde{} age² \(\beta\)
-= -0.134, indicating steeper HVR differences at older ages;
-HC\textsubscript{RES} \textasciitilde{} age² \(\beta\) = -0.075; g
-\textasciitilde{} age² \(\beta\) = -0.078; and Speed\textsubscript{s}
-\textasciitilde{} age² \(\beta\) = -0.046, with processing speed showing
-the expected age vulnerability.
-
-The stronger quadratic effect for HVR (\(\beta\) = -0.134) compared to
-HC\textsubscript{RES} (\(\beta\) = -0.075) reflects that HVR captures
-both hippocampal and ventricular age-related differences, which both
-show steeper cross-sectional patterns at older ages. HVR detects
-accelerating age-related patterns. Researchers using raw hippocampal
-volumes in complex multivariate models may encounter convergence issues
-or require simpler covariate structures, potentially missing non-linear
-relationships. Self-normalizing measures like HVR, or statistically
-residualized volumes, allow for non-linear modeling.
+These sex-differential patterns indicate that HVR is not simply
+``residualized HC by another means.'' Unlike HC\textsubscript{RES},
+which lost predictive validity in males, HVR maintained significant
+associations in both sexes---paralleling Schoemaker et al. {[}2019{]}
+and Fernandez-Lozano et al. {[}2025{]}, who found that HVR predicted
+cognition comparably or better than HC alone. The differential patterns
+between HC\textsubscript{RES} and HVR across sexes suggest HVR captures
+distinct information related to hippocampus-ventricle coupling. HVR also
+accommodated quadratic age specifications that raw HC could not (the HC
++ ICV + age² combination produced multicollinearity), allowing detection
+of accelerating age-related patterns (\(\beta\)\textsubscript{age²} =
+-0.134 for HVR vs.~-0.075 for HC\textsubscript{RES}). The stronger
+quadratic effect for HVR reflects its capture of both hippocampal and
+ventricular age-related differences. The ventricular component likely
+contributes cognitive-relevant variance beyond medial temporal
+integrity, as ventricular volume has been associated with executive
+function rather than episodic memory {[}Bachmann et al., 2023{]}.
 
 \subsection{Sensitivity Analyses (Analysis
 6)}\label{sensitivity-analyses-analysis-6-1}
 
-\subsubsection{Site Effects}\label{site-effects-1}
-
-The low site ICCs (Table S17, all \textless{} 0.05) indicate that
-scanner site contributed minimally to variance in brain measures. This
-is consistent with UK Biobank's harmonized acquisition protocol across
-sites {[}Alfaro-Almagro et al., 2018{]}. The stability of effect sizes
-after site adjustment confirms that our findings are not driven by
-site-specific biases.
-
-Different analytical contexts employed appropriate site-handling
-methods. Normative GAMLSS models used random intercepts for site to
-allow site-specific baseline levels while pooling information across
-sites. Sex difference analyses used linear mixed-effects models with
-random site intercepts. Pooled SEM analyses used cluster-robust standard
-errors grouped by site rather than random effects, as the FIML estimator
-in lavaan does not support random effects. Multi-group SEM analyses used
-robust maximum likelihood estimation without site clustering, as lavaan
-does not support the combination of multi-group analysis with clustered
-standard errors.
-
-For HVR specifically, site effects could theoretically differentially
-affect hippocampus and ventricle measurements. The low site ICC for HVR
-suggests that the ratio construction does not amplify site-related
-noise.
-
-\subsubsection{Hemisphere Comparison}\label{hemisphere-comparison-2}
-
-For individual volumes, sex differences were symmetrical across
-hemispheres: left and right hippocampal effect sizes were nearly
-identical (d = −0.14 and −0.16, overlapping CIs), as were ventricular
-effect sizes (d = 0.48 bilaterally). This bilateral symmetry is
-consistent with Fjell et al. {[}2009{]}, who found a non-significant
-hemisphere × sex × structure interaction (p = 0.97) across 13 brain
-volumes including hippocampus and lateral ventricles, and with Ritchie
-et al. {[}2018{]}, who reported nearly identical left (d = −0.55) and
-right (d = −0.54) hippocampal sex differences in the UK Biobank.
-
-However, HVR showed a lateralized pattern, with a significant female
-advantage in the right hemisphere (d = 0.05) but not the left (d =
-−0.01). Because HVR combines two bilaterally symmetrical structures into
-a ratio, this lateralization likely reflects subtle asymmetries in how
-hippocampal and ventricular volumes interact within each hemisphere
-rather than lateralized sex differences in either structure alone.
-Ruigrok et al. {[}2014{]} noted that female volume increases tend to be
-more pronounced in right limbic structures, which could contribute to a
-right-lateralized HVR advantage. However, automated segmentation
-algorithms show hemispheric biases---higher sensitivity for the right
-hippocampus but better ventricular segmentation on the left
-{[}Fernandez-Lozano et al., 2025{]}---which could produce artifactual
-laterality in a derived ratio measure. The small magnitude of this
-lateralization (d = 0.05 vs.~−0.01) and its potential methodological
-origins suggest that bilateral HVR remains the most robust measure for
-clinical application.
-
-\subsubsection{Inclusion of Psychiatric
-Diagnoses}\label{inclusion-of-psychiatric-diagnoses-1}
-
-Including participants with psychiatric diagnoses (F-codes) resulted in
-minimal change in effect sizes (\(\Delta\)d \textless{} 0.02; Table S19,
-Figure S4), with all findings retaining the same direction and
-significance. This stability is expected given the low prevalence of
-psychiatric diagnoses in the UK Biobank, which reflects the
-well-documented healthy volunteer selection bias of the cohort {[}Fry et
-al., 2017; Ritchie et al., 2018{]}. While reduced hippocampal volume is
-a shared feature across major psychiatric conditions {[}Brosch et al.,
-2022; Schmaal et al., 2016{]}, the low base rates in this sample mean
-that inclusion or exclusion of F-code participants lacks the statistical
-weight to meaningfully shift population-level estimates. Nonetheless,
-establishing robustness to psychiatric exclusion criteria is important
-because the brain regions showing the largest sex differences
-(hippocampus, amygdala) overlap with those implicated in sex-biased
-psychiatric conditions, creating potential sex-by-disorder interactions
-that could confound normative sex difference estimates {[}Ritchie et
-al., 2018; Ruigrok et al., 2014{]}.
+Low site ICCs (all \textless{} 0.05; Table S17) confirmed minimal
+scanner site contribution to variance, and effect sizes were stable
+after site adjustment; the ratio construction of HVR did not amplify
+site-related noise. Sex difference effect sizes were symmetrical across
+hemispheres for HC and LV; HVR showed a small lateralized pattern (right
+d = 0.05 vs.~left d = −0.01), though the small magnitude and potential
+contribution of hemispheric segmentation biases {[}Fernandez-Lozano et
+al., 2025{]} suggest bilateral HVR remains most robust for clinical
+application. Including participants with psychiatric diagnoses changed
+effect sizes minimally (\(\Delta\)d \textless{} 0.02; Table S19, Figure
+S4), consistent with the low prevalence of psychiatric diagnoses in this
+healthy volunteer cohort {[}Fry et al., 2017{]}.
 
 \subsection{Limitations}\label{limitations}
 
-This study has limitations related to design, sample, and methodology.
-The cross-sectional design cannot distinguish age effects from cohort
-effects or establish individual change trajectories, and HVR conflates
-two structures, precluding separation of hippocampal and ventricular
-contributions to observed differences.
-
-Sample characteristics impose additional constraints. UK Biobank
+Design and sample constraints include the cross-sectional design, which
+cannot distinguish age effects from cohort effects or establish
+individual change trajectories, and HVR's conflation of hippocampal and
+ventricular contributions to observed differences. UK Biobank
 participants are healthier and more educated than the general population
 {[}Fry et al., 2017{]}, limiting generalizability to clinical
 populations. Some cognitive tests had incomplete data, and complete-case
@@ -1879,36 +1584,23 @@ analyses may introduce selection bias. APOE genotype was unavailable,
 precluding examination of gene × sex interactions relevant to dementia
 risk.
 
-Several methodological considerations warrant mention. The study did not
-include the power-corrected proportions allometric adjustment method
-proposed by Sanchis-Segura et al. {[}2020{]}. Imaging site clustering
-was not modeled in multigroup SEM because lavaan does not support the
-combination of multigroup analysis with clustered standard errors
-{[}Rosseel, 2012{]}. However, with only 4 imaging sites across
-approximately 27,000 participants (average cluster size
-\textgreater6,000), the design effect is minimal, and any residual site
-effects would inflate standard errors equally across sexes, making sex
-comparisons conservative rather than biased.
-
-The bifactor model's memory-specific factor (Memory\textsubscript{s})
-could not be reliably estimated in either sex (females: estimation
-failure; males: all loadings non-significant, p \textgreater{} .90).
-This ``factor collapse'' is common in bifactor models, occurring in
-approximately 60\% of published applications {[}Burns et al., 2020; Eid
-et al., 2017{]}, indicating that variance in memory test performance was
-fully captured by the general cognitive factor (\emph{g}).
-Brain-cognition paths involving Memory\textsubscript{s} were therefore
-not interpretable and are not reported, though the processing speed
-factor (Speed\textsubscript{s}) was well-identified in both sexes.
-
-Ratios can exhibit non-normality, heteroscedasticity, and complex
-interpretation when numerator and denominator correlate differently with
-outcomes; while HVR showed approximately normal distributions in this
-sample, these properties should be verified in other populations. All
-brain-cognition associations were small (\(\beta\) = 0.02--0.04),
-explaining less than 1\% of variance in cognitive performance. While
-statistically significant given the large sample, the practical and
-clinical significance of these associations remains to be established.
+Methodologically, the study did not include power-corrected proportions
+allometric adjustment {[}Sanchis-Segura et al., 2020{]}. Imaging site
+clustering was not modeled in multigroup SEM because lavaan does not
+support this combination {[}Rosseel, 2012{]}, though the minimal design
+effect across 4 sites makes sex comparisons conservative rather than
+biased. The bifactor model's memory-specific factor could not be
+reliably estimated in either sex---a common occurrence in bifactor
+models {[}Burns et al., 2020; Eid et al., 2017{]}---indicating that
+memory variance was fully captured by \emph{g}; brain-cognition paths
+involving Memory\textsubscript{s} are therefore not reported. Ratios can
+exhibit non-normality and complex interpretation when numerator and
+denominator correlate differently with outcomes, though HVR showed
+approximately normal distributions here. All brain-cognition
+associations were small (\(\beta\) = 0.02--0.04), explaining less than
+1\% of variance in cognitive performance. While statistically
+significant given the large sample, the practical and clinical
+significance of these associations remains to be established.
 
 \subsection{Future Directions}\label{future-directions}
 
@@ -1930,19 +1622,15 @@ substantial head-size independence (r\textsubscript{ICV} = -0.25; 58\%
 reduction vs.~raw HC), a consistent female advantage replicated in
 ICV-matched samples (d = 0.18), and comparable brain-cognition
 associations to hippocampal volume (HVR → \emph{g}: \(\beta\) = 0.043
-vs.~HC → \emph{g}: \(\beta\) = 0.04, overlapping CIs). In contrast,
-hippocampal sex differences reversed direction across adjustment methods
-(d range: 1.5 SD), confirming their methodological determination. HVR
-maintained predictive validity in both sexes, while residualized HC lost
+vs.~HC → \emph{g}: \(\beta\) = 0.04, overlapping CIs). Hippocampal sex
+differences reversed direction across adjustment methods (d range: 1.5
+SD), confirming their methodological determination. HVR maintained
+predictive validity in both sexes, while residualized HC lost
 significance in males (p = 0.227), and supported more complex SEM
-specifications that raw HC could not.
-
-Males showed 1.66× steeper age-related HVR differences (p = 2e-61),
-consistent with earlier ventricular expansion signatures in males
-{[}Currà et al., 2019{]} and evidence that hippocampal trajectory slopes
-predict dementia conversion {[}Rajagopal et al., 2024{]}. Sex-specific
-normative centile curves are provided for research application and
-potential clinical use, pending validation in clinical populations.
+specifications that raw HC could not. Males showed 1.66× steeper
+age-related HVR differences (p = 2e-61). Sex-specific normative centile
+curves are provided for research application, pending validation in
+clinical populations.
 
 \section*{Author Contributions}\label{author-contributions}
 \addcontentsline{toc}{section}{Author Contributions}
@@ -2108,12 +1796,6 @@ Marinelli L, Trompetto C, Fattapposta F, Missori P (2019): The
 11.
 \url{https://www.frontiersin.org/journals/aging-neuroscience/articles/10.3389/fnagi.2019.00294/full}.
 
-\bibitem[\citeproctext]{ref-diaz_brinton_healthy_2008}
-Diaz Brinton R (2008):
-\href{https://doi.org/10.1016/j.tins.2008.07.003}{The healthy cell bias
-of estrogen action: Mitochondrial bioenergetics and neurological
-implications}. Trends in Neurosciences 31:529--537.
-
 \bibitem[\citeproctext]{ref-dima_subcortical_2022}
 Dima D, Modabbernia A, Papachristou E, Doucet GE, Agartz I, others
 (2022): Subcortical volumes across the lifespan: {Data} from 18,605
@@ -2242,14 +1924,6 @@ predictability of cognitive profiles from brain structure in older males
 and females. GeroScience 46:1713--1730.
 \url{https://doi.org/10.1007/s11357-023-00934-y}.
 
-\bibitem[\citeproctext]{ref-joel_analysis_2018}
-Joel D, Persico A, Salhov M, Berman Z, Oligschläger S, Meilijson I,
-Averbuch A (2018): Analysis of {Human} {Brain} {Structure} {Reveals}
-that the {Brain} {``{Types}''} {Typical} of {Males} {Are} {Also}
-{Typical} of {Females}, and {Vice} {Versa}. Frontiers in Human
-Neuroscience 12.
-\url{https://www.frontiersin.org/journals/human-neuroscience/articles/10.3389/fnhum.2018.00399/full}.
-
 \bibitem[\citeproctext]{ref-de_jong_allometric_2017}
 Jong LW de, Vidal J-S, Forsberg LE, Zijdenbos AP, Haight T, Initiative
 ADN, Sigurdsson S, Gudnason V, Buchem MA van, Launer LJ (2017):
@@ -2263,13 +1937,6 @@ SM, Trapp BD, Phillips MD (2014): Hippocampal volume is related to
 cognitive decline and fornicial diffusion measures in multiple
 sclerosis. Magnetic Resonance Imaging 32:354--358.
 \url{https://linkinghub.elsevier.com/retrieve/pii/S0730725X13004189}.
-
-\bibitem[\citeproctext]{ref-de_lange_womens_2020}
-Lange A-MG de, Barth C, Kaufmann T, Maximov II, Meer D van der, Agartz
-I, Westlye LT (2020): Women's brain aging: {Effects} of sex-hormone
-exposure, pregnancies, and genetic risk for {Alzheimer}'s disease. Human
-Brain Mapping 41:5141--5150.
-\url{https://onlinelibrary.wiley.com/doi/abs/10.1002/hbm.25180}.
 
 \bibitem[\citeproctext]{ref-luders_case_2025}
 Luders E, Poromaa IS, Barth C, Gaser C (2025): A {Case} for estradiol:
@@ -2416,11 +2083,6 @@ A, Young A, Sprosen T, Peakman T, Collins R (2015):
 \href{https://doi.org/10.1371/journal.pmed.1001779}{{UK} biobank: An
 open access resource for identifying the causes of a wide range of
 complex diseases of middle and old age}. PLoS medicine 12:e1001779.
-
-\bibitem[\citeproctext]{ref-sundermann_female_2016}
-Sundermann EE, Maki PM, Rubin LH, Lipton RB, Landau S, Biegon A, Null N
-(2016): Female advantage in verbal memory. Neurology 87:1916--1924.
-\url{https://www.neurology.org/doi/10.1212/WNL.0000000000003288}.
 
 \bibitem[\citeproctext]{ref-tai_detection_2025}
 Tai XY, Toniolo S, Llewellyn DJ, Van Duijn CM, Husain M, Manohar SG
