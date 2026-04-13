@@ -210,8 +210,8 @@ supp_tables <- c(
 )
 
 supp_figures <- c(
-  "fig-distributions",
   "fig-gamlss-calibration",
+  "fig-distributions",
   "fig-hemisphere",
   "fig-sensitivity"
 )
