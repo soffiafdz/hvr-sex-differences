@@ -289,7 +289,7 @@ where $\text{HC}_{\text{total}}$ and $\text{LV}_{\text{total}}$ denote bilateral
 
 ### Test Battery
 
-Cognitive data were collected at the imaging visit using the UK Biobank touchscreen-based cognitive battery [@sudlow_uk_2015], comprising 12 indicators spanning memory, processing speed, executive function, and reasoning domains (`r S("tbl-cog-battery")`). Timed measures (reaction time, trail making, pair matching response time) were inverse-coded so that higher scores consistently indicate better performance across all indicators. Missing cognitive data were handled using full information maximum likelihood (FIML) estimation, which uses all available data under a missing-at-random assumption.
+Cognitive data were collected at the imaging visit using the UK Biobank touchscreen-based cognitive battery [@sudlow_uk_2015], comprising 12 indicators spanning memory, processing speed, executive function, and reasoning domains (Appendix A, `r S("tbl-cog-battery")`). Timed measures (reaction time, trail making, pair matching response time) were inverse-coded so that higher scores consistently indicate better performance across all indicators. Missing cognitive data were handled using full information maximum likelihood (FIML) estimation, which uses all available data under a missing-at-random assumption.
 
 ### Factor Structure: Bifactor CFA
 
@@ -446,7 +446,7 @@ Unlike HC, lateral ventricular sex differences were consistently negative (males
 
 #### HVR
 
-HVR showed a consistent female advantage: d = `r round(hvr_non$ESTIMATE, 2)` [95% CI: `r round(hvr_non$CI_LOWER, 2)`, `r round(hvr_non$CI_UPPER, 2)`]. The combination of males having relatively smaller hippocampi (after head-size adjustment) and larger ventricles produces this female advantage in HVR. Distribution overlap between sexes across adjustment methods is shown in `r S("fig-distributions")`.
+HVR showed a consistent female advantage: d = `r round(hvr_non$ESTIMATE, 2)` [95% CI: `r round(hvr_non$CI_LOWER, 2)`, `r round(hvr_non$CI_UPPER, 2)`]. The combination of males having relatively smaller hippocampi (after head-size adjustment) and larger ventricles produces this female advantage in HVR. Distribution overlap between sexes across adjustment methods is shown in Appendix C (`r S("fig-distributions")`).
 
 ```{r}
 #| label: fig-effect-sizes
@@ -496,7 +496,7 @@ fig_age_trajectory(sex_diff)
 fig_normative_centiles_panel(norm_tables)
 ```
 
-Calibration plots (`r S("fig-gamlss-calibration")`) assess whether the normative models are well-specified: for each nominal centile (e.g., the 10th percentile curve), the plot shows what proportion of observations actually fall below that curve. A well-calibrated model produces points along the diagonal (observed proportion = expected proportion). Our models closely track the diagonal across all centiles, indicating that the fitted distributions accurately capture the true variability in the data.
+Calibration plots (Appendix B, `r S("fig-gamlss-calibration")`) assess whether the normative models are well-specified: for each nominal centile (e.g., the 10th percentile curve), the plot shows what proportion of observations actually fall below that curve. A well-calibrated model produces points along the diagonal (observed proportion = expected proportion). Our models closely track the diagonal across all centiles, indicating that the fitted distributions accurately capture the true variability in the data.
 
 #### Temporal Stability (Longitudinal Validation)
 
@@ -504,7 +504,7 @@ All brain measures demonstrated high test-retest reliability across the longitud
 
 #### Clinical Normative Centile Tables
 
-Sex-specific normative centile tables for HVR, hippocampal volume, and lateral ventricular volume are provided in Supporting Information (`r S_range("tbl-hvr-centiles-female", "tbl-lv-centiles-male")`) to enable clinical interpretation of individual measurements at 5-year age intervals. These tables allow clinicians to determine an individual's percentile rank given their age, sex, and brain measure.
+Sex-specific normative centile tables for HVR, hippocampal volume, and lateral ventricular volume are provided in Appendix B (`r S_range("tbl-hvr-centiles-female", "tbl-lv-centiles-male")`) to enable clinical interpretation of individual measurements at 5-year age intervals. These tables allow clinicians to determine an individual's percentile rank given their age, sex, and brain measure.
 
 GAMLSS model coefficients for the transfer models (excluding site random effects) are provided in `r S("tbl-gamlss-hvr-coef")` and `r S("tbl-gamlss-hc-coef")`. These transfer models enable researchers to compute individual centile scores in external datasets where UK Biobank site identifiers are not applicable.
 
@@ -514,7 +514,7 @@ SEM analyses were restricted to the England subsample (N = `r format(n_england, 
 
 ### Measurement Invariance
 
-The cognitive bifactor model showed acceptable fit at all invariance levels, with $\Delta$CFI $\leq$ 0.01 and $\Delta$RMSEA $\leq$ 0.015 at each step (`r S("tbl-measurement-invariance")`). Strict measurement invariance was supported, validating cross-sex comparisons of factor scores and structural paths.
+The cognitive bifactor model showed acceptable fit at all invariance levels, with $\Delta$CFI $\leq$ 0.01 and $\Delta$RMSEA $\leq$ 0.015 at each step (Appendix C, `r S("tbl-measurement-invariance")`). Strict measurement invariance was supported, validating cross-sex comparisons of factor scores and structural paths.
 
 ### Pooled Model Results
 
@@ -553,7 +553,7 @@ As described in Methods, quadratic age terms were included in HVR and HC~RES~ mo
 
 ### Site-Adjusted Effect Sizes
 
-Site ICCs ranged from 0.004 to 0.012 (`r S("tbl-site-adjusted")`), indicating that scanner site explained less than 1.5% of total variance in all brain measures. Effect sizes remained consistent after site adjustment.
+Site ICCs ranged from 0.004 to 0.012 (Appendix D, `r S("tbl-site-adjusted")`), indicating that scanner site explained less than 1.5% of total variance in all brain measures. Effect sizes remained consistent after site adjustment.
 
 ### Hemisphere Comparison
 
