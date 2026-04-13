@@ -208,6 +208,8 @@ calc_temporal_stability <- function() {
   }
 
   hvr_lr <- calc_retest(lng, "HVR", "LR")
+  hvr_l  <- calc_retest(lng, "HVR", "L")
+  hvr_r  <- calc_retest(lng, "HVR", "R")
   hc_lr  <- calc_retest(lng, "HC", "LR")
   hc_l   <- calc_retest(lng, "HC", "L")
   hc_r   <- calc_retest(lng, "HC", "R")
@@ -216,19 +218,19 @@ calc_temporal_stability <- function() {
   lv_r   <- calc_retest(lng, "LV", "R")
 
   results <- data.table(
-    ROI = c("Hippocampal-to-Ventricle Ratio",
+    ROI = c(rep("Hippocampal-to-Ventricle Ratio", 3),
             rep("Hippocampus", 3),
             rep("Lateral Ventricles", 3)),
-    Laterality = c("Bilateral",
+    Laterality = c("Bilateral", "Left", "Right",
                    "Bilateral", "Left", "Right",
                    "Bilateral", "Left", "Right"),
-    N = c(hvr_lr$n,
+    N = c(hvr_lr$n, hvr_l$n, hvr_r$n,
           hc_lr$n, hc_l$n, hc_r$n,
           lv_lr$n, lv_l$n, lv_r$n),
-    `Pearson r` = c(hvr_lr$r,
+    `Pearson r` = c(hvr_lr$r, hvr_l$r, hvr_r$r,
                     hc_lr$r, hc_l$r, hc_r$r,
                     lv_lr$r, lv_l$r, lv_r$r),
-    `ICC` = c(hvr_lr$icc,
+    `ICC` = c(hvr_lr$icc, hvr_l$icc, hvr_r$icc,
               hc_lr$icc, hc_l$icc, hc_r$icc,
               lv_lr$icc, lv_l$icc, lv_r$icc)
   )

@@ -106,7 +106,7 @@ list2env(ms$data, envir = environment())
 list2env(ms$tables, envir = environment())
 ```
 
-# Supporting Tables {.unnumbered}
+# Appendix A: Cognitive Battery and Covariates {.unnumbered}
 
 ```{r}
 #| label: supp-tbl-cog-battery
@@ -187,6 +187,8 @@ data.table(
 ```
 
 \clearpage
+
+# Appendix B: Normative Centile Tables {.unnumbered}
 
 ```{r}
 #| label: supp-tbl-temporal-stability
@@ -285,6 +287,21 @@ format_centile_hemisphere_gt(
 \clearpage
 
 ```{r}
+#| label: supp-fig-gamlss-calibration
+#| fig-cap: "**GAMLSS normative model calibration.** Points represent observed vs. expected proportions in held-out test data. Diagonal line indicates perfect calibration."
+#| fig-width: 6.5
+#| fig-height: 3.5
+
+if (!is.null(gamlss_calib)) {
+  fig_gamlss_validation_combined(gamlss_calib)
+}
+```
+
+\clearpage
+
+# Appendix C: Model Results {.unnumbered}
+
+```{r}
 #| label: supp-tbl-gamlss-hvr-coef
 #| tbl-cap: "**GAMLSS coefficients for HVR.** Transfer model without site. $\\mu$ = location (mean), $\\sigma$ = scale (variance), $\\nu$ = skewness. Bold indicates p < .05."
 
@@ -353,6 +370,18 @@ format_sem_covariates_gt(covar_dt, model_name = "HVR Model")
 \clearpage
 
 ```{r}
+#| label: supp-fig-distributions
+#| fig-cap: "**Distribution overlap by sex.** Across adjustment methods. Left column: full sample. Right column: head-size matched sample (age $\\pm 1$ year, intracranial volume $\\pm 25$ cc)."
+#| fig-width: 5
+#| fig-height: 7
+fig_distribution_overlap(brain_data, matched_brain_data, show_matched = TRUE)
+```
+
+\clearpage
+
+# Appendix D: Sensitivity Analyses {.unnumbered}
+
+```{r}
 #| label: supp-tbl-site-adjusted
 #| tbl-cap: "**Site-adjusted sex difference effect sizes.** ICC = intraclass correlation coefficient indicating proportion of variance attributable to site."
 if ("SITE_ADJUSTED" %in% names(sex_diff))
@@ -377,31 +406,6 @@ if (!is.null(hemi_dt) && nrow(hemi_dt) > 0)
 sens_dt <- get_sensitivity_comparison(sex_diff)
 if (!is.null(sens_dt) && nrow(sens_dt) > 0)
   format_sensitivity_gt(sens_dt)
-```
-
-\clearpage
-
-# Supporting Figures {.unnumbered}
-
-```{r}
-#| label: supp-fig-distributions
-#| fig-cap: "**Distribution overlap by sex.** Across adjustment methods. Left column: full sample. Right column: head-size matched sample (age $\\pm 1$ year, intracranial volume $\\pm 25$ cc)."
-#| fig-width: 5
-#| fig-height: 7
-fig_distribution_overlap(brain_data, matched_brain_data, show_matched = TRUE)
-```
-
-\clearpage
-
-```{r}
-#| label: supp-fig-gamlss-calibration
-#| fig-cap: "**GAMLSS normative model calibration.** Points represent observed vs. expected proportions in held-out test data. Diagonal line indicates perfect calibration."
-#| fig-width: 6.5
-#| fig-height: 3.5
-
-if (!is.null(gamlss_calib)) {
-  fig_gamlss_validation_combined(gamlss_calib)
-}
 ```
 
 \clearpage
