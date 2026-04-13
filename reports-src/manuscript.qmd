@@ -270,7 +270,6 @@ $$V_{\text{PRP}} = \frac{V}{\text{ICV}} \times 1000$$ {#eq-prp}
 3. **Stereotaxic**: volumes in standard template space after nonlinear registration, which corrects for global size and shape differences:
 
 $$V_{\text{STX}} = V \times |J|$$ {#eq-stx}
-
 where $J$ is the Jacobian determinant of the nonlinear transformation.
 
 4. **Residualized**: linear regression residuals after removing ICV association, with regression coefficients estimated from the pooled sample [@sanchis-segura_effects_2020; @obrien_statistical_2011]:
@@ -284,7 +283,6 @@ Residualization eliminates ICV-related variance and produces more replicable sex
 The hippocampal-to-ventricle ratio (HVR) was computed as:
 
 $$\text{HVR} = \frac{\text{HC}_{\text{total}}}{\text{HC}_{\text{total}} + \text{LV}_{\text{total}}}$$ {#eq-hvr}
-
 where $\text{HC}_{\text{total}}$ and $\text{LV}_{\text{total}}$ denote bilateral sums (left + right) of hippocampal and lateral ventricular temporal horn volumes, respectively. HVR is bounded between 0 and 1, with higher values indicating larger hippocampus relative to ventricles. Because HVR is a ratio of two head-size-dependent structures, no further head-size adjustment was applied.
 
 ## Cognitive Assessment
@@ -335,22 +333,20 @@ To isolate sex effects from head-size confounding, we created an ICV-matched sub
 Linear regression models tested whether cross-sectional age-related patterns differed by sex:
 
 $$Y_i = \beta_0 + \beta_{\text{Age}} \cdot \text{Age}_i + \beta_{\text{Sex}} \cdot \text{Sex}_i + \beta_{\text{Age} \times \text{Sex}} \cdot \text{Age}_i \times \text{Sex}_i + \varepsilon_i$$ {#eq-age-sex}
-
 where $Y$ is the brain measure, Sex is coded as a binary indicator (Female = reference), and $\varepsilon_i \sim \mathcal{N}(0, \sigma^2)$. A significant $\beta_{\text{Age} \times \text{Sex}}$ indicates different age slopes between sexes. Sex-specific slopes were derived as $\hat{\beta}_{\text{Age}}$ for females and $\hat{\beta}_{\text{Age}} + \hat{\beta}_{\text{Age} \times \text{Sex}}$ for males, and their ratio quantified the relative rate of cross-sectional age-related differences. Separate models were fit for HC~RES~ and LV~RES~ (both residualized against ICV; @eq-res) and HVR (self-normalizing; @eq-hvr). Scanner site was not included as a random effect given the low site ICCs (< 0.05; see Sensitivity Analyses), indicating minimal site contribution to variance. While age trajectories may be non-linear (as captured by the GAMLSS normative models below), linear interaction models were used here to provide interpretable summary statistics for sex-differential aging rates.
 
 #### Normative Centile Curves
 
-Sex-specific normative centile curves were estimated using Generalized Additive Models for Location, Scale, and Shape (GAMLSS) [@rigby_generalized_2005; @bethlehem_brain_2022]. For HC and LV (unadjusted):
+Sex-specific normative centile curves were estimated using Generalized Additive Models for Location, Scale, and Shape (GAMLSS) [@rigby_generalized_2005; @bethlehem_brain_2022] on the N = 27,434 participants from the primary sample with complete education and site data. For HC and LV (unadjusted):
 
 $$\mu = f_\mu(\text{Age}) + \beta_{\text{ICV}} \cdot \text{ICV} + \beta_{\text{Edu}} \cdot \text{Education} + u_{\text{site}}$$ {#eq-gamlss-hc}
 
 For HVR (self-normalizing, no ICV term needed):
 
 $$\mu = f_\mu(\text{Age}) + \beta_{\text{Edu}} \cdot \text{Education} + u_{\text{site}}$$ {#eq-gamlss-hvr}
-
 where $f_\mu(\cdot)$ denotes a cubic spline smooth for the location parameter and $u_{\text{site}}$ denotes random intercepts for scanner site. The scale parameter was also modeled as a function of age, $\sigma = f_\sigma(\text{Age})$, allowing variance to change across the age range. Model families (Gaussian and Box-Cox Cole and Green; BCCG) were compared using AIC, with BIC as secondary criterion. The BCCG distribution was used when flexible modeling of location ($\mu$), scale ($\sigma$), and skewness ($\nu$) was warranted; shape parameters beyond $\sigma$ were held constant to maintain parsimony. Centile curves (5th, 10th, 25th, 50th, 75th, 90th, 95th) were generated for ages 45--82 by sex.
 
-Data were split into 80% training and 20% test sets, stratified by sex and 5-year age bins. Distribution families were selected on training data and evaluated on the held-out test set by comparing observed vs. expected proportions across centiles. Final models were then fit on the complete cross-sectional sample using the selected distribution family. Model calibration was additionally assessed using the longitudinal subsample (N = 2,935; see Data Source and Participants). Because this subsample comprises the same participants as the primary cross-sectional sample with an additional follow-up session, it tests temporal stability rather than independent validation. Test-retest reliability was quantified using Pearson correlation and intraclass correlation coefficient (ICC, two-way random, absolute agreement).
+Data were split into 80% training and 20% test sets, stratified by sex and 5-year age bins, to evaluate model fit on independent data and guard against overfitting. Distribution families were selected on training data and evaluated on the held-out test set by comparing observed vs. expected proportions across centiles. Final models were then fit on the complete cross-sectional sample using the selected distribution family. Model calibration was additionally assessed using the longitudinal subsample (N = 2,935; see Data Source and Participants). Because this subsample comprises the same participants as the primary cross-sectional sample with an additional follow-up session, it tests temporal stability rather than independent validation. Test-retest reliability was quantified using Pearson correlation and intraclass correlation coefficient (ICC, two-way random, absolute agreement).
 
 Two sets of GAMLSS models were generated: (1) site-controlled models including random site intercepts ($u_{\text{site}}$) for optimal within-UKB accuracy, and (2) transfer models without site effects for application to external cohorts where site is unknown or not comparable. Transfer models used identical distribution families but omitted the random site term, following recommendations for cross-study normative modeling.
 
@@ -412,7 +408,6 @@ $$\text{ICC} = \frac{\sigma^2_{\text{site}}}{\sigma^2_{\text{site}} + \sigma^2_{
 Site-adjusted sex difference effect sizes were computed using linear mixed-effects models with a fixed effect for sex and a random intercept for scanner site:
 
 $$Y_i = \beta_0 + \beta_{\text{Sex}} \cdot \text{Sex}_i + u_{\text{site}(i)} + \varepsilon_i$$ {#eq-site-adj}
-
 where $u_{\text{site}} \sim \mathcal{N}(0, \sigma^2_{\text{site}})$ and $\varepsilon_i \sim \mathcal{N}(0, \sigma^2_{\text{residual}})$. Cohen's d was approximated as $\hat{\beta}_{\text{Sex}} / \hat{\sigma}_{\text{residual}}$, with confidence intervals derived from the Wald approximation.
 
 #### Hemisphere comparison
@@ -516,7 +511,7 @@ fig_age_trajectory(sex_diff)
 fig_normative_centiles_panel(norm_tables)
 ```
 
-Calibration plots (`r S("fig-gamlss-calibration")`) demonstrate that normative models accurately capture the distribution of observed values, with observed proportions closely tracking expected proportions across centiles.
+Calibration plots (`r S("fig-gamlss-calibration")`) assess whether the normative models are well-specified: for each nominal centile (e.g., the 10th percentile curve), the plot shows what proportion of observations actually fall below that curve. A well-calibrated model produces points along the diagonal (observed proportion = expected proportion). Our models closely track the diagonal across all centiles, indicating that the fitted distributions accurately capture the true variability in the data.
 
 #### Temporal Stability (Longitudinal Validation)
 
@@ -567,7 +562,7 @@ All SEM models demonstrated good fit according to conventional criteria (`r S("t
 
 #### Non-Linear Age Effects
 
-As described in Methods, quadratic age terms were included in HVR and HC~RES~ models but not in the HC model due to multicollinearity; fit indices for the HC model (`r S("tbl-sem-fit")`) therefore reflect this linear-age specification. Both brain measures and cognitive factors showed significant negative quadratic age effects (all p < .001; `r S("tbl-sem-covariate-effects")`), indicating steeper cross-sectional differences at older ages. For brain measures, HVR showed $\beta$ = `r safe_round(hvr_age_sq$est.std, 3)` and HC~RES~ showed $\beta$ = `r safe_round(hc_res_age_sq$est.std, 3)`. For cognitive factors, *g* showed $\beta$ = `r safe_round(g_age_sq_hvr$est.std, 3)` in the HVR model and $\beta$ = `r safe_round(g_age_sq_hc$est.std, 3)` in the HC~RES~ model, while Speed~s~ showed $\beta$ = `r safe_round(speed_age_sq_hvr$est.std, 3)` and $\beta$ = `r safe_round(speed_age_sq_hc$est.std, 3)` respectively. The stronger quadratic effect for HVR compared to HC~RES~ suggests that HVR captures both hippocampal atrophy and ventricular expansion, both of which accelerate with age.
+As described in Methods, quadratic age terms were included in HVR and HC~RES~ models but not in the HC model due to multicollinearity; fit indices for the HC model (`r S("tbl-sem-fit")`) therefore reflect a linear-age specification. All quadratic age effects were significantly negative (all p < .001; `r S("tbl-sem-covariate-effects")`), indicating that cross-sectional differences between older and younger participants were disproportionately larger at older ages. HVR showed a stronger quadratic effect ($\beta$ = `r safe_round(hvr_age_sq$est.std, 3)`) than HC~RES~ ($\beta$ = `r safe_round(hc_res_age_sq$est.std, 3)`), consistent with HVR capturing both hippocampal and ventricular age-related changes, both of which accelerate at older ages. Cognitive factors showed comparable quadratic effects across models (*g*: $\beta$ $\approx$ `r safe_round(g_age_sq_hvr$est.std, 3)`; Speed~s~: $\beta$ $\approx$ `r safe_round(speed_age_sq_hvr$est.std, 3)`).
 
 ## Sensitivity Analyses
 
@@ -589,7 +584,7 @@ Effect sizes remained stable when including participants with psychiatric diagno
 
 ## Summary of Findings
 
-In `r format(n_primary, big.mark=",")` UK Biobank participants, we evaluated HVR as a self-normalizing measure that bypasses conventional head-size correction. HVR showed weak correlation with ICV, substantially reducing head-size dependence compared to unadjusted HC. Hippocampal sex differences ranged from d = `r round(hc_non$ESTIMATE, 2)` (males larger) to d = `r round(hc_prp$ESTIMATE, 2)` (females larger) depending solely on the adjustment method, whereas HVR consistently showed a female advantage replicated in the ICV-matched subsample. Males showed steeper age-related HVR differences (`r round(abs(hvr_int$SLOPE_RATIO), 2)`× female slope), with the female advantage widening at older ages (d = `r round(hvr_d_young$ESTIMATE, 2)` at 45-55y to d = `r round(hvr_d_old$ESTIMATE, 2)` at 75+y). HVR predicted general cognition comparably to hippocampal volume.
+In `r format(n_primary, big.mark=",")` UK Biobank participants, we evaluated HVR as a self-normalizing measure that bypasses conventional head-size correction. HVR showed weak correlation with ICV, substantially reducing head-size dependence compared to unadjusted HC. Hippocampal sex differences ranged from d = `r round(hc_non$ESTIMATE, 2)` (males larger) to d = `r round(hc_prp$ESTIMATE, 2)` (females larger) depending solely on the adjustment method and age, whereas HVR consistently showed a female advantage replicated in the ICV-matched subsample. Males showed steeper age-related HVR differences (`r round(abs(hvr_int$SLOPE_RATIO), 2)`× female slope), with the female advantage widening at older ages (d = `r round(hvr_d_young$ESTIMATE, 2)` at 45-55y to d = `r round(hvr_d_old$ESTIMATE, 2)` at 75+y). HVR predicted general cognition comparably to hippocampal volume.
 
 ## Sex Differences Across Adjustment Methods
 
