@@ -490,7 +490,13 @@ of ``A'' (highest quality grade) {[}Coupé et al., 2020{]}, (2)
 statistical outlier detection excluding participants with age- and
 head-size-adjusted volumes exceeding \(\pm 3\) SD from the sample mean,
 and (3) visual inspection of flagged cases by trained raters for evident
-segmentation failures, motion artifacts, or anatomical anomalies.
+segmentation failures, motion artifacts, or anatomical anomalies. This
+multi-stage pipeline is intentionally conservative: in a large
+population-based study where statistical power is not a limiting factor,
+prioritizing data quality over sample retention reduces the risk of
+segmentation errors biasing volumetric estimates, particularly for small
+structures like the hippocampus and temporal horn ventricles where even
+minor segmentation failures can produce large relative errors.
 
 For participants with multiple imaging sessions, QC filtering was
 applied first, then one session per participant was selected for
@@ -587,43 +593,12 @@ structures, no further head-size adjustment was applied.
 Cognitive data were collected at the imaging visit using the UK Biobank
 touchscreen-based cognitive battery {[}Sudlow et al., 2015{]},
 comprising 12 indicators spanning memory, processing speed, executive
-function, and reasoning domains (Table S1):
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  \textbf{Pair matching -- average time} (mean response time;
-  inverse-coded)
-\item
-  \textbf{Pair matching -- average errors} (mean incorrect responses;
-  inverse-coded)
-\item
-  \textbf{Numeric memory} (maximum digits recalled)
-\item
-  \textbf{Prospective memory} (recall timing: 0 = incorrect, 1 = second
-  attempt, 2 = first attempt)
-\item
-  \textbf{Fluid intelligence} (total score)
-\item
-  \textbf{Matrix pattern recognition} (puzzles solved)
-\item
-  \textbf{Trail making -- numeric} (completion time; inverse-coded)
-\item
-  \textbf{Trail making -- alphanumeric} (completion time; inverse-coded)
-\item
-  \textbf{Tower rearranging} (correct puzzles)
-\item
-  \textbf{Reaction time} (mean time to identify matches; inverse-coded)
-\item
-  \textbf{Symbol digit substitution -- correct} (correct responses)
-\item
-  \textbf{Symbol digit substitution -- attempts} (total attempts)
-\end{enumerate}
-
-Missing cognitive data were handled using full information maximum
-likelihood (FIML) estimation, which uses all available data under a
-missing-at-random assumption.
+function, and reasoning domains (Table S1). Timed measures (reaction
+time, trail making, pair matching response time) were inverse-coded so
+that higher scores consistently indicate better performance across all
+indicators. Missing cognitive data were handled using full information
+maximum likelihood (FIML) estimation, which uses all available data
+under a missing-at-random assumption.
 
 \subsubsection{Factor Structure: Bifactor
 CFA}\label{factor-structure-bifactor-cfa}
@@ -1474,10 +1449,15 @@ captures both processes, and steeper male ventricular expansion
 amplifies hippocampal differences. Males also show earlier ventricular
 abnormality signatures, with ventricular enlargement accelerating in the
 seventies {[}Currà et al., 2019{]}, consistent with the steeper male HVR
-differences observed here. However, Brzezinski-Rittner et al. {[}2025{]}
-found that hippocampal age × sex interactions disappeared in a
-TIV-matched subsample, suggesting that some sex-differential aging
-trajectories may be byproducts of initial brain size differences.
+differences observed here. While the cross-sectional design precludes
+identifying a specific onset age, our age-stratified effect sizes show
+the male-female HVR divergence is already present in the youngest bin
+(ages 45--55, d = 0.23) and widens monotonically with age (d = 0.66 at
+ages 75+), suggesting the divergence begins before midlife. However,
+Brzezinski-Rittner et al. {[}2025{]} found that hippocampal age × sex
+interactions disappeared in a TIV-matched subsample, suggesting that
+some sex-differential aging trajectories may be byproducts of initial
+brain size differences.
 
 The prognostic relevance of age-pattern differences is supported by
 evidence that steeper hippocampal volume loss predicts dementia
@@ -1513,6 +1493,13 @@ greater heterogeneity in aging-related patterns. Well-calibrated centile
 estimates (Figure S2) have demonstrated clinical utility in detecting
 case-control differences and predicting diagnostic transition from MCI
 to Alzheimer's disease {[}Bethlehem et al., 2022; Dima et al., 2022{]}.
+HVR showed slightly lower test-retest reliability (ICC \textgreater{}
+0.93; Table S3) than HC or LV alone over a mean 2.7-year follow-up.
+Because this interval spans real aging-related change, the lower ICC may
+partly reflect HVR's sensitivity to concurrent hippocampal atrophy and
+ventricular expansion rather than measurement noise alone --- a
+hypothesis that dedicated longitudinal studies with shorter retest
+intervals could directly test.
 
 \subsection{Brain-Cognition
 Associations}\label{brain-cognition-associations-2}
