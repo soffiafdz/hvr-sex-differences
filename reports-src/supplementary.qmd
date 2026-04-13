@@ -71,7 +71,7 @@ format:
         % Center longtables
         \setlength{\LTleft}{\fill}
         \setlength{\LTright}{\fill}
-        % Supplementary numbering: Table S1, Figure S1, etc.
+        % Supporting Information numbering: Table S1, Figure S1, etc.
         \renewcommand{\thetable}{S\arabic{table}}
         \renewcommand{\thefigure}{S\arabic{figure}}
         % Force exact placement so floats don't drift
@@ -106,7 +106,7 @@ list2env(ms$data, envir = environment())
 list2env(ms$tables, envir = environment())
 ```
 
-# Supplementary Tables {.unnumbered}
+# Supporting Tables {.unnumbered}
 
 ```{r}
 #| label: supp-tbl-cog-battery
@@ -381,7 +381,7 @@ if (!is.null(sens_dt) && nrow(sens_dt) > 0)
 
 \clearpage
 
-# Supplementary Figures {.unnumbered}
+# Supporting Figures {.unnumbered}
 
 ```{r}
 #| label: supp-fig-distributions

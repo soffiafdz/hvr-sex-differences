@@ -152,7 +152,7 @@ We addressed three questions: (1) Do hippocampal sex differences vary across hea
 
 Data were obtained from UK Biobank (Application 45551) [@sudlow_uk_2015; @miller_multimodal_2016]. The initial imaging sample comprised approximately `r format(n_initial_imaging, big.mark=",")` participants with T1-weighted structural MRI. After exclusions (detailed below), the final analytic sample included N = `r format(n_primary, big.mark=",")` participants aged `r age_min` to `r age_max` years. With this sample size, we had >99% power to detect small effects (d = 0.10) and >80% power to detect very small effects (d = 0.05) for two-group comparisons at $\alpha$ = .05.
 
-Three additional subsamples were defined for specific analyses (@fig-prisma; @tbl-demographics). The **England subsample** (N = `r format(n_england, big.mark=",")`) comprised participants assessed at UK Biobank centres in England and was used for SEM analyses requiring the Index of Multiple Deprivation (IMDP), which is not comparable across UK countries. This subsample provides adequate power for detecting standardized path coefficients $\geq$ 0.02. The **ICV-matched subsample** (N = `r format(n_matched_pairs * 2, big.mark=",")`) comprised female--male pairs matched on age ($\pm 1$ year) and ICV ($\pm 25$ cc) drawn from the primary sample, and was used to isolate sex effects from head-size confounding (see Sex Differences Across Adjustment Methods). The **longitudinal subsample** (N = 2,935) comprised participants from the primary sample who also had a follow-up imaging session (ses-3), with a mean intersession interval of 2.7 years (SD = 1.1; range: 1.5--5.0). This subsample was used as a sensitivity check for normative model calibration (see Age-Related Patterns and Normative Modeling).
+Three additional subsamples were defined for specific analyses (@fig-prisma; @tbl-demographics). The **England subsample** (N = `r format(n_england, big.mark=",")`) comprised participants assessed at UK Biobank centres in England and was used for SEM analyses requiring the Index of Multiple Deprivation (IMDP), which is not comparable across UK countries. This subsample provides adequate power for detecting standardized path coefficients $\geq$ 0.02. The **ICV-matched subsample** (N = `r format(n_matched_pairs * 2, big.mark=",")`) comprised female--male pairs matched on age ($\pm 1$ year) and ICV ($\pm 25$ cc) drawn from the primary sample, and was used to isolate sex effects from head-size confounding (see @sec-sex-diff-methods). The **longitudinal subsample** (N = 2,935) comprised participants from the primary sample who also had a follow-up imaging session (ses-3), with a mean intersession interval of 2.7 years (SD = 1.1; range: 1.5--5.0). This subsample was used as a sensitivity check for normative model calibration (see @sec-age-patterns-methods).
 
 ### Exclusion Criteria
 
@@ -299,7 +299,7 @@ Models were estimated using maximum likelihood with robust standard errors (MLR)
 
 ## Statistical Analyses
 
-### Sex Differences Across Adjustment Methods
+### Sex Differences Across Adjustment Methods {#sec-sex-diff-methods}
 
 #### HVR Self-Normalizing Properties
 
@@ -311,7 +311,7 @@ Sex differences were quantified using Cohen's d with 95% confidence intervals [@
 
 To isolate sex effects from head-size confounding, we created an ICV-matched subsample where females and males were paired on age ($\pm 1$ year) and ICV ($\pm 25$ cc, approximately 0.3 SD). Matching used the MatchIt package (v4.7.2; @ho_matchit_2011) with optimal 1:1 matching without replacement (`method = "optimal"`, `distance = "mahalanobis"`), with calipers enforcing tolerance bounds. This yielded N = `r format(n_matched_pairs, big.mark=",")` matched pairs (total N = `r format(n_matched_pairs * 2, big.mark=",")`). We reasoned that if sex differences in HC persist after matching on ICV, they cannot be attributed solely to head-size confounding, and if HVR shows similar effects in full and matched samples, this indicates HVR is independent of head size.
 
-### Age-Related Patterns and Normative Modeling
+### Age-Related Patterns and Normative Modeling {#sec-age-patterns-methods}
 
 #### Age × Sex Interactions
 
@@ -329,7 +329,7 @@ $$\mu = f_\mu(\text{Age}) + \beta_{\text{ICV}} \cdot \text{ICV} + \beta_{\text{E
 For HVR (self-normalizing, no ICV term needed):
 
 $$\mu = f_\mu(\text{Age}) + \beta_{\text{Edu}} \cdot \text{Education} + u_{\text{site}}$$ {#eq-gamlss-hvr}
-where $f_\mu(\cdot)$ denotes a cubic spline smooth for the location parameter and $u_{\text{site}}$ denotes random intercepts for scanner site. The scale parameter was also modeled as a function of age, $\sigma = f_\sigma(\text{Age})$, allowing variance to change across the age range. Model families (Gaussian and Box-Cox Cole and Green; BCCG) were compared using AIC, with BIC as secondary criterion. The BCCG distribution was used when flexible modeling of location ($\mu$), scale ($\sigma$), and skewness ($\nu$) was warranted; shape parameters beyond $\sigma$ were held constant to maintain parsimony. Centile curves (5th, 10th, 25th, 50th, 75th, 90th, 95th) were generated for ages 45--82 by sex.
+where $f_\mu(\cdot)$ denotes a cubic spline smooth for the location parameter and $u_{\text{site}}$ denotes random intercepts for scanner site. Although site ICCs were low (< 0.05; see Sensitivity Analyses), site random intercepts were retained in the normative models because centile estimation targets individual-level classification, where even small systematic shifts can affect percentile assignment. The scale parameter was also modeled as a function of age, $\sigma = f_\sigma(\text{Age})$, allowing variance to change across the age range. Model families (Gaussian and Box-Cox Cole and Green; BCCG) were compared using AIC, with BIC as secondary criterion. The BCCG distribution was used when flexible modeling of location ($\mu$), scale ($\sigma$), and skewness ($\nu$) was warranted; shape parameters beyond $\sigma$ were held constant to maintain parsimony. Centile curves (5th, 10th, 25th, 50th, 75th, 90th, 95th) were generated for ages 45--82 by sex.
 
 Data were split into 80% training and 20% test sets, stratified by sex and 5-year age bins, to evaluate model fit on independent data and guard against overfitting. Distribution families were selected on training data and evaluated on the held-out test set by comparing observed vs. expected proportions across centiles. Final models were then fit on the complete cross-sectional sample using the selected distribution family. Model calibration was additionally assessed using the longitudinal subsample (N = 2,935; see Data Source and Participants). Because this subsample comprises the same participants as the primary cross-sectional sample with an additional follow-up session, it tests temporal stability rather than independent validation. Test-retest reliability was quantified using Pearson correlation and intraclass correlation coefficient (ICC, two-way random, absolute agreement).
 
@@ -401,7 +401,7 @@ Left and right hippocampus and lateral ventricle volumes (residualized against I
 
 #### Inclusion of psychiatric diagnoses
 
-The primary analysis excluded participants with ICD-10 diagnoses in the F (mental and behavioral disorders), G (neurological), or Q0 (congenital brain malformations) categories. To assess robustness, sex difference analyses were repeated in an expanded sensitivity sample that included participants with F-code diagnoses (F00-F99) while still excluding G and Q0 codes. The difference in Cohen's d between primary and sensitivity samples ($\Delta d$ = $d_{\text{primary}}$ - $d_{\text{sensitivity}}$) quantified the impact of psychiatric exclusion criteria. Small differences indicate that findings generalize to a less restrictively selected sample and are not driven by exclusion of psychiatric comorbidity.
+To assess robustness, sex difference analyses were repeated in an expanded sensitivity sample that retained participants with F-code diagnoses (F00-F99; N = 30,032) while still excluding G and Q0 codes. The impact of psychiatric exclusion was quantified as $\Delta d$ = $d_{\text{primary}}$ - $d_{\text{sensitivity}}$.
 
 ---
 
@@ -531,7 +531,7 @@ format_pooled_sem_paths_gt(sem_params, hvr_g, hc_res_g, hc_g)
 
 ### Sex-Stratified Results
 
-@fig-sem-forest displays sex-stratified path coefficients from multi-group models (`r S("tbl-sem-paths-by-sex")`). The multigroup analyses revealed sex differences in brain-cognition associations.
+@fig-sem-forest displays sex-stratified path coefficients from multi-group models (detailed in `r S("tbl-sem-paths-by-sex")`). The multigroup analyses revealed sex differences in brain-cognition associations.
 
 For general cognition (*g*), HC~RES~ → *g* was not significant in males (p = `r safe_round(hc_res_g_m$pvalue, 3)`) while remaining significant in females. In contrast, HVR showed the opposite pattern: males exhibited stronger HVR-cognition associations ($\beta$ = `r safe_round(hvr_g_m$est.std, 3)`) than females ($\beta$ = `r safe_round(hvr_g_f$est.std, 3)`), with both significant. For processing speed (Speed~s~), males showed significant HC and HC~RES~ associations ($\beta$ = `r safe_round(hc_speed_m$est.std, 3)` and `r safe_round(hc_res_speed_m$est.std, 3)`, respectively) while females showed none, suggesting sex-differential neural substrates for processing speed performance. Neither sex showed significant HVR → Speed~s~ associations.
 
@@ -547,7 +547,7 @@ All SEM models demonstrated good fit according to conventional criteria (`r S("t
 
 #### Non-Linear Age Effects
 
-As described in Methods, quadratic age terms were included in HVR and HC~RES~ models but not in the HC model due to multicollinearity; fit indices for the HC model (`r S("tbl-sem-fit")`) therefore reflect a linear-age specification. All quadratic age effects were significantly negative (all p < .001; `r S("tbl-sem-covariate-effects")`), indicating that cross-sectional differences between older and younger participants were disproportionately larger at older ages. HVR showed a stronger quadratic effect ($\beta$ = `r safe_round(hvr_age_sq$est.std, 3)`) than HC~RES~ ($\beta$ = `r safe_round(hc_res_age_sq$est.std, 3)`), consistent with HVR capturing both hippocampal and ventricular age-related changes, both of which accelerate at older ages. Cognitive factors showed comparable quadratic effects across models (*g*: $\beta$ $\approx$ `r safe_round(g_age_sq_hvr$est.std, 3)`; Speed~s~: $\beta$ $\approx$ `r safe_round(speed_age_sq_hvr$est.std, 3)`).
+As described in Methods, quadratic age terms were included in HVR and HC~RES~ models but not in the HC model due to multicollinearity; fit indices for the HC model (`r S("tbl-sem-fit")`) therefore reflect a linear-age specification. All quadratic age effects were significantly negative (all p < .001; `r S("tbl-sem-covariate-effects")`), indicating that cross-sectional differences between older and younger participants were disproportionately larger at older ages. HVR showed a stronger quadratic effect ($\beta$ = `r safe_round(hvr_age_sq$est.std, 3)`) than HC~RES~ ($\beta$ = `r safe_round(hc_res_age_sq$est.std, 3)`; `r S("tbl-sem-covariate-effects")`), consistent with HVR capturing both hippocampal and ventricular age-related changes, both of which accelerate at older ages. Cognitive factors showed comparable quadratic effects across models (*g*: $\beta$ $\approx$ `r safe_round(g_age_sq_hvr$est.std, 3)`; Speed~s~: $\beta$ $\approx$ `r safe_round(speed_age_sq_hvr$est.std, 3)`).
 
 ## Sensitivity Analyses
 

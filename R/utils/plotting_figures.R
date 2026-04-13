@@ -377,7 +377,7 @@ fig_normative_centiles_panel <- function(norm_tables) {
   # ROI definitions: key, y-label
   roi_defs <- list(
     list(roi = "HVR", adj = "NON", ylab = "HVR"),
-    list(roi = "HC",  adj = "NON", ylab = "Hippocampal Volume (mm\u00B3)"),
+    list(roi = "HC",  adj = "NON", ylab = "Hippocampal Volume (mL)"),
     list(roi = "LV",  adj = "NON", ylab = "Lateral Ventricle Volume (cc)")
   )
 
@@ -407,7 +407,7 @@ fig_normative_centiles_panel <- function(norm_tables) {
   # Helper: single-sex panel (Female or Male)
   # Legend is NOT suppressed so patchwork can collect the full 7-level
   # linetype guide from these panels (the both panel only has 3 levels).
-  panel_single <- function(long, sex, ylab, show_y = TRUE, show_x = FALSE) {
+  panel_single <- function(long, sex, ylab, show_y = TRUE, show_x = FALSE, ylim = NULL) {
     d <- long[SEX == sex]
     p <- ggplot(d, aes(x = AGE, y = Value, linetype = Centile, linewidth = Centile)) +
       geom_line(color = sex_colors[sex]) +
@@ -419,6 +419,7 @@ fig_normative_centiles_panel <- function(norm_tables) {
       base_theme +
       guides(linetype = guide_legend(title = "Centile", ncol = 7,
                                      override.aes = list(color = "grey30")))
+    if (!is.null(ylim)) p <- p + coord_cartesian(ylim = ylim)
     if (!show_y) p <- p + theme(axis.text.y = element_blank(),
                                  axis.ticks.y = element_blank())
     p
@@ -427,9 +428,9 @@ fig_normative_centiles_panel <- function(norm_tables) {
   # Helper: overlaid both-sex panel (carries the legend aesthetics)
   # Only median + 5th/95th bounds to reduce visual clutter
   both_centiles <- c("5th", "Median", "95th")
-  panel_both <- function(long, ylab, show_x = FALSE) {
+  panel_both <- function(long, ylab, show_x = FALSE, ylim = NULL) {
     d <- long[Centile %in% both_centiles]
-    ggplot(d, aes(x = AGE, y = Value, linetype = Centile, color = SEX,
+    p <- ggplot(d, aes(x = AGE, y = Value, linetype = Centile, color = SEX,
                      linewidth = Centile)) +
       geom_line(alpha = 0.8) +
       scale_color_manual(values = sex_colors) +
@@ -445,6 +446,8 @@ fig_normative_centiles_panel <- function(norm_tables) {
             legend.margin = margin(0, 0, 0, 0)) +
       guides(linetype = "none",
              color = "none")
+    if (!is.null(ylim)) p <- p + coord_cartesian(ylim = ylim)
+    p
   }
 
   # Build all 9 panels (3 ROIs x 3 columns)
@@ -454,10 +457,14 @@ fig_normative_centiles_panel <- function(norm_tables) {
     long <- prep_data(def)
     if (is.null(long)) next
     is_bottom <- (i == length(roi_defs))
+    # Shared Y limits across all 3 columns for this ROI
+    y_range <- range(long$Value, na.rm = TRUE)
+    y_pad <- diff(y_range) * 0.03
+    y_lim <- c(y_range[1] - y_pad, y_range[2] + y_pad)
     panels <- c(panels, list(
-      panel_single(long, "Female", def$ylab, show_y = TRUE, show_x = is_bottom),
-      panel_both(long, def$ylab, show_x = is_bottom),
-      panel_single(long, "Male", def$ylab, show_y = FALSE, show_x = is_bottom)
+      panel_single(long, "Female", def$ylab, show_y = TRUE, show_x = is_bottom, ylim = y_lim),
+      panel_both(long, def$ylab, show_x = is_bottom, ylim = y_lim),
+      panel_single(long, "Male", def$ylab, show_y = FALSE, show_x = is_bottom, ylim = y_lim)
     ))
   }
 
