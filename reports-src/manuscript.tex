@@ -370,13 +370,13 @@ UK countries. This subsample provides adequate power for detecting
 standardized path coefficients \(\geq\) 0.02. The \textbf{ICV-matched
 subsample} (N = 9,500) comprised female--male pairs matched on age
 (\(\pm 1\) year) and ICV (\(\pm 25\) cc) drawn from the primary sample,
-and was used to isolate sex effects from head-size confounding (see Sex
-Differences Across Adjustment Methods). The \textbf{longitudinal
-subsample} (N = 2,935) comprised participants from the primary sample
-who also had a follow-up imaging session (ses-3), with a mean
-intersession interval of 2.7 years (SD = 1.1; range: 1.5--5.0). This
-subsample was used as a sensitivity check for normative model
-calibration (see Age-Related Patterns and Normative Modeling).
+and was used to isolate sex effects from head-size confounding (see
+Section~\ref{sec-sex-diff-methods}). The \textbf{longitudinal subsample}
+(N = 2,935) comprised participants from the primary sample who also had
+a follow-up imaging session (ses-3), with a mean intersession interval
+of 2.7 years (SD = 1.1; range: 1.5--5.0). This subsample was used as a
+sensitivity check for normative model calibration (see
+Section~\ref{sec-age-patterns-methods}).
 
 \subsubsection{Exclusion Criteria}\label{exclusion-criteria}
 
@@ -593,12 +593,12 @@ structures, no further head-size adjustment was applied.
 Cognitive data were collected at the imaging visit using the UK Biobank
 touchscreen-based cognitive battery {[}Sudlow et al., 2015{]},
 comprising 12 indicators spanning memory, processing speed, executive
-function, and reasoning domains (Table S1). Timed measures (reaction
-time, trail making, pair matching response time) were inverse-coded so
-that higher scores consistently indicate better performance across all
-indicators. Missing cognitive data were handled using full information
-maximum likelihood (FIML) estimation, which uses all available data
-under a missing-at-random assumption.
+function, and reasoning domains (Supporting Information, Table S1).
+Timed measures (reaction time, trail making, pair matching response
+time) were inverse-coded so that higher scores consistently indicate
+better performance across all indicators. Missing cognitive data were
+handled using full information maximum likelihood (FIML) estimation,
+which uses all available data under a missing-at-random assumption.
 
 \subsubsection{Factor Structure: Bifactor
 CFA}\label{factor-structure-bifactor-cfa}
@@ -624,7 +624,7 @@ errors (MLR) in lavaan {[}Rosseel, 2012{]}.
 \subsection{Statistical Analyses}\label{statistical-analyses}
 
 \subsubsection{Sex Differences Across Adjustment
-Methods}\label{sex-differences-across-adjustment-methods}
+Methods}\label{sec-sex-diff-methods}
 
 \paragraph{HVR Self-Normalizing
 Properties}\label{hvr-self-normalizing-properties}
@@ -657,7 +657,7 @@ shows similar effects in full and matched samples, this indicates HVR is
 independent of head size.
 
 \subsubsection{Age-Related Patterns and Normative
-Modeling}\label{age-related-patterns-and-normative-modeling}
+Modeling}\label{sec-age-patterns-methods}
 
 \paragraph{Age × Sex Interactions}\label{age-sex-interactions}
 
@@ -698,7 +698,11 @@ For HVR (self-normalizing, no ICV term needed):
 \begin{equation}\phantomsection\label{eq-gamlss-hvr}{\mu = f_\mu(\text{Age}) + \beta_{\text{Edu}} \cdot \text{Education} + u_{\text{site}}}\end{equation}
 where \(f_\mu(\cdot)\) denotes a cubic spline smooth for the location
 parameter and \(u_{\text{site}}\) denotes random intercepts for scanner
-site. The scale parameter was also modeled as a function of age,
+site. Although site ICCs were low (\textless{} 0.05; see Sensitivity
+Analyses), site random intercepts were retained in the normative models
+because centile estimation targets individual-level classification,
+where even small systematic shifts can affect percentile assignment. The
+scale parameter was also modeled as a function of age,
 \(\sigma = f_\sigma(\text{Age})\), allowing variance to change across
 the age range. Model families (Gaussian and Box-Cox Cole and Green;
 BCCG) were compared using AIC, with BIC as secondary criterion. The BCCG
@@ -862,17 +866,11 @@ significant difference in effect magnitude between hemispheres.
 \paragraph{Inclusion of psychiatric
 diagnoses}\label{inclusion-of-psychiatric-diagnoses}
 
-The primary analysis excluded participants with ICD-10 diagnoses in the
-F (mental and behavioral disorders), G (neurological), or Q0 (congenital
-brain malformations) categories. To assess robustness, sex difference
-analyses were repeated in an expanded sensitivity sample that included
-participants with F-code diagnoses (F00-F99) while still excluding G and
-Q0 codes. The difference in Cohen's d between primary and sensitivity
-samples (\(\Delta d\) = \(d_{\text{primary}}\) -
-\(d_{\text{sensitivity}}\)) quantified the impact of psychiatric
-exclusion criteria. Small differences indicate that findings generalize
-to a less restrictively selected sample and are not driven by exclusion
-of psychiatric comorbidity.
+To assess robustness, sex difference analyses were repeated in an
+expanded sensitivity sample that retained participants with F-code
+diagnoses (F00-F99; N = 30,032) while still excluding G and Q0 codes.
+The impact of psychiatric exclusion was quantified as \(\Delta d\) =
+\(d_{\text{primary}}\) - \(d_{\text{sensitivity}}\).
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -937,7 +935,7 @@ ICV, cc & 1509 (107) & 1723 (130) & -1.82 \\
 \end{table}%
 
 \subsection{Sex Differences Across Adjustment
-Methods}\label{sex-differences-across-adjustment-methods-1}
+Methods}\label{sex-differences-across-adjustment-methods}
 
 \subsubsection{HVR Self-Normalizing
 Properties}\label{hvr-self-normalizing-properties-1}
@@ -1024,7 +1022,7 @@ HVR showed a consistent female advantage: d = 0.52 {[}95\% CI: 0.49,
 0.54{]}. The combination of males having relatively smaller hippocampi
 (after head-size adjustment) and larger ventricles produces this female
 advantage in HVR. Distribution overlap between sexes across adjustment
-methods is shown in Figure S1.
+methods is shown in Supporting Information (Figure S2).
 
 \begin{figure}
 
@@ -1096,7 +1094,7 @@ Self-normalizing & 0.517 & [0.493, 0.542] & 0.183 & [0.142, 0.223] & 0.335 & [0.
 \end{table}%
 
 \subsection{Age-Related Patterns and Normative
-Modeling}\label{age-related-patterns-and-normative-modeling-1}
+Modeling}\label{age-related-patterns-and-normative-modeling}
 
 \subsubsection{Age × Sex Interactions}\label{age-sex-interactions-1}
 
@@ -1160,13 +1158,14 @@ volume models include intracranial volume as a covariate.}
 
 \end{figure}%
 
-Calibration plots (Figure S2) assess whether the normative models are
-well-specified: for each nominal centile (e.g., the 10th percentile
-curve), the plot shows what proportion of observations actually fall
-below that curve. A well-calibrated model produces points along the
-diagonal (observed proportion = expected proportion). Our models closely
-track the diagonal across all centiles, indicating that the fitted
-distributions accurately capture the true variability in the data.
+Calibration plots (Supporting Information, Figure S1) assess whether the
+normative models are well-specified: for each nominal centile (e.g., the
+10th percentile curve), the plot shows what proportion of observations
+actually fall below that curve. A well-calibrated model produces points
+along the diagonal (observed proportion = expected proportion). Our
+models closely track the diagonal across all centiles, indicating that
+the fitted distributions accurately capture the true variability in the
+data.
 
 \paragraph{Temporal Stability (Longitudinal
 Validation)}\label{temporal-stability-longitudinal-validation}
@@ -1206,9 +1205,9 @@ covariate.
 
 The cognitive bifactor model showed acceptable fit at all invariance
 levels, with \(\Delta\)CFI \(\leq\) 0.01 and \(\Delta\)RMSEA \(\leq\)
-0.015 at each step (Table S12). Strict measurement invariance was
-supported, validating cross-sex comparisons of factor scores and
-structural paths.
+0.015 at each step (Supporting Information, Table S12). Strict
+measurement invariance was supported, validating cross-sex comparisons
+of factor scores and structural paths.
 
 \subsubsection{Pooled Model Results}\label{pooled-model-results}
 
@@ -1267,8 +1266,8 @@ Path & \ensuremath{\beta} & 95\% CI & p \\
 \subsubsection{Sex-Stratified Results}\label{sex-stratified-results}
 
 Figure~\ref{fig-sem-forest} displays sex-stratified path coefficients
-from multi-group models (Table S13). The multigroup analyses revealed
-sex differences in brain-cognition associations.
+from multi-group models (detailed in Table S13). The multigroup analyses
+revealed sex differences in brain-cognition associations.
 
 For general cognition (\emph{g}), HC\textsubscript{RES} → \emph{g} was
 not significant in males (p = 0.227) while remaining significant in
@@ -1311,20 +1310,21 @@ significantly negative (all p \textless{} .001; Table S16), indicating
 that cross-sectional differences between older and younger participants
 were disproportionately larger at older ages. HVR showed a stronger
 quadratic effect (\(\beta\) = -0.134) than HC\textsubscript{RES}
-(\(\beta\) = -0.075), consistent with HVR capturing both hippocampal and
-ventricular age-related changes, both of which accelerate at older ages.
-Cognitive factors showed comparable quadratic effects across models
-(\emph{g}: \(\beta\) \(\approx\) -0.078; Speed\textsubscript{s}:
-\(\beta\) \(\approx\) -0.046).
+(\(\beta\) = -0.075; Table S16), consistent with HVR capturing both
+hippocampal and ventricular age-related changes, both of which
+accelerate at older ages. Cognitive factors showed comparable quadratic
+effects across models (\emph{g}: \(\beta\) \(\approx\) -0.078;
+Speed\textsubscript{s}: \(\beta\) \(\approx\) -0.046).
 
 \subsection{Sensitivity Analyses}\label{sensitivity-analyses-1}
 
 \subsubsection{Site-Adjusted Effect
 Sizes}\label{site-adjusted-effect-sizes}
 
-Site ICCs ranged from 0.004 to 0.012 (Table S17), indicating that
-scanner site explained less than 1.5\% of total variance in all brain
-measures. Effect sizes remained consistent after site adjustment.
+Site ICCs ranged from 0.004 to 0.012 (Supporting Information, Table
+S17), indicating that scanner site explained less than 1.5\% of total
+variance in all brain measures. Effect sizes remained consistent after
+site adjustment.
 
 \subsubsection{Hemisphere Comparison}\label{hemisphere-comparison-1}
 
@@ -1365,7 +1365,7 @@ female slope), with the female advantage widening at older ages (d =
 comparably to hippocampal volume.
 
 \subsection{Sex Differences Across Adjustment
-Methods}\label{sex-differences-across-adjustment-methods-2}
+Methods}\label{sex-differences-across-adjustment-methods-1}
 
 HVR achieves head-size independence through its mathematical
 construction: both numerator (HC) and denominator (HC + LV) scale with
@@ -1437,7 +1437,7 @@ differences in the hippocampus-to-ventricle balance, not head-size
 confounding.
 
 \subsection{Age-Related Patterns and Normative
-Modeling}\label{age-related-patterns-and-normative-modeling-2}
+Modeling}\label{age-related-patterns-and-normative-modeling-1}
 
 Males showed steeper cross-sectional differences across all measures:
 1.66× for HVR (p = 2e-61), 1.63× for HC, and 1.87× for LV, consistent
@@ -1490,7 +1490,7 @@ with the near-zero Cohen's d for residualized volumes, supporting
 combined norms when proper ICV adjustment is applied. For LV, males show
 greater ventricular variability at older ages, potentially reflecting
 greater heterogeneity in aging-related patterns. Well-calibrated centile
-estimates (Figure S2) have demonstrated clinical utility in detecting
+estimates (Figure S1) have demonstrated clinical utility in detecting
 case-control differences and predicting diagnostic transition from MCI
 to Alzheimer's disease {[}Bethlehem et al., 2022; Dima et al., 2022{]}.
 HVR showed slightly lower test-retest reliability (ICC \textgreater{}
