@@ -15,10 +15,12 @@ key-points:
   - Males show steeper cross-sectional age-related HVR reductions; sex-specific normative centile curves are provided for clinical application
 author:
   - name: Sofia Fernandez-Lozano
+    orcid: 0000-0003-2288-8111
     affiliations:
       - ref: bic
       - ref: ipn
   - name: D. Louis Collins
+    orcid: 0000-0002-8432-7021
     affiliations:
       - ref: bic
       - ref: ipn
@@ -46,7 +48,10 @@ affiliations:
     country: Canada
 date: today
 abstract: |
-  Hippocampal volume is a key biomarker for Alzheimer's disease and brain aging, yet reported sex differences vary substantially depending on head-size adjustment methods. We examined whether the hippocampal-to-ventricle ratio (HVR), a self-normalizing measure, provides more consistent sex difference estimates than conventional adjustment approaches. Using a subset of UK Biobank structural MRI data (N = 27,680; 56% female; ages 45--82), we compared sex differences across four adjustment methods (unadjusted, proportions, stereotaxic, residualized) and in samples matched on age and on intracranial volume (ICV). Hippocampal sex differences reversed direction across methods, ranging from $d = -0.89$ (males larger, unadjusted) to $d = 0.58$ (females larger, proportions), with a range of 1.5 standard deviations across analytical choices. In contrast, HVR showed a consistent female advantage ($d = 0.52$) that persisted in the ICV-matched subsample ($d = 0.19$), confirming this effect is not a head-size artifact. Males exhibited steeper cross-sectional age-related HVR differences ($1.7\times$ female rate, $p < 10^{-50}$), consistent with males showing ventricular expansion at younger ages. Structural equation modeling revealed that HVR predicted general cognition comparably to hippocampal volume ($\beta = 0.04$, overlapping CIs), and unlike residualized hippocampal volume, HVR maintained significant brain-cognition associations in both sexes. We provide sex-specific normative centile curves for clinical application. These findings indicate that apparent hippocampal sex differences largely reflect methodological choices rather than biology, while HVR captures consistent morphological variation related to brain aging that may have clinical utility.
+  **Introduction:** Hippocampal volume is a key biomarker for Alzheimer's disease and brain aging, yet reported sex differences vary substantially depending on head-size adjustment methods. We examined whether the hippocampal-to-ventricle ratio (HVR), a self-normalizing measure, provides more consistent sex difference estimates than conventional adjustment approaches.
+  **Methods:** Using a subset of UK Biobank structural MRI data (N = 27,680; 56% female; ages 45--82), we compared sex differences across four adjustment methods (unadjusted, proportions, stereotaxic, residualized) and in samples matched on age and on intracranial volume (ICV). Cross-sectional age patterns were modeled with GAMLSS, and brain--cognition associations were estimated via structural equation modeling on a bifactor cognitive model.
+  **Results:** Hippocampal sex differences reversed direction across methods, ranging from $d = -0.89$ (males larger, unadjusted) to $d = 0.58$ (females larger, proportions), with a range of 1.5 standard deviations across analytical choices. In contrast, HVR showed a consistent female advantage ($d = 0.52$) that persisted in the ICV-matched subsample ($d = 0.19$), confirming this effect is not a head-size artifact. Males exhibited steeper cross-sectional age-related HVR differences ($1.7\times$ female rate, $p < 10^{-50}$), consistent with males showing ventricular expansion at younger ages. HVR predicted general cognition comparably to hippocampal volume ($\beta = 0.04$, overlapping CIs), and unlike residualized hippocampal volume, HVR maintained significant brain--cognition associations in both sexes.
+  **Conclusion:** Apparent hippocampal sex differences largely reflect methodological choices rather than biology, while HVR captures consistent morphological variation related to brain aging that may have clinical utility. We provide sex-specific normative centile curves for clinical application.
 format:
   html:
     toc: true
@@ -106,7 +111,7 @@ execute:
   message: false
   eval: true
 bibliography: references.bib
-csl: human-brain-mapping.csl
+csl: apa.csl
 ---
 
 ```{r}
@@ -607,7 +612,7 @@ Methodologically, the study did not include power-corrected proportions allometr
 
 The current findings motivate four lines of follow-up work. First, the UK Biobank repeat imaging subsample enables longitudinal validation of whether HVR predicts individual-level cognitive decline. Second, clinical validation in AD/MCI cohorts would assess HVR's diagnostic utility compared to clinical populations studied previously [@fernandez-lozano_enhanced_2025]. Third, longitudinal data could separate hippocampal and ventricular contributions to HVR changes, which the cross-sectional ratio conflates. Fourth, examining whether HVR × sex × APOE genotype predicts dementia conversion would address the gene × sex interactions that this study could not explore.
 
-## Conclusions
+# Conclusions
 
 In `r format(n_primary, big.mark=",")` UK Biobank participants (`r pct_female`% female), hippocampal sex differences reversed direction across adjustment methods (d range: `r round(abs(hc_d_range), 1)` SD), confirming their methodological determination. HVR demonstrated substantial head-size independence (r~ICV~ = `r round(r_hvr_icv, 2)`; `r icv_reduction_pct`% reduction vs. raw HC) and a consistent female advantage replicated in the ICV-matched subsample (d = `r round(matched_hvr$ESTIMATE_MTCH, 2)`). Males showed `r round(hvr_int$SLOPE_RATIO, 2)`× steeper age-related HVR differences (p = `r format(hvr_int$INTERACTION_P, scientific=TRUE, digits=2)`); sex-specific normative centile curves are provided for research application, pending validation in clinical populations. HVR predicted general cognition comparably to hippocampal volume (HVR → *g*: $\beta$ = `r safe_round(hvr_g$est.std, 3)` vs. HC → *g*: $\beta$ = `r safe_round(hc_g$est.std, 3)`, overlapping CIs), maintained predictive validity in both sexes while residualized HC lost significance in males (p = `r safe_round(hc_res_g_m$pvalue, 3)`), and supported more complex SEM specifications that raw HC could not.
 
@@ -617,7 +622,11 @@ S.F-L. conceived the study, developed the analysis pipeline, performed all analy
 
 # Acknowledgments {.unnumbered}
 
-This research has been conducted using the UK Biobank Resource under Application Number 45551. This investigation was supported in part by an award from the International Progressive MS Alliance (award reference number PA-1412-02420), a grant from the Canadian Institutes of Health Research, and a donation from the Famille Louise & Andre Charron.
+This research has been conducted using the UK Biobank Resource under Application Number 45551.
+
+# Funding {.unnumbered}
+
+This investigation was supported in part by an award from the International Progressive MS Alliance (award reference number PA-1412-02420), a grant from the Canadian Institutes of Health Research, and a donation from the Famille Louise & Andre Charron.
 
 # Conflict of Interest Statement {.unnumbered}
 

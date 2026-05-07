@@ -3,10 +3,12 @@ title: "Supporting Information"
 subtitle: "Hippocampal-to-Ventricle Ratio as a Head-Size-Independent Biomarker: Sex Differences and Cognitive Associations in 27,680 UK Biobank Participants"
 author:
   - name: Sofia Fernandez-Lozano
+    orcid: 0000-0003-2288-8111
     affiliations:
       - ref: bic
       - ref: ipn
   - name: D. Louis Collins
+    orcid: 0000-0002-8432-7021
     affiliations:
       - ref: bic
       - ref: ipn

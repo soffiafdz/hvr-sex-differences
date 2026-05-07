@@ -222,9 +222,10 @@ Aging, Biomarkers, Reference Values},
 Biomarker: Sex Differences and Cognitive Associations in 27,680 UK
 Biobank Participants}
 
-\author[1,2]{Sofia Fernandez-Lozano}
+\author[1,2]{Sofia
+Fernandez-Lozano\thanks{ORCID: \href{https://orcid.org/0000-0003-2288-8111}{0000-0003-2288-8111}}}
 \author[1,2,3]{D. Louis
-Collins\thanks{Corresponding author: louis.collins@mcgill.ca}}
+Collins\thanks{ORCID: \href{https://orcid.org/0000-0002-8432-7021}{0000-0002-8432-7021}. Corresponding author: louis.collins@mcgill.ca}}
 
 \affil[1]{Montreal Neurological Institute, McConnell Brain Imaging
 Centre, Montreal, Quebec, Canada}
@@ -233,81 +234,81 @@ University, Montreal, Quebec, Canada}
 \affil[3]{Department of Biomedical Engineering, McGill
 University, Montreal, Quebec, Canada}
 
-\date{2026-04-13}
+\date{2026-04-30}
 
 \begin{document}
 \maketitle
 \begin{abstract}
-Hippocampal volume is a key biomarker for Alzheimer's disease and brain
-aging, yet reported sex differences vary substantially depending on
-head-size adjustment methods. We examined whether the
-hippocampal-to-ventricle ratio (HVR), a self-normalizing measure,
-provides more consistent sex difference estimates than conventional
-adjustment approaches. Using a subset of UK Biobank structural MRI data
-(N = 27,680; 56\% female; ages 45--82), we compared sex differences
-across four adjustment methods (unadjusted, proportions, stereotaxic,
-residualized) and in samples matched on age and on intracranial volume
-(ICV). Hippocampal sex differences reversed direction across methods,
-ranging from \(d = -0.89\) (males larger, unadjusted) to \(d = 0.58\)
-(females larger, proportions), with a range of 1.5 standard deviations
-across analytical choices. In contrast, HVR showed a consistent female
-advantage (\(d = 0.52\)) that persisted in the ICV-matched subsample
-(\(d = 0.19\)), confirming this effect is not a head-size artifact.
-Males exhibited steeper cross-sectional age-related HVR differences
-(\(1.7\times\) female rate, \(p < 10^{-50}\)), consistent with males
-showing ventricular expansion at younger ages. Structural equation
-modeling revealed that HVR predicted general cognition comparably to
-hippocampal volume (\(\beta = 0.04\), overlapping CIs), and unlike
-residualized hippocampal volume, HVR maintained significant
-brain-cognition associations in both sexes. We provide sex-specific
-normative centile curves for clinical application. These findings
-indicate that apparent hippocampal sex differences largely reflect
-methodological choices rather than biology, while HVR captures
+\textbf{Introduction:} Hippocampal volume is a key biomarker for
+Alzheimer's disease and brain aging, yet reported sex differences vary
+substantially depending on head-size adjustment methods. We examined
+whether the hippocampal-to-ventricle ratio (HVR), a self-normalizing
+measure, provides more consistent sex difference estimates than
+conventional adjustment approaches. \textbf{Methods:} Using a subset of
+UK Biobank structural MRI data (N = 27,680; 56\% female; ages 45--82),
+we compared sex differences across four adjustment methods (unadjusted,
+proportions, stereotaxic, residualized) and in samples matched on age
+and on intracranial volume (ICV). Cross-sectional age patterns were
+modeled with GAMLSS, and brain--cognition associations were estimated
+via structural equation modeling on a bifactor cognitive model.
+\textbf{Results:} Hippocampal sex differences reversed direction across
+methods, ranging from \(d = -0.89\) (males larger, unadjusted) to
+\(d = 0.58\) (females larger, proportions), with a range of 1.5 standard
+deviations across analytical choices. In contrast, HVR showed a
+consistent female advantage (\(d = 0.52\)) that persisted in the
+ICV-matched subsample (\(d = 0.19\)), confirming this effect is not a
+head-size artifact. Males exhibited steeper cross-sectional age-related
+HVR differences (\(1.7\times\) female rate, \(p < 10^{-50}\)),
+consistent with males showing ventricular expansion at younger ages. HVR
+predicted general cognition comparably to hippocampal volume
+(\(\beta = 0.04\), overlapping CIs), and unlike residualized hippocampal
+volume, HVR maintained significant brain--cognition associations in both
+sexes. \textbf{Conclusion:} Apparent hippocampal sex differences largely
+reflect methodological choices rather than biology, while HVR captures
 consistent morphological variation related to brain aging that may have
-clinical utility.
+clinical utility. We provide sex-specific normative centile curves for
+clinical application.
 \end{abstract}
 
 
 \section{Introduction}\label{introduction}
 
 The hippocampus (HC) is a brain structure used as an early biomarker for
-Alzheimer's disease (AD) and brain aging {[}Jack et al., 1999; Jack et
-al., 2010; Raz et al., 2005{]}. Sex differences in brain structures have
-been documented, but their interpretation is controversial {[}Ritchie et
-al., 2018; Ruigrok et al., 2014{]}, largely because findings depend on
-whether and how head-size adjustments are applied {[}Nordenskjöld et
-al., 2015; Sanchis-Segura et al., 2020{]}. Males have approximately 12\%
-larger intracranial volume (ICV) than females {[}Ruigrok et al.,
-2014{]}, and after head-size correction, sex classification from brain
-features drops from \textgreater80\% to approximately 60\%
-{[}Sanchis-Segura et al., 2020{]}. This methodological sensitivity
-suggests some reported sex differences may be artifacts of adjustment
-methods.
+Alzheimer's disease (AD) and brain aging (Jack et al., 1999, 2010; Raz
+et al., 2005). Sex differences in brain structures have been documented,
+but their interpretation is controversial (Ritchie et al., 2018; Ruigrok
+et al., 2014), largely because findings depend on whether and how
+head-size adjustments are applied (Nordenskjöld et al., 2015;
+Sanchis-Segura et al., 2020). Males have approximately 12\% larger
+intracranial volume (ICV) than females (Ruigrok et al., 2014), and after
+head-size correction, sex classification from brain features drops from
+\textgreater80\% to approximately 60\% (Sanchis-Segura et al., 2020).
+This methodological sensitivity suggests some reported sex differences
+may be artifacts of adjustment methods.
 
 Hippocampal atrophy rates predict conversion from mild cognitive
-impairment to dementia {[}Rajagopal et al., 2024{]}, making accurate
-volume assessment clinically consequential. However, males and females
-show different rates of age-related brain volume change, with steeper
-subcortical volume declines in males across multiple structures
-{[}Ritchie et al., 2018{]}. These sex-differential trajectories mean
-that normative reference values must be sex-stratified to avoid
-misclassifying normal variation as pathological; recent large-scale
-brain charting efforts have adopted sex-specific centile modeling for
-this reason {[}Bethlehem et al., 2022; Ge et al., 2024{]}.
+impairment to dementia (Rajagopal et al., 2024), making accurate volume
+assessment clinically consequential. However, males and females show
+different rates of age-related brain volume change, with steeper
+subcortical volume declines in males across multiple structures (Ritchie
+et al., 2018). These sex-differential trajectories mean that normative
+reference values must be sex-stratified to avoid misclassifying normal
+variation as pathological; recent large-scale brain charting efforts
+have adopted sex-specific centile modeling for this reason (Bethlehem et
+al., 2022; Ge et al., 2024).
 
 Multiple adjustment methods exist, each with different assumptions:
 proportions (V/ICV) assumes perfect allometric scaling, residualization
 (V \(-\) \(\beta \times\) ICV) removes linear ICV association, and
 stereotaxic normalization applies spatial transformation to a template.
 These methods can yield contradictory conclusions about the same brain
-regions {[}Wang et al., 2024{]}. For hippocampus, reported sex
-differences range from males larger (unadjusted; Ruigrok et al.
-{[}2014{]}) to females larger (proportions; Sanchis-Segura et al.
-{[}2020{]}) to no difference (residualized; O'Brien et al. {[}2011{]}).
-The proportions method can produce biologically implausible results,
-while residualization yields more consistent estimates {[}Wang et al.,
-2024{]}. No consensus exists on the correct method, and conclusions
-depend on analytical choices.
+regions (Wang et al., 2024). For hippocampus, reported sex differences
+range from males larger (unadjusted; Ruigrok et al. (2014)) to females
+larger (proportions; Sanchis-Segura et al. (2020)) to no difference
+(residualized; O'Brien et al. (2011)). The proportions method can
+produce biologically implausible results, while residualization yields
+more consistent estimates (Wang et al., 2024). No consensus exists on
+the correct method, and conclusions depend on analytical choices.
 
 The hippocampal-to-ventricle ratio (HVR), defined as HC / (HC + LV)
 where HC denotes total hippocampal volume and LV denotes the volume of
@@ -317,26 +318,25 @@ self-normalizing. HVR captures the relationship between hippocampal and
 ventricular volumes, which show opposite patterns with age---smaller
 hippocampus and larger ventricles. Schoemaker and colleagues introduced
 HVR and showed that it provides stronger associations with age and
-memory than standard hippocampal volume in healthy aging {[}Schoemaker
-et al., 2019{]}. Subsequent work shows HVR provides higher effect sizes
-for distinguishing AD from controls compared to HC alone
-{[}Fernandez-Lozano et al., 2025{]}. However, properties of HVR in
-healthy populations and across adjustment methods remain unexplored.
+memory than standard hippocampal volume in healthy aging (Schoemaker et
+al., 2019). Subsequent work shows HVR provides higher effect sizes for
+distinguishing AD from controls compared to HC alone (Fernandez-Lozano
+et al., 2025). However, properties of HVR in healthy populations and
+across adjustment methods remain unexplored.
 
 Age-related ventricular expansion reflects concurrent loss of
-surrounding gray and white matter tissue {[}Madsen et al., 2015{]}, and
-this expansion occurs earlier in males, with abnormal enlargement
-appearing in the seventies and preferentially affecting the frontal
-horns {[}Currà et al., 2019{]}. These sex-differential ventricular
-trajectories suggest that a ratio incorporating both hippocampal and
-ventricular volumes may capture sex differences in brain aging that
-individual volumes miss. Furthermore, brain structure--cognition
-associations themselves may differ by sex: grey matter volumes predict
-cognitive profiles with different strength and spatial specificity in
-older males versus females {[}Jockwitz et al., 2024{]}, and hippocampal
-volume predicts associative memory in older women but not men {[}Zheng
-et al., 2017{]}. Whether HVR shows similar sex-differential cognitive
-associations remains unknown.
+surrounding gray and white matter tissue (Madsen et al., 2015), and this
+expansion occurs earlier in males, with abnormal enlargement appearing
+in the seventies and preferentially affecting the frontal horns (Currà
+et al., 2019). These sex-differential ventricular trajectories suggest
+that a ratio incorporating both hippocampal and ventricular volumes may
+capture sex differences in brain aging that individual volumes miss.
+Furthermore, brain structure--cognition associations themselves may
+differ by sex: grey matter volumes predict cognitive profiles with
+different strength and spatial specificity in older males versus females
+(Jockwitz et al., 2024), and hippocampal volume predicts associative
+memory in older women but not men (Zheng et al., 2017). Whether HVR
+shows similar sex-differential cognitive associations remains unknown.
 
 We addressed three questions: (1) Do hippocampal sex differences vary
 across head-size adjustment methods while HVR remains consistent? (2) Do
@@ -352,8 +352,8 @@ volumes?
 \subsection{Data Source and
 Participants}\label{data-source-and-participants}
 
-Data were obtained from UK Biobank (Application 45551) {[}Miller et al.,
-2016; Sudlow et al., 2015{]}. The initial imaging sample comprised
+Data were obtained from UK Biobank (Application 45551) (Miller et al.,
+2016; Sudlow et al., 2015). The initial imaging sample comprised
 approximately 47,398 participants with T1-weighted structural MRI. After
 exclusions (detailed below), the final analytic sample included N =
 27,680 participants aged 44.6 to 82.8 years. With this sample size, we
@@ -384,11 +384,11 @@ Participants were excluded if they had any of the following ICD-10
 diagnoses recorded in linked hospital records: F00-F99 (mental and
 behavioral disorders including dementia, mood disorders, schizophrenia,
 and anxiety disorders, which are associated with hippocampal volume
-alterations {[}Brosch et al., 2022; Cao et al., 2023; Schmaal et al.,
-2016{]}); G00-G99 (neurological diseases including Parkinson's disease,
+alterations (Brosch et al., 2022; Cao et al., 2023; Schmaal et al.,
+2016)); G00-G99 (neurological diseases including Parkinson's disease,
 multiple sclerosis, epilepsy, and cerebrovascular disease, which
-directly affect brain structure {[}Erp et al., 2016; Koenig et al.,
-2014; Tai et al., 2025; Xu et al., 2020{]}); and Q00-Q07 (congenital CNS
+directly affect brain structure (Erp et al., 2016; Koenig et al., 2014;
+Tai et al., 2025; Xu et al., 2020)); and Q00-Q07 (congenital CNS
 malformations affecting normal brain development). This exclusion
 strategy selected a sample of cognitively healthy adults without
 conditions known to affect hippocampal morphometry. The full exclusion
@@ -485,9 +485,9 @@ boxes indicate analytic subsamples derived from the primary sample.}
 
 Image segmentations underwent quality control in three stages: (1)
 automated quality scores from deep learning-based assessments, requiring
-DARQ score \(\geq\) 0.25 {[}Fonov et al., 2022{]} and AssemblyNet rating
-of ``A'' (highest quality grade) {[}Coupé et al., 2020{]}, (2)
-statistical outlier detection excluding participants with age- and
+DARQ score \(\geq\) 0.25 (Fonov et al., 2022) and AssemblyNet rating of
+``A'' (highest quality grade) (Coupé et al., 2020), (2) statistical
+outlier detection excluding participants with age- and
 head-size-adjusted volumes exceeding \(\pm 3\) SD from the sample mean,
 and (3) visual inspection of flagged cases by trained raters for evident
 segmentation failures, motion artifacts, or anatomical anomalies. This
@@ -512,25 +512,25 @@ analyses required both sessions to pass QC.
 Images were acquired on Siemens Skyra 3T scanners at three UK sites
 (Cheadle, Newcastle, Reading) using a T1-weighted MPRAGE sequence at 1mm
 isotropic resolution. Full protocol details are provided in
-Alfaro-Almagro et al. {[}2018{]}.
+Alfaro-Almagro et al. (2018).
 
 \subsubsection{Segmentation}\label{segmentation}
 
 Hippocampal and ventricular volumes were segmented using an in-house
 convolutional neural network trained on manually labeled data.
 Validation against manual segmentations showed Dice \(\kappa\) = 0.94
-and Pearson r = 0.99 {[}Fernandez-Lozano et al., 2025{]}. Outputs
-included bilateral hippocampal volumes (left, right, total) and temporal
-horn volumes of the lateral ventricles (left, right, total).
-Intracranial volume (ICV) was obtained from AssemblyNet {[}Coupé et al.,
-2020{]}, a large-ensemble convolutional neural network for whole-brain
-MRI segmentation.
+and Pearson r = 0.99 (Fernandez-Lozano et al., 2025). Outputs included
+bilateral hippocampal volumes (left, right, total) and temporal horn
+volumes of the lateral ventricles (left, right, total). Intracranial
+volume (ICV) was obtained from AssemblyNet (Coupé et al., 2020), a
+large-ensemble convolutional neural network for whole-brain MRI
+segmentation.
 
 \subsubsection{Head-Size Adjustment
 Methods}\label{head-size-adjustment-methods}
 
 Four adjustment approaches were applied to hippocampal and ventricular
-volumes {[}Sanchis-Segura et al., 2020; Sanfilipo et al., 2004{]}:
+volumes (Sanchis-Segura et al., 2020; Sanfilipo et al., 2004):
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -540,8 +540,8 @@ volumes {[}Sanchis-Segura et al., 2020; Sanfilipo et al., 2004{]}:
 \item
   \textbf{Proportions}: volume expressed as a proportion of ICV, which
   assumes isometric (1:1) scaling and may over- or under-correct
-  depending on the true allometric relationship {[}Jong et al., 2017;
-  Williams et al., 2021{]}:
+  depending on the true allometric relationship (Jong et al., 2017;
+  Williams et al., 2021):
 \end{enumerate}
 
 \begin{equation}\phantomsection\label{eq-prp}{V_{\text{PRP}} = \frac{V}{\text{ICV}} \times 1000}\end{equation}
@@ -566,7 +566,7 @@ where \(J\) is the Jacobian determinant of the nonlinear transformation.
 \item
   \textbf{Residualized}: linear regression residuals after removing ICV
   association, with regression coefficients estimated from the pooled
-  sample {[}O'Brien et al., 2011; Sanchis-Segura et al., 2020{]}:
+  sample (O'Brien et al., 2011; Sanchis-Segura et al., 2020):
 \end{enumerate}
 
 \begin{equation}\phantomsection\label{eq-res}{V_{\text{RES}} = V - \hat{\beta} \times (\text{ICV} - \overline{\text{ICV}})}\end{equation}
@@ -591,20 +591,20 @@ structures, no further head-size adjustment was applied.
 \subsubsection{Test Battery}\label{test-battery}
 
 Cognitive data were collected at the imaging visit using the UK Biobank
-touchscreen-based cognitive battery {[}Sudlow et al., 2015{]},
-comprising 12 indicators spanning memory, processing speed, executive
-function, and reasoning domains (Supporting Information, Table S1).
-Timed measures (reaction time, trail making, pair matching response
-time) were inverse-coded so that higher scores consistently indicate
-better performance across all indicators. Missing cognitive data were
-handled using full information maximum likelihood (FIML) estimation,
-which uses all available data under a missing-at-random assumption.
+touchscreen-based cognitive battery (Sudlow et al., 2015), comprising 12
+indicators spanning memory, processing speed, executive function, and
+reasoning domains (Supporting Information, Table S1). Timed measures
+(reaction time, trail making, pair matching response time) were
+inverse-coded so that higher scores consistently indicate better
+performance across all indicators. Missing cognitive data were handled
+using full information maximum likelihood (FIML) estimation, which uses
+all available data under a missing-at-random assumption.
 
 \subsubsection{Factor Structure: Bifactor
 CFA}\label{factor-structure-bifactor-cfa}
 
 Cognitive indicators were modeled using a bifactor confirmatory factor
-analysis (CFA) {[}Sudlow et al., 2015{]} with three latent factors. The
+analysis (CFA) (Sudlow et al., 2015) with three latent factors. The
 general factor (\emph{g}) loaded on all 12 indicators. The
 memory-specific factor (Memory\textsubscript{s}, orthogonal to \emph{g})
 loaded on pair matching, numeric memory, and prospective memory. The
@@ -619,7 +619,7 @@ within the same test (pair matching time with errors; symbol digit
 correct with attempts; trail making numeric with alphanumeric).
 
 Models were estimated using maximum likelihood with robust standard
-errors (MLR) in lavaan {[}Rosseel, 2012{]}.
+errors (MLR) in lavaan (Rosseel, 2012).
 
 \subsection{Statistical Analyses}\label{statistical-analyses}
 
@@ -639,7 +639,7 @@ show reduced correlation with ICV compared to unadjusted volumes.
 Measures}\label{sex-differences-in-brain-measures}
 
 Sex differences were quantified using Cohen's d with 95\% confidence
-intervals {[}Cohen, 2013{]}, with positive d indicating females
+intervals (Cohen, 2013), with positive d indicating females
 \textgreater{} males by our coding convention. Effect sizes were
 computed for all ROI × adjustment method combinations in the full sample
 (N = 27,680).
@@ -647,7 +647,7 @@ computed for all ROI × adjustment method combinations in the full sample
 To isolate sex effects from head-size confounding, we created an
 ICV-matched subsample where females and males were paired on age
 (\(\pm 1\) year) and ICV (\(\pm 25\) cc, approximately 0.3 SD). Matching
-used the MatchIt package (v4.7.2; Ho et al. {[}2011{]}) with optimal 1:1
+used the MatchIt package (v4.7.2; Ho et al. (2011)) with optimal 1:1
 matching without replacement (\texttt{method\ =\ "optimal"},
 \texttt{distance\ =\ "mahalanobis"}), with calipers enforcing tolerance
 bounds. This yielded N = 4,750 matched pairs (total N = 9,500). We
@@ -686,10 +686,10 @@ summary statistics for sex-differential aging rates.
 \paragraph{Normative Centile Curves}\label{normative-centile-curves}
 
 Sex-specific normative centile curves were estimated using Generalized
-Additive Models for Location, Scale, and Shape (GAMLSS) {[}Bethlehem et
-al., 2022; Rigby and Stasinopoulos, 2005{]} on the N = 27,434
-participants from the primary sample with complete education and site
-data. For HC and LV (unadjusted):
+Additive Models for Location, Scale, and Shape (GAMLSS) (Bethlehem et
+al., 2022; Rigby \& Stasinopoulos, 2005) on the N = 27,434 participants
+from the primary sample with complete education and site data. For HC
+and LV (unadjusted):
 
 \begin{equation}\phantomsection\label{eq-gamlss-hc}{\mu = f_\mu(\text{Age}) + \beta_{\text{ICV}} \cdot \text{ICV} + \beta_{\text{Edu}} \cdot \text{Education} + u_{\text{site}}}\end{equation}
 
@@ -742,7 +742,7 @@ brain measures and cognitive factors. These analyses were restricted to
 the England subsample (N = 25,172; see Data Source and Participants)
 because the Index of Multiple Deprivation (IMDP), used as a
 socioeconomic covariate, is not comparable across UK countries. All
-models were estimated in lavaan {[}Rosseel, 2012{]}.
+models were estimated in lavaan (Rosseel, 2012).
 
 \paragraph{Measurement Invariance}\label{measurement-invariance}
 
@@ -750,12 +750,12 @@ Comparing brain-cognition associations across sexes requires that the
 cognitive measurement model is equivalent across groups. Measurement
 invariance of the bifactor structure (see Factor Structure: Bifactor
 CFA) was therefore tested following standard multi-group CFA procedures
-{[}Putnick and Bornstein, 2016{]}. Four nested models were tested: (1)
+(Putnick \& Bornstein, 2016). Four nested models were tested: (1)
 configural invariance (same factor structure), (2) metric invariance
 (equal loadings), (3) scalar invariance (equal intercepts), and (4)
 strict invariance (equal residuals). Invariance was evaluated using
-\(\Delta\)CFI \(\leq\) 0.01 {[}Cheung and Rensvold, 2002{]} and
-\(\Delta\)RMSEA \(\leq\) 0.015 {[}Chen, 2007{]}. At minimum, metric
+\(\Delta\)CFI \(\leq\) 0.01 (Cheung \& Rensvold, 2002) and
+\(\Delta\)RMSEA \(\leq\) 0.015 (Chen, 2007). At minimum, metric
 invariance is required to compare structural paths across groups.
 
 \paragraph{SEM Specifications}\label{sem-specifications}
@@ -813,7 +813,7 @@ cognitive associations while being self-normalizing and capturing
 additional variance through its incorporation of ventricular dynamics.
 The proportions and stereotaxic adjustment methods were excluded due to
 concerns about biologically implausible associations and residual ICV
-correlation, respectively {[}Wang et al., 2024{]}.
+correlation, respectively (Wang et al., 2024).
 
 \paragraph{Estimation and Inference}\label{estimation-and-inference}
 
@@ -824,8 +824,8 @@ account for scanner site. Multi-group models estimated separate
 structural parameters for females and males, allowing sex differences in
 brain-cognition paths to be directly tested; these were estimated using
 maximum likelihood with bootstrap confidence intervals (2,000 resamples)
-{[}Cumming and Finch, 2005{]}. Missing cognitive data were handled using
-full information maximum likelihood (FIML) in both approaches. Sex
+(Cumming \& Finch, 2005). Missing cognitive data were handled using full
+information maximum likelihood (FIML) in both approaches. Sex
 differences in path coefficients were evaluated by comparing bootstrap
 confidence intervals across groups.
 
@@ -1296,7 +1296,7 @@ effects.}
 \end{figure}%
 
 All SEM models demonstrated good fit according to conventional criteria
-(Table S14; Hu and Bentler {[}1999{]}). Full model parameters including
+(Table S14; Hu \& Bentler (1999)). Full model parameters including
 factor loadings and covariate effects are reported in Table S15 and
 Table S16.
 
@@ -1370,20 +1370,20 @@ Methods}\label{sex-differences-across-adjustment-methods-1}
 HVR achieves head-size independence through its mathematical
 construction: both numerator (HC) and denominator (HC + LV) scale with
 head size, so their ratio largely normalizes out this confound.
-Schoemaker et al. {[}2019{]} demonstrated that HVR yielded stronger
+Schoemaker et al. (2019) demonstrated that HVR yielded stronger
 correlations with both age and memory performance than absolute
 hippocampal volume, supporting its utility as an integrity index. In the
 present sample, HVR achieved a 58\% reduction in ICV correlation
 compared to unadjusted HC (r = -0.252 vs.~r = 0.605). This approach
 complements other ratio measures in clinical neuroimaging, such as the
-Evans' index {[}Currà et al., 2019{]}, and avoids the pitfalls of
+Evans' index (Currà et al., 2019), and avoids the pitfalls of
 proportional ICV correction when brain structures scale
-non-isometrically with head size {[}Pintzka et al., 2015; Wang et al.,
-2024{]}. The residual negative HVR-ICV correlation likely reflects
+non-isometrically with head size (Pintzka et al., 2015; Wang et al.,
+2024). The residual negative HVR-ICV correlation likely reflects
 ventricular scaling: the hippocampus scales hypoallometrically with ICV
-while lateral ventricles scale near-isometrically {[}Jong et al.,
-2017{]}, so larger heads have disproportionately larger ventricles
-relative to hippocampal volume, naturally producing lower HVR. Unlike
+while lateral ventricles scale near-isometrically (Jong et al., 2017),
+so larger heads have disproportionately larger ventricles relative to
+hippocampal volume, naturally producing lower HVR. Unlike
 residualization, which removes all ICV association by construction, HVR
 preserves morphological variation related to how ventricular space
 scales with brain size.
@@ -1393,41 +1393,41 @@ The reversal of HC sex differences across adjustment methods---from d =
 proportions-adjusted), a swing of 1.47 SD---indicates these differences
 reflect head-size confounding rather than biology. This over-correction
 arises because the hippocampus scales hypoallometrically with ICV
-(\(\alpha\) = 0.60; Jong et al. {[}2017{]}), so dividing by ICV
-systematically overestimates relative volume in smaller heads {[}Pintzka
-et al., 2015; Voevodskaya et al., 2014{]}. The pattern replicates across
-multiple cohorts {[}Fjell et al., 2009; Pintzka et al., 2015;
-Voevodskaya et al., 2014{]}, and Ritchie et al. {[}2018{]} reported that
-unadjusted hippocampal sex differences in the UK Biobank dropped to
-near-zero after regression-based adjustment. The near-zero residualized
-effect (d = 0.022) suggests no meaningful sex difference after
-appropriate statistical control. While total hippocampal volume sex
-differences appear methodologically determined, sex-specific
-trajectories in hippocampal subregions {[}Mu et al., 2020{]} and
-structural connectivity patterns {[}Ingalhalikar et al., 2014{]} suggest
-meaningful differences may exist at finer spatial scales. Lateral
-ventricles, by contrast, showed a consistent male advantage across all
-methods (Figure~\ref{fig-effect-sizes}). Because the LV-ICV regression
-has a negative y-intercept, proportional correction under-corrects
-rather than over-corrects ventricular volumes---the opposite of what
-occurs for HC {[}Pintzka et al., 2015{]}. The male advantage persists or
-increases after correction {[}Fjell et al., 2009{]}, and in our large
-sample, residualized LV differences remained significant (d = -0.16),
-suggesting that null findings in smaller studies may reflect
-insufficient power. The consistent male ventricular advantage contrasts
-sharply with the method-dependent HC reversals, indicating this sex
-difference is not a head-size artifact.
+(\(\alpha\) = 0.60; Jong et al. (2017)), so dividing by ICV
+systematically overestimates relative volume in smaller heads (Pintzka
+et al., 2015; Voevodskaya et al., 2014). The pattern replicates across
+multiple cohorts (Fjell et al., 2009; Pintzka et al., 2015; Voevodskaya
+et al., 2014), and Ritchie et al. (2018) reported that unadjusted
+hippocampal sex differences in the UK Biobank dropped to near-zero after
+regression-based adjustment. The near-zero residualized effect (d =
+0.022) suggests no meaningful sex difference after appropriate
+statistical control. While total hippocampal volume sex differences
+appear methodologically determined, sex-specific trajectories in
+hippocampal subregions (Mu et al., 2020) and structural connectivity
+patterns (Ingalhalikar et al., 2014) suggest meaningful differences may
+exist at finer spatial scales. Lateral ventricles, by contrast, showed a
+consistent male advantage across all methods
+(Figure~\ref{fig-effect-sizes}). Because the LV-ICV regression has a
+negative y-intercept, proportional correction under-corrects rather than
+over-corrects ventricular volumes---the opposite of what occurs for HC
+(Pintzka et al., 2015). The male advantage persists or increases after
+correction (Fjell et al., 2009), and in our large sample, residualized
+LV differences remained significant (d = -0.16), suggesting that null
+findings in smaller studies may reflect insufficient power. The
+consistent male ventricular advantage contrasts sharply with the
+method-dependent HC reversals, indicating this sex difference is not a
+head-size artifact.
 
 The matched-pair analysis (Table~\ref{tbl-matched}) provides the
 strongest test of head-size independence. Matching on age and ICV
 eliminates head-size variation without the mathematical assumptions of
-statistical correction {[}Brzezinski-Rittner et al., 2025{]}. When
-matched, the HC sex difference collapsed to d = -0.038 (effectively
-zero), replicating prior matched-sample findings {[}Pintzka et al.,
-2015; Voevodskaya et al., 2014{]}, while LV retained a male advantage (d
-= -0.2) and HVR retained a significant female advantage (d = 0.183). The
-HVR effect decreased 65\% from full to matched samples, indicating that
-most of the sex difference is attributable to head-size variation, but a
+statistical correction (Brzezinski-Rittner et al., 2025). When matched,
+the HC sex difference collapsed to d = -0.038 (effectively zero),
+replicating prior matched-sample findings (Pintzka et al., 2015;
+Voevodskaya et al., 2014), while LV retained a male advantage (d = -0.2)
+and HVR retained a significant female advantage (d = 0.183). The HVR
+effect decreased 65\% from full to matched samples, indicating that most
+of the sex difference is attributable to head-size variation, but a
 significant residual persists. Since HVR = HC/(HC+LV), the female
 advantage arises from two converging factors: comparable hippocampal
 volumes after size matching and relatively smaller female ventricles.
@@ -1441,65 +1441,64 @@ Modeling}\label{age-related-patterns-and-normative-modeling-1}
 
 Males showed steeper cross-sectional differences across all measures:
 1.66× for HVR (p = 2e-61), 1.63× for HC, and 1.87× for LV, consistent
-with steeper male subcortical decline reported by Ritchie et al.
-{[}2018{]} and steeper male CSF expansion by Fjell et al. {[}2009{]}.
-The greater sex disparity in ventricular differences (1.87×) compared to
-hippocampal differences (1.63×) explains HVR's intermediate ratio: HVR
-captures both processes, and steeper male ventricular expansion
-amplifies hippocampal differences. Males also show earlier ventricular
-abnormality signatures, with ventricular enlargement accelerating in the
-seventies {[}Currà et al., 2019{]}, consistent with the steeper male HVR
-differences observed here. While the cross-sectional design precludes
-identifying a specific onset age, our age-stratified effect sizes show
-the male-female HVR divergence is already present in the youngest bin
-(ages 45--55, d = 0.23) and widens monotonically with age (d = 0.66 at
-ages 75+), suggesting the divergence begins before midlife. However,
-Brzezinski-Rittner et al. {[}2025{]} found that hippocampal age × sex
+with steeper male subcortical decline reported by Ritchie et al. (2018)
+and steeper male CSF expansion by Fjell et al. (2009). The greater sex
+disparity in ventricular differences (1.87×) compared to hippocampal
+differences (1.63×) explains HVR's intermediate ratio: HVR captures both
+processes, and steeper male ventricular expansion amplifies hippocampal
+differences. Males also show earlier ventricular abnormality signatures,
+with ventricular enlargement accelerating in the seventies (Currà et
+al., 2019), consistent with the steeper male HVR differences observed
+here. While the cross-sectional design precludes identifying a specific
+onset age, our age-stratified effect sizes show the male-female HVR
+divergence is already present in the youngest bin (ages 45--55, d =
+0.23) and widens monotonically with age (d = 0.66 at ages 75+),
+suggesting the divergence begins before midlife. However,
+Brzezinski-Rittner et al. (2025) found that hippocampal age × sex
 interactions disappeared in a TIV-matched subsample, suggesting that
 some sex-differential aging trajectories may be byproducts of initial
 brain size differences.
 
 The prognostic relevance of age-pattern differences is supported by
 evidence that steeper hippocampal volume loss predicts dementia
-conversion {[}Rajagopal et al., 2024{]}. Cumulative estrogen exposure
-may contribute to the female advantage, as longer reproductive spans are
-associated with younger brain ages {[}Luders et al., 2025{]} and
-estrogen promotes hippocampal neurogenesis and synaptic plasticity
-{[}Jett et al., 2022{]}. However, the female advantage is not universal:
-female APOE ε4 carriers show faster hippocampal loss than male carriers
-in aMCI {[}Park et al., 2025{]}, indicating that genetic risk can
-modulate typical sex-differential patterns. Other large studies have
-found no significant sex differences in hippocampal age slopes {[}Fjell
-et al., 2009; Pintzka et al., 2015{]}, underscoring that the presence of
-age × sex interactions depends on sample size, age range, and head-size
-adjustment method. These cross-sectional patterns cannot establish true
-individual trajectories and may be confounded by cohort effects or
-differential survival; longitudinal validation is essential.
+conversion (Rajagopal et al., 2024). Cumulative estrogen exposure may
+contribute to the female advantage, as longer reproductive spans are
+associated with younger brain ages (Luders et al., 2025) and estrogen
+promotes hippocampal neurogenesis and synaptic plasticity (Jett et al.,
+2022). However, the female advantage is not universal: female APOE ε4
+carriers show faster hippocampal loss than male carriers in aMCI (Park
+et al., 2025), indicating that genetic risk can modulate typical
+sex-differential patterns. Other large studies have found no significant
+sex differences in hippocampal age slopes (Fjell et al., 2009; Pintzka
+et al., 2015), underscoring that the presence of age × sex interactions
+depends on sample size, age range, and head-size adjustment method.
+These cross-sectional patterns cannot establish true individual
+trajectories and may be confounded by cohort effects or differential
+survival; longitudinal validation is essential.
 
 The sex-specific centile curves (Figure~\ref{fig-normative-centiles})
-extend normative brain charts {[}Bethlehem et al., 2022; Dima et al.,
-2022; Ge et al., 2024{]} by providing the first sex-specific reference
-values for HVR. Our GAMLSS approach aligns with Bethlehem et al.
-{[}2022{]} and Dima et al. {[}2022{]}, flexibly modeling both non-linear
-age trends and age-related variability changes. Sex-specific norms are
-essential to avoid misclassification, consistent with recommendations
-from Williams et al. {[}2021{]} and Ge et al. {[}2024{]}, who found that
-sex accounts for a considerable proportion of morphological variance.
-For residualized HC, sex differences in centiles are minimal, consistent
-with the near-zero Cohen's d for residualized volumes, supporting
-combined norms when proper ICV adjustment is applied. For LV, males show
-greater ventricular variability at older ages, potentially reflecting
-greater heterogeneity in aging-related patterns. Well-calibrated centile
-estimates (Figure S1) have demonstrated clinical utility in detecting
-case-control differences and predicting diagnostic transition from MCI
-to Alzheimer's disease {[}Bethlehem et al., 2022; Dima et al., 2022{]}.
-HVR showed slightly lower test-retest reliability (ICC \textgreater{}
-0.93; Table S3) than HC or LV alone over a mean 2.7-year follow-up.
-Because this interval spans real aging-related change, the lower ICC may
-partly reflect HVR's sensitivity to concurrent hippocampal atrophy and
-ventricular expansion rather than measurement noise alone --- a
-hypothesis that dedicated longitudinal studies with shorter retest
-intervals could directly test.
+extend normative brain charts (Bethlehem et al., 2022; Dima et al.,
+2022; Ge et al., 2024) by providing the first sex-specific reference
+values for HVR. Our GAMLSS approach aligns with Bethlehem et al. (2022)
+and Dima et al. (2022), flexibly modeling both non-linear age trends and
+age-related variability changes. Sex-specific norms are essential to
+avoid misclassification, consistent with recommendations from Williams
+et al. (2021) and Ge et al. (2024), who found that sex accounts for a
+considerable proportion of morphological variance. For residualized HC,
+sex differences in centiles are minimal, consistent with the near-zero
+Cohen's d for residualized volumes, supporting combined norms when
+proper ICV adjustment is applied. For LV, males show greater ventricular
+variability at older ages, potentially reflecting greater heterogeneity
+in aging-related patterns. Well-calibrated centile estimates (Figure S1)
+have demonstrated clinical utility in detecting case-control differences
+and predicting diagnostic transition from MCI to Alzheimer's disease
+(Bethlehem et al., 2022; Dima et al., 2022). HVR showed slightly lower
+test-retest reliability (ICC \textgreater{} 0.93; Table S3) than HC or
+LV alone over a mean 2.7-year follow-up. Because this interval spans
+real aging-related change, the lower ICC may partly reflect HVR's
+sensitivity to concurrent hippocampal atrophy and ventricular expansion
+rather than measurement noise alone --- a hypothesis that dedicated
+longitudinal studies with shorter retest intervals could directly test.
 
 \subsection{Brain-Cognition
 Associations}\label{brain-cognition-associations-2}
@@ -1509,32 +1508,32 @@ Strict measurement invariance for the cognitive bifactor model
 level; Table S12) confirmed that the same cognitive constructs
 (\emph{g}, Memory\textsubscript{s}, Speed\textsubscript{s}) exist in
 both sexes with equivalent loadings, intercepts, and residual variances
-{[}Chen, 2007; Putnick and Bornstein, 2016{]}, validating cross-sex
+(Chen, 2007; Putnick \& Bornstein, 2016), validating cross-sex
 comparison of brain-cognition paths. In pooled models, HVR predicted
 general cognition comparably to HC without requiring head-size
 adjustment (HVR → \emph{g} \(\beta\) = 0.043 vs.~HC → \emph{g} \(\beta\)
 = 0.04, overlapping CIs), with all effects small---consistent with the
 modest brain-cognition associations typically observed in large healthy
-samples {[}Ritchie et al., 2018; Wang et al., 2024{]}. The restricted
+samples (Ritchie et al., 2018; Wang et al., 2024). The restricted
 cognitive range in healthy volunteer samples likely attenuates these
-associations {[}Bachmann et al., 2023{]}. Multigroup analyses revealed
+associations (Bachmann et al., 2023). Multigroup analyses revealed
 sex-differential patterns: HC\textsubscript{RES} predicted cognition in
 females but not males (\(\beta\) = 0.013, p = 0.227), consistent with
 stronger female hippocampal-cognition associations reported elsewhere
-{[}Jockwitz et al., 2024; Zheng et al., 2017{]}. Raw HC showed
-significant associations in both sexes but with a female advantage
-(\(\beta\) = 0.048 vs.~0.027). HVR showed the opposite pattern, with
-males exhibiting stronger associations (\(\beta\) = 0.045 vs.~0.036),
-though both sexes reached significance.
+(Jockwitz et al., 2024; Zheng et al., 2017). Raw HC showed significant
+associations in both sexes but with a female advantage (\(\beta\) =
+0.048 vs.~0.027). HVR showed the opposite pattern, with males exhibiting
+stronger associations (\(\beta\) = 0.045 vs.~0.036), though both sexes
+reached significance.
 
 These sex-differential patterns indicate that HVR is not simply
 ``residualized HC by another means.'' Unlike HC\textsubscript{RES},
 which lost predictive validity in males, HVR maintained significant
-associations in both sexes---paralleling Schoemaker et al. {[}2019{]}
-and Fernandez-Lozano et al. {[}2025{]}, who found that HVR predicted
-cognition comparably or better than HC alone. The differential patterns
-between HC\textsubscript{RES} and HVR across sexes suggest HVR captures
-distinct information related to hippocampus-ventricle coupling. HVR also
+associations in both sexes---paralleling Schoemaker et al. (2019) and
+Fernandez-Lozano et al. (2025), who found that HVR predicted cognition
+comparably or better than HC alone. The differential patterns between
+HC\textsubscript{RES} and HVR across sexes suggest HVR captures distinct
+information related to hippocampus-ventricle coupling. HVR also
 accommodated quadratic age specifications that raw HC could not (the HC
 + ICV + age² combination produced multicollinearity), allowing detection
 of accelerating age-related patterns (\(\beta\)\textsubscript{age²} =
@@ -1543,7 +1542,7 @@ quadratic effect for HVR reflects its capture of both hippocampal and
 ventricular age-related differences. The ventricular component likely
 contributes cognitive-relevant variance beyond medial temporal
 integrity, as ventricular volume has been associated with executive
-function rather than episodic memory {[}Bachmann et al., 2023{]}.
+function rather than episodic memory (Bachmann et al., 2023).
 
 \subsection{Sensitivity Analyses}\label{sensitivity-analyses-2}
 
@@ -1553,12 +1552,12 @@ after site adjustment; the ratio construction of HVR did not amplify
 site-related noise. Sex difference effect sizes were symmetrical across
 hemispheres for HC and LV; HVR showed a small lateralized pattern (right
 d = 0.05 vs.~left d = −0.01), though the small magnitude and potential
-contribution of hemispheric segmentation biases {[}Fernandez-Lozano et
-al., 2025{]} suggest bilateral HVR remains most robust for clinical
+contribution of hemispheric segmentation biases (Fernandez-Lozano et
+al., 2025) suggest bilateral HVR remains most robust for clinical
 application. Including participants with psychiatric diagnoses changed
 effect sizes minimally (\(\Delta\)d \textless{} 0.02; Table S19, Figure
 S4), consistent with the low prevalence of psychiatric diagnoses in this
-healthy volunteer cohort {[}Fry et al., 2017{]}.
+healthy volunteer cohort (Fry et al., 2017).
 
 \subsection{Limitations}\label{limitations}
 
@@ -1567,29 +1566,28 @@ cannot distinguish age effects from cohort effects or establish
 individual change trajectories, and HVR's conflation of hippocampal and
 ventricular contributions to observed differences. UK Biobank
 participants are healthier and more educated than the general population
-{[}Fry et al., 2017{]}, limiting generalizability to clinical
-populations. Some cognitive tests had incomplete data, and complete-case
-analyses may introduce selection bias. APOE genotype was unavailable,
-precluding examination of gene × sex interactions relevant to dementia
-risk.
+(Fry et al., 2017), limiting generalizability to clinical populations.
+Some cognitive tests had incomplete data, and complete-case analyses may
+introduce selection bias. APOE genotype was unavailable, precluding
+examination of gene × sex interactions relevant to dementia risk.
 
 Methodologically, the study did not include power-corrected proportions
-allometric adjustment {[}Sanchis-Segura et al., 2020{]}. Imaging site
+allometric adjustment (Sanchis-Segura et al., 2020). Imaging site
 clustering was not modeled in multigroup SEM because lavaan does not
-support this combination {[}Rosseel, 2012{]}, though the minimal design
+support this combination (Rosseel, 2012), though the minimal design
 effect across 4 sites makes sex comparisons conservative rather than
 biased. The bifactor model's memory-specific factor could not be
 reliably estimated in either sex---a common occurrence in bifactor
-models {[}Burns et al., 2020; Eid et al., 2017{]}---indicating that
-memory variance was fully captured by \emph{g}; brain-cognition paths
-involving Memory\textsubscript{s} are therefore not reported. Ratios can
-exhibit non-normality and complex interpretation when numerator and
-denominator correlate differently with outcomes, though HVR showed
-approximately normal distributions here. All brain-cognition
-associations were small (\(\beta\) = 0.02--0.04), explaining less than
-1\% of variance in cognitive performance. While statistically
-significant given the large sample, the practical and clinical
-significance of these associations remains to be established.
+models (Burns et al., 2020; Eid et al., 2017)---indicating that memory
+variance was fully captured by \emph{g}; brain-cognition paths involving
+Memory\textsubscript{s} are therefore not reported. Ratios can exhibit
+non-normality and complex interpretation when numerator and denominator
+correlate differently with outcomes, though HVR showed approximately
+normal distributions here. All brain-cognition associations were small
+(\(\beta\) = 0.02--0.04), explaining less than 1\% of variance in
+cognitive performance. While statistically significant given the large
+sample, the practical and clinical significance of these associations
+remains to be established.
 
 \subsection{Future Directions}\label{future-directions}
 
@@ -1598,13 +1596,13 @@ UK Biobank repeat imaging subsample enables longitudinal validation of
 whether HVR predicts individual-level cognitive decline. Second,
 clinical validation in AD/MCI cohorts would assess HVR's diagnostic
 utility compared to clinical populations studied previously
-{[}Fernandez-Lozano et al., 2025{]}. Third, longitudinal data could
-separate hippocampal and ventricular contributions to HVR changes, which
-the cross-sectional ratio conflates. Fourth, examining whether HVR × sex
-× APOE genotype predicts dementia conversion would address the gene ×
-sex interactions that this study could not explore.
+(Fernandez-Lozano et al., 2025). Third, longitudinal data could separate
+hippocampal and ventricular contributions to HVR changes, which the
+cross-sectional ratio conflates. Fourth, examining whether HVR × sex ×
+APOE genotype predicts dementia conversion would address the gene × sex
+interactions that this study could not explore.
 
-\subsection{Conclusions}\label{conclusions}
+\section{Conclusions}\label{conclusions}
 
 In 27,680 UK Biobank participants (56.2\% female), hippocampal sex
 differences reversed direction across adjustment methods (d range: 1.5
@@ -1631,10 +1629,15 @@ provided critical review, and approved the final manuscript.
 \addcontentsline{toc}{section}{Acknowledgments}
 
 This research has been conducted using the UK Biobank Resource under
-Application Number 45551. This investigation was supported in part by an
-award from the International Progressive MS Alliance (award reference
-number PA-1412-02420), a grant from the Canadian Institutes of Health
-Research, and a donation from the Famille Louise \& Andre Charron.
+Application Number 45551.
+
+\section*{Funding}\label{funding}
+\addcontentsline{toc}{section}{Funding}
+
+This investigation was supported in part by an award from the
+International Progressive MS Alliance (award reference number
+PA-1412-02420), a grant from the Canadian Institutes of Health Research,
+and a donation from the Famille Louise \& Andre Charron.
 
 \section*{Conflict of Interest
 Statement}\label{conflict-of-interest-statement}
@@ -1664,455 +1667,423 @@ provided written informed consent.
 \phantomsection\label{refs}
 \begin{CSLReferences}{1}{0}
 \bibitem[\citeproctext]{ref-alfaro-almagro_image_2018}
-Alfaro-Almagro F, Jenkinson M, Bangerter NK, Andersson JLR, Griffanti L,
-Douaud G, Sotiropoulos SN, Jbabdi S, Hernandez-Fernandez M, Vallee E,
-Vidaurre D, Webster M, McCarthy P, Rorden C, Daducci A, Alexander DC,
-Zhang H, Dragonu I, Matthews PM, Miller KL, Smith SM (2018):
-\href{https://doi.org/10.1016/j.neuroimage.2017.10.034}{Image processing
-and {Quality} {Control} for the first 10,000 brain imaging datasets from
-{UK} {Biobank}}. NeuroImage 166:400--424.
+Alfaro-Almagro, F., Jenkinson, M., Bangerter, N. K., Andersson, J. L.
+R., Griffanti, L., Douaud, G., Sotiropoulos, S. N., Jbabdi, S.,
+Hernandez-Fernandez, M., Vallee, E., Vidaurre, D., Webster, M.,
+McCarthy, P., Rorden, C., Daducci, A., Alexander, D. C., Zhang, H.,
+Dragonu, I., Matthews, P. M., \ldots{} Smith, S. M. (2018). Image
+processing and {Quality} {Control} for the first 10,000 brain imaging
+datasets from {UK} {Biobank}. \emph{NeuroImage}, \emph{166}, 400--424.
+\url{https://doi.org/10.1016/j.neuroimage.2017.10.034}
 
 \bibitem[\citeproctext]{ref-bachmann_age-_2023}
-Bachmann D, Buchmann A, Studer S, Saake A, Rauen K, Zuber I, Gruber E,
-Nitsch RM, Hock C, Gietl A, Treyer V (2023): Age-, sex-, and
-pathology-related variability in brain structure and cognition.
-Translational Psychiatry 13:278.
-\url{https://www.nature.com/articles/s41398-023-02572-6}.
+Bachmann, D., Buchmann, A., Studer, S., Saake, A., Rauen, K., Zuber, I.,
+Gruber, E., Nitsch, R. M., Hock, C., Gietl, A., \& Treyer, V. (2023).
+Age-, sex-, and pathology-related variability in brain structure and
+cognition. \emph{Translational Psychiatry}, \emph{13}(1), 278.
+\url{https://doi.org/10.1038/s41398-023-02572-6}
 
 \bibitem[\citeproctext]{ref-bethlehem_brain_2022}
-Bethlehem RaI, Seidlitz J, White SR, Vogel JW, Anderson KM, Adamson C,
-Adler S, Alexopoulos GS, Anagnostou E, Areces-Gonzalez A, Astle DE,
-Auyeung B, Ayub M, Bae J, Ball G, Baron-Cohen S, Beare R, Bedford SA,
-Benegal V, Beyer F, Blangero J, Blesa Cábez M, Boardman JP, Borzage M,
-Bosch-Bayard JF, Bourke N, Calhoun VD, Chakravarty MM, Chen C,
-Chertavian C, Chetelat G, Chong YS, Cole JH, Corvin A, Costantino M,
-Courchesne E, Crivello F, Cropley VL, Crosbie J, Crossley N, Delarue M,
-Delorme R, Desrivieres S, Devenyi GA, Di Biase MA, Dolan R, Donald KA,
-Donohoe G, Dunlop K, Edwards AD, Elison JT, Ellis CT, Elman JA, Eyler L,
-Fair DA, Feczko E, Fletcher PC, Fonagy P, Franz CE, Galan-Garcia L,
-Gholipour A, Giedd J, Gilmore JH, Glahn DC, Goodyer IM, Grant PE,
-Groenewold NA, Gunning FM, Gur RE, Gur RC, Hammill CF, Hansson O, Hedden
-T, Heinz A, Henson RN, Heuer K, Hoare J, Holla B, Holmes AJ, Holt R,
-Huang H, Im K, Ipser J, Jack CR, Jackowski AP, Jia T, Johnson KA, Jones
-PB, Jones DT, Kahn RS, Karlsson H, Karlsson L, Kawashima R, Kelley EA,
-Kern S, Kim KW, Kitzbichler MG, Kremen WS, Lalonde F, Landeau B, Lee S,
-Lerch J, Lewis JD, Li J, Liao W, Liston C, Lombardo MV, Lv J, Lynch C,
-Mallard TT, Marcelis M, Markello RD, Mathias SR, Mazoyer B, McGuire P,
-Meaney MJ, Mechelli A, Medic N, Misic B, Morgan SE, Mothersill D, Nigg
-J, Ong MQW, Ortinau C, Ossenkoppele R, Ouyang M, Palaniyappan L, Paly L,
-Pan PM, Pantelis C, Park MM, Paus T, Pausova Z, Paz-Linares D, Pichet
-Binette A, Pierce K, Qian X, Qiu J, Qiu A, Raznahan A, Rittman T,
-Rodrigue A, Rollins CK, Romero-Garcia R, Ronan L, Rosenberg MD, Rowitch
-DH, Salum GA, Satterthwaite TD, Schaare HL, Schachar RJ, Schultz AP,
-Schumann G, Schöll M, Sharp D, Shinohara RT, Skoog I, Smyser CD,
-Sperling RA, Stein DJ, Stolicyn A, Suckling J, Sullivan G, Taki Y,
-Thyreau B, Toro R, Traut N, Tsvetanov KA, Turk-Browne NB, Tuulari JJ,
-Tzourio C, Vachon-Presseau É, Valdes-Sosa MJ, Valdes-Sosa PA, Valk SL,
-Amelsvoort T van, Vandekar SN, Vasung L, Victoria LW, Villeneuve S,
-Villringer A, Vértes PE, Wagstyl K, Wang YS, Warfield SK, Warrier V,
-Westman E, Westwater ML, Whalley HC, Witte AV, Yang N, Yeo B, Yun H,
-Zalesky A, Zar HJ, Zettergren A, Zhou JH, Ziauddeen H, Zugman A, Zuo XN,
-Bullmore ET, Alexander-Bloch AF (2022): Brain charts for the human
-lifespan. Nature 604:525--533.
-\url{https://www.nature.com/articles/s41586-022-04554-y}.
+Bethlehem, R. a. I., Seidlitz, J., White, S. R., Vogel, J. W., Anderson,
+K. M., Adamson, C., Adler, S., Alexopoulos, G. S., Anagnostou, E.,
+Areces-Gonzalez, A., Astle, D. E., Auyeung, B., Ayub, M., Bae, J., Ball,
+G., Baron-Cohen, S., Beare, R., Bedford, S. A., Benegal, V., \ldots{}
+Alexander-Bloch, A. F. (2022). Brain charts for the human lifespan.
+\emph{Nature}, \emph{604}(7906), 525--533.
+\url{https://doi.org/10.1038/s41586-022-04554-y}
 
 \bibitem[\citeproctext]{ref-brosch_reduced_2022}
-Brosch K, Stein F, Schmitt S, Pfarr J-K, Ringwald KG, Thomas-Odenthal F,
-Meller T, Steinsträter O, Waltemate L, Lemke H, Meinert S, Winter A,
-Breuer F, Thiel K, Grotegerd D, Hahn T, Jansen A, Dannlowski U, Krug A,
-Nenadić I, Kircher T (2022): Reduced hippocampal gray matter volume is a
-common feature of patients with major depression, bipolar disorder, and
-schizophrenia spectrum disorders. Molecular Psychiatry 27:4234--4243.
-\url{https://www.nature.com/articles/s41380-022-01687-4}.
+Brosch, K., Stein, F., Schmitt, S., Pfarr, J.-K., Ringwald, K. G.,
+Thomas-Odenthal, F., Meller, T., Steinsträter, O., Waltemate, L., Lemke,
+H., Meinert, S., Winter, A., Breuer, F., Thiel, K., Grotegerd, D., Hahn,
+T., Jansen, A., Dannlowski, U., Krug, A., \ldots{} Kircher, T. (2022).
+Reduced hippocampal gray matter volume is a common feature of patients
+with major depression, bipolar disorder, and schizophrenia spectrum
+disorders. \emph{Molecular Psychiatry}, \emph{27}(10), 4234--4243.
+\url{https://doi.org/10.1038/s41380-022-01687-4}
 
 \bibitem[\citeproctext]{ref-brzezinski-rittner_disentangling_2025}
-Brzezinski-Rittner A, Moqadam R, Iturria-Medina Y, Chakravarty MM, Dadar
-M, Zeighami Y (2025):
-\href{https://doi.org/10.1007/s11357-024-01486-5}{Disentangling the
-effect of sex from brain size on brain organization and cognitive
-functioning}. GeroScience 47:247--262.
+Brzezinski-Rittner, A., Moqadam, R., Iturria-Medina, Y., Chakravarty, M.
+M., Dadar, M., \& Zeighami, Y. (2025). Disentangling the effect of sex
+from brain size on brain organization and cognitive functioning.
+\emph{GeroScience}, \emph{47}(1), 247--262.
+\url{https://doi.org/10.1007/s11357-024-01486-5}
 
 \bibitem[\citeproctext]{ref-burns_application_2020}
-Burns GL, Geiser C, Servera M, Becker SP, Beauchaine TP (2020):
-Application of the {Bifactor} {S} -- 1 {Model} to {Multisource}
-{Ratings} of {ADHD}/{ODD} {Symptoms}:{An} {Appropriate} {Bifactor}
-{Model} for {Symptom} {Ratings}. Journal of abnormal child psychology
-48:881--894. \url{https://pmc.ncbi.nlm.nih.gov/articles/PMC8017439/}.
+Burns, G. L., Geiser, C., Servera, M., Becker, S. P., \& Beauchaine, T.
+P. (2020). Application of the {Bifactor} {S} -- 1 {Model} to
+{Multisource} {Ratings} of {ADHD}/{ODD} {Symptoms}:{An} {Appropriate}
+{Bifactor} {Model} for {Symptom} {Ratings}. \emph{Journal of Abnormal
+Child Psychology}, \emph{48}(7), 881--894.
+\url{https://doi.org/10.1007/s10802-019-00608-4}
 
 \bibitem[\citeproctext]{ref-cao_volumes_2023}
-Cao P, Chen C, Si Q, Li Y, Ren F, Han C, Zhao J, Wang X, Xu G, Sui Y
-(2023): Volumes of hippocampal subfields suggest a continuum between
-schizophrenia, major depressive disorder and bipolar disorder. Frontiers
-in Psychiatry 14:1191170.
-\url{https://www.frontiersin.org/articles/10.3389/fpsyt.2023.1191170/full}.
+Cao, P., Chen, C., Si, Q., Li, Y., Ren, F., Han, C., Zhao, J., Wang, X.,
+Xu, G., \& Sui, Y. (2023). Volumes of hippocampal subfields suggest a
+continuum between schizophrenia, major depressive disorder and bipolar
+disorder. \emph{Frontiers in Psychiatry}, \emph{14}, 1191170.
+\url{https://doi.org/10.3389/fpsyt.2023.1191170}
 
 \bibitem[\citeproctext]{ref-chen_sensitivity_2007}
-Chen FF (2007): Sensitivity of {Goodness} of {Fit} {Indexes} to {Lack}
-of {Measurement} {Invariance}. Structural Equation Modeling: A
-Multidisciplinary Journal 14:464--504.
-\url{https://doi.org/10.1080/10705510701301834}.
+Chen, F. F. (2007). Sensitivity of {Goodness} of {Fit} {Indexes} to
+{Lack} of {Measurement} {Invariance}. \emph{Structural Equation
+Modeling: A Multidisciplinary Journal}, \emph{14}(3), 464--504.
+\url{https://doi.org/10.1080/10705510701301834}
 
 \bibitem[\citeproctext]{ref-cheung_evaluating_2002}
-Cheung GW, Rensvold RB (2002): Evaluating {Goodness}-of-{Fit} {Indexes}
-for {Testing} {Measurement} {Invariance}. Structural Equation Modeling:
-A Multidisciplinary Journal 9:233--255.
-\url{https://doi.org/10.1207/S15328007SEM0902_5}.
+Cheung, G. W., \& Rensvold, R. B. (2002). Evaluating {Goodness}-of-{Fit}
+{Indexes} for {Testing} {Measurement} {Invariance}. \emph{Structural
+Equation Modeling: A Multidisciplinary Journal}, \emph{9}(2), 233--255.
+\url{https://doi.org/10.1207/S15328007SEM0902_5}
 
 \bibitem[\citeproctext]{ref-cohen_statistical_2013}
-Cohen J (2013): \href{https://doi.org/10.4324/9780203771587}{Statistical
-{Power} {Analysis} for the {Behavioral} {Sciences}} 2nd ed. New York:
-Routledge.
+Cohen, J. (2013). \emph{Statistical {Power} {Analysis} for the
+{Behavioral} {Sciences}} (2nd ed.). Routledge.
+\url{https://doi.org/10.4324/9780203771587}
 
 \bibitem[\citeproctext]{ref-coupe_assemblynet_2020}
-Coupé P, Mansencal B, Clément M, Giraud R, Denis de Senneville B, Ta
-V-T, Lepetit V, Manjon JV (2020): {AssemblyNet}: {A} large ensemble of
-{CNNs} for {3D} whole brain {MRI} segmentation. NeuroImage 219:117026.
-\url{https://www.sciencedirect.com/science/article/pii/S1053811920305127}.
+Coupé, P., Mansencal, B., Clément, M., Giraud, R., Denis de Senneville,
+B., Ta, V.-T., Lepetit, V., \& Manjon, J. V. (2020). {AssemblyNet}: {A}
+large ensemble of {CNNs} for {3D} whole brain {MRI} segmentation.
+\emph{NeuroImage}, \emph{219}, 117026.
+\url{https://doi.org/10.1016/j.neuroimage.2020.117026}
 
 \bibitem[\citeproctext]{ref-cumming_inference_2005}
-Cumming G, Finch S (2005):
-\href{https://doi.org/10.1037/0003-066X.60.2.170}{Inference by {Eye}:
-{Confidence} {Intervals} and {How} to {Read} {Pictures} of {Data}}.
-American Psychologist 60:170--180.
+Cumming, G., \& Finch, S. (2005). Inference by {Eye}: {Confidence}
+{Intervals} and {How} to {Read} {Pictures} of {Data}. \emph{American
+Psychologist}, \emph{60}(2), 170--180.
+\url{https://doi.org/10.1037/0003-066X.60.2.170}
 
 \bibitem[\citeproctext]{ref-curra_ventricular_2019}
-Currà A, Pierelli F, Gasbarrone R, Mannarelli D, Nofroni I, Matone V,
-Marinelli L, Trompetto C, Fattapposta F, Missori P (2019): The
-{Ventricular} {System} {Enlarges} {Abnormally} in the {Seventies},
-{Earlier} in {Men}, and {First} in the {Frontal} {Horn}: {A} {Study}
-{Based} on {More} {Than} 3,000 {Scans}. Frontiers in Aging Neuroscience
-11.
-\url{https://www.frontiersin.org/journals/aging-neuroscience/articles/10.3389/fnagi.2019.00294/full}.
+Currà, A., Pierelli, F., Gasbarrone, R., Mannarelli, D., Nofroni, I.,
+Matone, V., Marinelli, L., Trompetto, C., Fattapposta, F., \& Missori,
+P. (2019). The {Ventricular} {System} {Enlarges} {Abnormally} in the
+{Seventies}, {Earlier} in {Men}, and {First} in the {Frontal} {Horn}:
+{A} {Study} {Based} on {More} {Than} 3,000 {Scans}. \emph{Frontiers in
+Aging Neuroscience}, \emph{11}.
+\url{https://doi.org/10.3389/fnagi.2019.00294}
 
 \bibitem[\citeproctext]{ref-dima_subcortical_2022}
-Dima D, Modabbernia A, Papachristou E, Doucet GE, Agartz I, others
-(2022): Subcortical volumes across the lifespan: {Data} from 18,605
-healthy individuals aged 3--90 years. Human Brain Mapping 43:452--469.
-\url{https://onlinelibrary.wiley.com/doi/10.1002/hbm.25320}.
+Dima, D., Modabbernia, A., Papachristou, E., Doucet, G. E., Agartz, I.,
+et al. (2022). Subcortical volumes across the lifespan: {Data} from
+18,605 healthy individuals aged 3--90 years. \emph{Human Brain Mapping},
+\emph{43}(1), 452--469. \url{https://doi.org/10.1002/hbm.25320}
 
 \bibitem[\citeproctext]{ref-eid_anomalous_2017}
-Eid M, Geiser C, Koch T, Heene M (2017):
-\href{https://doi.org/10.1037/met0000083}{Anomalous results in
-{G}-factor models: {Explanations} and alternatives}. Psychological
-Methods 22:541--562.
+Eid, M., Geiser, C., Koch, T., \& Heene, M. (2017). Anomalous results in
+{G}-factor models: {Explanations} and alternatives. \emph{Psychological
+Methods}, \emph{22}(3), 541--562.
+\url{https://doi.org/10.1037/met0000083}
 
 \bibitem[\citeproctext]{ref-van_erp_subcortical_2016}
-Erp TGM van, Hibar DP, Rasmussen JM, Glahn DC, Pearlson GD, Andreassen
-OA, Agartz I, Westlye LT, Haukvik UK, Dale AM, Melle I, Hartberg CB,
-Gruber O, Kraemer B, Zilles D, Donohoe G, Kelly S, McDonald C, Morris
-DW, Cannon DM, Corvin A, Machielsen MWJ, Koenders L, Haan L de, Veltman
-DJ, Satterthwaite TD, Wolf DH, Gur RC, Gur RE, Potkin SG, Mathalon DH,
-Mueller BA, Preda A, Macciardi F, Ehrlich S, Walton E, Hass J, Calhoun
-VD, Bockholt HJ, Sponheim SR, Shoemaker JM, Haren NEM van, Pol HEH,
-Ophoff RA, Kahn RS, Roiz-Santiañez R, Crespo-Facorro B, Wang L, Alpert
-KI, Jönsson EG, Dimitrova R, Bois C, Whalley HC, McIntosh AM, Lawrie SM,
-Hashimoto R, Thompson PM, Turner JA (2016): Subcortical brain volume
-abnormalities in 2028 individuals with schizophrenia and 2540 healthy
-controls via the {ENIGMA} consortium. Molecular Psychiatry 21:547--553.
-\url{https://pmc.ncbi.nlm.nih.gov/articles/PMC4668237/}.
+Erp, T. G. M. van, Hibar, D. P., Rasmussen, J. M., Glahn, D. C.,
+Pearlson, G. D., Andreassen, O. A., Agartz, I., Westlye, L. T., Haukvik,
+U. K., Dale, A. M., Melle, I., Hartberg, C. B., Gruber, O., Kraemer, B.,
+Zilles, D., Donohoe, G., Kelly, S., McDonald, C., Morris, D. W.,
+\ldots{} Turner, J. A. (2016). Subcortical brain volume abnormalities in
+2028 individuals with schizophrenia and 2540 healthy controls via the
+{ENIGMA} consortium. \emph{Molecular Psychiatry}, \emph{21}(4),
+547--553. \url{https://doi.org/10.1038/mp.2015.63}
 
 \bibitem[\citeproctext]{ref-fernandez-lozano_enhanced_2025}
-Fernandez-Lozano S, Fonov V, Schoemaker D, Pruessner J, Potvin O,
-Duchesne S, Collins DL, Initiative ADN (2025): Enhanced {Detection} of
-{Age}-{Related} and {Cognitive} {Declines} {Using} {Automated}
-{Hippocampal}-{To}-{Ventricle} {Ratio} in {Alzheimer}'s {Patients}.
-Human Brain Mapping 46:e70265.
-\url{https://onlinelibrary.wiley.com/doi/abs/10.1002/hbm.70265}.
+Fernandez-Lozano, S., Fonov, V., Schoemaker, D., Pruessner, J., Potvin,
+O., Duchesne, S., Collins, D. L., \& Initiative, A. D. N. (2025).
+Enhanced {Detection} of {Age}-{Related} and {Cognitive} {Declines}
+{Using} {Automated} {Hippocampal}-{To}-{Ventricle} {Ratio} in
+{Alzheimer}'s {Patients}. \emph{Human Brain Mapping}, \emph{46}(11),
+e70265. \url{https://doi.org/10.1002/hbm.70265}
 
 \bibitem[\citeproctext]{ref-fjell_minute_2009}
-Fjell AM, Westlye LT, Amlien I, Espeseth T, Reinvang I, Raz N, Agartz I,
-Salat DH, Greve DN, Fischl B, Dale AM, Walhovd KB (2009): Minute
-{Effects} of {Sex} on the {Aging} {Brain}: {A} {Multisample} {Magnetic}
-{Resonance} {Imaging} {Study} of {Healthy} {Aging} and {Alzheimer}'s
-{Disease}. Journal of Neuroscience 29:8774--8783.
-\url{https://www.jneurosci.org/lookup/doi/10.1523/JNEUROSCI.0115-09.2009}.
+Fjell, A. M., Westlye, L. T., Amlien, I., Espeseth, T., Reinvang, I.,
+Raz, N., Agartz, I., Salat, D. H., Greve, D. N., Fischl, B., Dale, A.
+M., \& Walhovd, K. B. (2009). Minute {Effects} of {Sex} on the {Aging}
+{Brain}: {A} {Multisample} {Magnetic} {Resonance} {Imaging} {Study} of
+{Healthy} {Aging} and {Alzheimer}'s {Disease}. \emph{Journal of
+Neuroscience}, \emph{29}(27), 8774--8783.
+\url{https://doi.org/10.1523/JNEUROSCI.0115-09.2009}
 
 \bibitem[\citeproctext]{ref-fonov_darq_2022}
-Fonov V, Dadar M, Adni TP-ARG, Collins DL (2022): {DARQ}: {Deep}
-learning of quality control for stereotaxic registration of human brain
-{MRI} to the {T1w} {MNI}-{ICBM} 152 template. NeuroImage 257:119266.
-\url{https://www.sciencedirect.com/science/article/pii/S1053811922003871}.
+Fonov, V., Dadar, M., Adni, T. P.-A. R. G., \& Collins, D. L. (2022).
+{DARQ}: {Deep} learning of quality control for stereotaxic registration
+of human brain {MRI} to the {T1w} {MNI}-{ICBM} 152 template.
+\emph{NeuroImage}, \emph{257}, 119266.
+\url{https://doi.org/10.1016/j.neuroimage.2022.119266}
 
 \bibitem[\citeproctext]{ref-fry_comparison_2017}
-Fry A, Littlejohns TJ, Sudlow C, Doherty N, Adamska L, Sprosen T,
-Collins R, Allen NE (2017): Comparison of {Sociodemographic} and
-{Health}-{Related} {Characteristics} of {UK} {Biobank} {Participants}
-{With} {Those} of the {General} {Population}. American Journal of
-Epidemiology 186:1026--1034.
-\url{https://pmc.ncbi.nlm.nih.gov/articles/PMC5860371/}.
+Fry, A., Littlejohns, T. J., Sudlow, C., Doherty, N., Adamska, L.,
+Sprosen, T., Collins, R., \& Allen, N. E. (2017). Comparison of
+{Sociodemographic} and {Health}-{Related} {Characteristics} of {UK}
+{Biobank} {Participants} {With} {Those} of the {General} {Population}.
+\emph{American Journal of Epidemiology}, \emph{186}(9), 1026--1034.
+\url{https://doi.org/10.1093/aje/kwx246}
 
 \bibitem[\citeproctext]{ref-ge_normative_2024}
-Ge R, Yu Y, Qi YX, Fan Y, Chen S, Gao C, Haas SS, New F, Boomsma DI,
-Brodaty H, Brouwer RM, Buckner R, Caseras X, Crivello F, Crone EA, Erk
-S, Fisher SE, Franke B, Glahn DC, Dannlowski U, Grotegerd D, Gruber O,
-Hulshoff Pol HE, Schumann G, Tamnes CK, Walter H, Wierenga LM, Jahanshad
-N, Thompson PM, Frangou S, Agartz I, Asherson P, Ayesa-Arriola R, Banaj
-N, Banaschewski T, Baumeister S, Bertolino A, Borgwardt S, Bourque J,
-Brandeis D, Breier A, Buitelaar JK, Cannon DM, Cervenka S, Conrod PJ,
-Crespo-Facorro B, Davey CG, Haan L de, Zubicaray GI de, Di Giorgio A,
-Frodl T, Gruner P, Gur RE, Gur RC, Harrison BJ, Hatton SN, Hickie I,
-Howells FM, Huyser C, Jernigan TL, Jiang J, Joska JA, Kahn RS, Kalnin
-AJ, Kochan NA, Koops S, Kuntsi J, Lagopoulos J, Lazaro L, Lebedeva IS,
-Lochner C, Martin NG, Mazoyer B, McDonald BC, McDonald C, McMahon KL,
-Medland S, Modabbernia A, Mwangi B, Nakao T, Nyberg L, Piras F, Portella
-MJ, Qiu J, Roffman JL, Sachdev PS, Sanford N, Satterthwaite TD, Saykin
-AJ, Sellgren CM, Sim K, Smoller JW, Soares JC, Sommer IE, Spalletta G,
-Stein DJ, Thomopoulos SI, Tomyshev AS, Tordesillas-Gutiérrez D, Trollor
-JN, Ent D van 't, Heuvel OA van den, Erp TG van, Haren NE van, Vecchio
-D, Veltman DJ, Wang Y, Weber B, Wei D, Wen W, Westlye LT, Williams SC,
-Wright MJ, Wu M-J, Yu K (2024): Normative modelling of brain morphometry
-across the lifespan with {CentileBrain}: Algorithm benchmarking and
-model optimisation. The Lancet Digital Health 6:e211--e221.
-\url{https://www.sciencedirect.com/science/article/pii/S2589750023002509}.
+Ge, R., Yu, Y., Qi, Y. X., Fan, Y., Chen, S., Gao, C., Haas, S. S., New,
+F., Boomsma, D. I., Brodaty, H., Brouwer, R. M., Buckner, R., Caseras,
+X., Crivello, F., Crone, E. A., Erk, S., Fisher, S. E., Franke, B.,
+Glahn, D. C., \ldots{} Yu, K. (2024). Normative modelling of brain
+morphometry across the lifespan with {CentileBrain}: Algorithm
+benchmarking and model optimisation. \emph{The Lancet Digital Health},
+\emph{6}(3), e211--e221.
+\url{https://doi.org/10.1016/S2589-7500(23)00250-9}
 
 \bibitem[\citeproctext]{ref-ho_matchit_2011}
-Ho D, Imai K, King G, Stuart EA (2011): {MatchIt}: {Nonparametric}
-{Preprocessing} for {Parametric} {Causal} {Inference}. Journal of
-Statistical Software 42:1--28.
-\url{https://doi.org/10.18637/jss.v042.i08}.
+Ho, D., Imai, K., King, G., \& Stuart, E. A. (2011). {MatchIt}:
+{Nonparametric} {Preprocessing} for {Parametric} {Causal} {Inference}.
+\emph{Journal of Statistical Software}, \emph{42}, 1--28.
+\url{https://doi.org/10.18637/jss.v042.i08}
 
 \bibitem[\citeproctext]{ref-hu_cutoff_1999}
-Hu L, Bentler PM (1999): Cutoff criteria for fit indexes in covariance
-structure analysis: {Conventional} criteria versus new alternatives.
-Structural Equation Modeling: A Multidisciplinary Journal 6:1--55.
-\url{https://doi.org/10.1080/10705519909540118}.
+Hu, L., \& Bentler, P. M. (1999). Cutoff criteria for fit indexes in
+covariance structure analysis: {Conventional} criteria versus new
+alternatives. \emph{Structural Equation Modeling: A Multidisciplinary
+Journal}, \emph{6}(1), 1--55.
+\url{https://doi.org/10.1080/10705519909540118}
 
 \bibitem[\citeproctext]{ref-ingalhalikar_sex_2014}
-Ingalhalikar M, Smith A, Parker D, Satterthwaite TD, Elliott MA, Ruparel
-K, Hakonarson H, Gur RE, Gur RC, Verma R (2014): Sex differences in the
-structural connectome of the human brain. Proceedings of the National
-Academy of Sciences 111:823--828.
-\url{https://www.pnas.org/doi/full/10.1073/pnas.1316909110}.
+Ingalhalikar, M., Smith, A., Parker, D., Satterthwaite, T. D., Elliott,
+M. A., Ruparel, K., Hakonarson, H., Gur, R. E., Gur, R. C., \& Verma, R.
+(2014). Sex differences in the structural connectome of the human brain.
+\emph{Proceedings of the National Academy of Sciences}, \emph{111}(2),
+823--828. \url{https://doi.org/10.1073/pnas.1316909110}
 
 \bibitem[\citeproctext]{ref-jack_hypothetical_2010}
-Jack CR, Knopman DS, Jagust WJ, Shaw LM, Aisen PS, Weiner MW, Petersen
-RC, Trojanowski JQ (2010): Hypothetical model of dynamic biomarkers of
-the {Alzheimer}'s pathological cascade. The Lancet Neurology 9:119--128.
-\url{https://www.thelancet.com/journals/laneur/article/PIIS1474-4422(09)70299-6/fulltext}.
+Jack, C. R., Knopman, D. S., Jagust, W. J., Shaw, L. M., Aisen, P. S.,
+Weiner, M. W., Petersen, R. C., \& Trojanowski, J. Q. (2010).
+Hypothetical model of dynamic biomarkers of the {Alzheimer}'s
+pathological cascade. \emph{The Lancet Neurology}, \emph{9}(1),
+119--128. \url{https://doi.org/10.1016/S1474-4422(09)70299-6}
 
 \bibitem[\citeproctext]{ref-jack_prediction_1999}
-Jack CR, Petersen RC, Xu YC, O'Brien PC, Smith GE, Ivnik RJ, Boeve BF,
-Waring SC, Tangalos EG, Kokmen E (1999): Prediction of {AD} with
-{MRI}-based hippocampal volume in mild cognitive impairment. Neurology
-52:1397--1397.
-\url{https://www.neurology.org/doi/10.1212/WNL.52.7.1397}.
+Jack, C. R., Petersen, R. C., Xu, Y. C., O'Brien, P. C., Smith, G. E.,
+Ivnik, R. J., Boeve, B. F., Waring, S. C., Tangalos, E. G., \& Kokmen,
+E. (1999). Prediction of {AD} with {MRI}-based hippocampal volume in
+mild cognitive impairment. \emph{Neurology}, \emph{52}(7), 1397--1397.
+\url{https://doi.org/10.1212/WNL.52.7.1397}
 
 \bibitem[\citeproctext]{ref-jett_endogenous_2022}
-Jett S, Malviya N, Schelbaum E, Jang G, Jahan E, Clancy K, Hristov H,
-Pahlajani S, Niotis K, Loeb-Zeitlin S, Havryliuk Y, Isaacson R, Brinton
-RD, Mosconi L (2022): Endogenous and {Exogenous} {Estrogen} {Exposures}:
-{How} {Women}'s {Reproductive} {Health} {Can} {Drive} {Brain} {Aging}
-and {Inform} {Alzheimer}'s {Prevention}. Frontiers in Aging Neuroscience
-14.
-\url{https://www.frontiersin.org/journals/aging-neuroscience/articles/10.3389/fnagi.2022.831807/full}.
+Jett, S., Malviya, N., Schelbaum, E., Jang, G., Jahan, E., Clancy, K.,
+Hristov, H., Pahlajani, S., Niotis, K., Loeb-Zeitlin, S., Havryliuk, Y.,
+Isaacson, R., Brinton, R. D., \& Mosconi, L. (2022). Endogenous and
+{Exogenous} {Estrogen} {Exposures}: {How} {Women}'s {Reproductive}
+{Health} {Can} {Drive} {Brain} {Aging} and {Inform} {Alzheimer}'s
+{Prevention}. \emph{Frontiers in Aging Neuroscience}, \emph{14}.
+\url{https://doi.org/10.3389/fnagi.2022.831807}
 
 \bibitem[\citeproctext]{ref-jockwitz_differential_2024}
-Jockwitz C, Krämer C, Dellani P, Caspers S (2024): Differential
-predictability of cognitive profiles from brain structure in older males
-and females. GeroScience 46:1713--1730.
-\url{https://doi.org/10.1007/s11357-023-00934-y}.
+Jockwitz, C., Krämer, C., Dellani, P., \& Caspers, S. (2024).
+Differential predictability of cognitive profiles from brain structure
+in older males and females. \emph{GeroScience}, \emph{46}(2),
+1713--1730. \url{https://doi.org/10.1007/s11357-023-00934-y}
 
 \bibitem[\citeproctext]{ref-de_jong_allometric_2017}
-Jong LW de, Vidal J-S, Forsberg LE, Zijdenbos AP, Haight T, Initiative
-ADN, Sigurdsson S, Gudnason V, Buchem MA van, Launer LJ (2017):
-Allometric scaling of brain regions to intra-cranial volume: {An}
-epidemiological {MRI} study. Human Brain Mapping 38:151--164.
-\url{https://onlinelibrary.wiley.com/doi/abs/10.1002/hbm.23351}.
+Jong, L. W. de, Vidal, J.-S., Forsberg, L. E., Zijdenbos, A. P., Haight,
+T., Initiative, A. D. N., Sigurdsson, S., Gudnason, V., Buchem, M. A.
+van, \& Launer, L. J. (2017). Allometric scaling of brain regions to
+intra-cranial volume: {An} epidemiological {MRI} study. \emph{Human
+Brain Mapping}, \emph{38}(1), 151--164.
+\url{https://doi.org/10.1002/hbm.23351}
 
 \bibitem[\citeproctext]{ref-koenig_hippocampal_2014}
-Koenig KA, Sakaie KE, Lowe MJ, Lin J, Stone L, Bermel RA, Beall EB, Rao
-SM, Trapp BD, Phillips MD (2014): Hippocampal volume is related to
-cognitive decline and fornicial diffusion measures in multiple
-sclerosis. Magnetic Resonance Imaging 32:354--358.
-\url{https://linkinghub.elsevier.com/retrieve/pii/S0730725X13004189}.
+Koenig, K. A., Sakaie, K. E., Lowe, M. J., Lin, J., Stone, L., Bermel,
+R. A., Beall, E. B., Rao, S. M., Trapp, B. D., \& Phillips, M. D.
+(2014). Hippocampal volume is related to cognitive decline and fornicial
+diffusion measures in multiple sclerosis. \emph{Magnetic Resonance
+Imaging}, \emph{32}(4), 354--358.
+\url{https://doi.org/10.1016/j.mri.2013.12.012}
 
 \bibitem[\citeproctext]{ref-luders_case_2025}
-Luders E, Poromaa IS, Barth C, Gaser C (2025): A {Case} for estradiol:
-Younger brains in women with earlier menarche and later menopause.
-GigaScience 14:giaf060.
-\url{https://doi.org/10.1093/gigascience/giaf060}.
+Luders, E., Poromaa, I. S., Barth, C., \& Gaser, C. (2025). A {Case} for
+estradiol: Younger brains in women with earlier menarche and later
+menopause. \emph{GigaScience}, \emph{14}, giaf060.
+\url{https://doi.org/10.1093/gigascience/giaf060}
 
 \bibitem[\citeproctext]{ref-madsen_mapping_2015}
-Madsen SK, Gutman BA, Joshi SH, Toga AW, Jack CR, Weiner MW, Thompson PM
-(2015): Mapping ventricular expansion onto cortical gray matter in older
-adults. Neurobiology of Aging 36. Novel {Imaging} {Biomarkers} for
-{Alzheimer}'s {Disease} and {Related} {Disorders} ({NIBAD}):S32--S41.
-\url{https://www.sciencedirect.com/science/article/pii/S0197458014005582}.
+Madsen, S. K., Gutman, B. A., Joshi, S. H., Toga, A. W., Jack, C. R.,
+Weiner, M. W., \& Thompson, P. M. (2015). Mapping ventricular expansion
+onto cortical gray matter in older adults. \emph{Neurobiology of Aging},
+\emph{36}, S32--S41.
+\url{https://doi.org/10.1016/j.neurobiolaging.2014.03.044}
 
 \bibitem[\citeproctext]{ref-miller_multimodal_2016}
-Miller KL, Alfaro-Almagro F, Bangerter NK, Thomas DL, Yacoub E, Xu J,
-Bartsch AJ, Jbabdi S, Sotiropoulos SN, Andersson JL, Griffanti L, Douaud
-G, Okell TW, Weale P, Dragonu I, Garratt S, Hudson S, Collins R,
-Jenkinson M, Matthews PM, Smith SM (2016): Multimodal population brain
-imaging in the {UK} {Biobank} prospective epidemiological study. Nature
-neuroscience 19:1523--1536.
-\url{https://pmc.ncbi.nlm.nih.gov/articles/PMC5086094/}.
+Miller, K. L., Alfaro-Almagro, F., Bangerter, N. K., Thomas, D. L.,
+Yacoub, E., Xu, J., Bartsch, A. J., Jbabdi, S., Sotiropoulos, S. N.,
+Andersson, J. L., Griffanti, L., Douaud, G., Okell, T. W., Weale, P.,
+Dragonu, I., Garratt, S., Hudson, S., Collins, R., Jenkinson, M.,
+\ldots{} Smith, S. M. (2016). Multimodal population brain imaging in the
+{UK} {Biobank} prospective epidemiological study. \emph{Nature
+Neuroscience}, \emph{19}(11), 1523--1536.
+\url{https://doi.org/10.1038/nn.4393}
 
 \bibitem[\citeproctext]{ref-mu_effect_2020}
-Mu SH, Yuan BK, Tan LH (2020): Effect of {Gender} on {Development} of
-{Hippocampal} {Subregions} {From} {Childhood} to {Adulthood}. Frontiers
-in Human Neuroscience 14:611057.
-\url{https://pmc.ncbi.nlm.nih.gov/articles/PMC7744655/}.
+Mu, S. H., Yuan, B. K., \& Tan, L. H. (2020). Effect of {Gender} on
+{Development} of {Hippocampal} {Subregions} {From} {Childhood} to
+{Adulthood}. \emph{Frontiers in Human Neuroscience}, \emph{14}, 611057.
+\url{https://doi.org/10.3389/fnhum.2020.611057}
 
 \bibitem[\citeproctext]{ref-nordenskjold_intracranial_2015}
-Nordenskjöld R, Malmberg F, Larsson E-M, Simmons A, Ahlström H,
-Johansson L, Kullberg J (2015): Intracranial volume normalization
-methods: {Considerations} when investigating gender differences in
-regional brain volume. Psychiatry Research: Neuroimaging 231:227--235.
-\url{https://www.sciencedirect.com/science/article/pii/S0925492714003084}.
+Nordenskjöld, R., Malmberg, F., Larsson, E.-M., Simmons, A., Ahlström,
+H., Johansson, L., \& Kullberg, J. (2015). Intracranial volume
+normalization methods: {Considerations} when investigating gender
+differences in regional brain volume. \emph{Psychiatry Research:
+Neuroimaging}, \emph{231}(3), 227--235.
+\url{https://doi.org/10.1016/j.pscychresns.2014.11.011}
 
 \bibitem[\citeproctext]{ref-obrien_statistical_2011}
-O'Brien LM, Ziegler DA, Deutsch CK, Frazier JA, Herbert MR, Locascio JJ
-(2011): Statistical adjustments for brain size in volumetric
-neuroimaging studies: {Some} practical implications in methods.
-Psychiatry Research: Neuroimaging 193:113--122.
-\url{https://www.sciencedirect.com/science/article/pii/S0925492711000357}.
+O'Brien, L. M., Ziegler, D. A., Deutsch, C. K., Frazier, J. A., Herbert,
+M. R., \& Locascio, J. J. (2011). Statistical adjustments for brain size
+in volumetric neuroimaging studies: {Some} practical implications in
+methods. \emph{Psychiatry Research: Neuroimaging}, \emph{193}(2),
+113--122. \url{https://doi.org/10.1016/j.pscychresns.2011.01.007}
 
 \bibitem[\citeproctext]{ref-park_sex-specific_2025}
-Park CH, Lee H, Lee Y-M, Lee B-D, Moon E, Suh H, Kim K, Kim H-J, Shim H,
-Pak K, Choi K-U, Kim C-S (2025): Sex-specific effects of apolipoprotein
-{E} ε4 genotype on longitudinal hippocampal atrophy in amnestic mild
-cognitive impairment over a 2-year evaluation period. Journal of
-Alzheimer's Disease 103:1269--1276.
-\url{https://doi.org/10.1177/13872877241313066}.
+Park, C. H., Lee, H., Lee, Y.-M., Lee, B.-D., Moon, E., Suh, H., Kim,
+K., Kim, H.-J., Shim, H., Pak, K., Choi, K.-U., \& Kim, C.-S. (2025).
+Sex-specific effects of apolipoprotein {E} ε4 genotype on longitudinal
+hippocampal atrophy in amnestic mild cognitive impairment over a 2-year
+evaluation period. \emph{Journal of Alzheimer's Disease}, \emph{103}(4),
+1269--1276. \url{https://doi.org/10.1177/13872877241313066}
 
 \bibitem[\citeproctext]{ref-pintzka_marked_2015}
-Pintzka CWS, Hansen TI, Evensmoen HR, Håberg AK (2015): Marked effects
-of intracranial volume correction methods on sex differences in
-neuroanatomical structures: A {HUNT} {MRI} study. Frontiers in
-Neuroscience 9.
-\url{https://www.frontiersin.org/journals/neuroscience/articles/10.3389/fnins.2015.00238/full}.
+Pintzka, C. W. S., Hansen, T. I., Evensmoen, H. R., \& Håberg, A. K.
+(2015). Marked effects of intracranial volume correction methods on sex
+differences in neuroanatomical structures: A {HUNT} {MRI} study.
+\emph{Frontiers in Neuroscience}, \emph{9}.
+\url{https://doi.org/10.3389/fnins.2015.00238}
 
 \bibitem[\citeproctext]{ref-putnick_measurement_2016}
-Putnick DL, Bornstein MH (2016): Measurement invariance conventions and
-reporting: {The} state of the art and future directions for
-psychological research. Developmental Review 41:71--90.
-\url{https://www.sciencedirect.com/science/article/pii/S0273229716300351}.
+Putnick, D. L., \& Bornstein, M. H. (2016). Measurement invariance
+conventions and reporting: {The} state of the art and future directions
+for psychological research. \emph{Developmental Review}, \emph{41},
+71--90. \url{https://doi.org/10.1016/j.dr.2016.06.004}
 
 \bibitem[\citeproctext]{ref-rajagopal_estimating_2024}
-Rajagopal SK, Beltz AM, Hampstead BM, Polk TA (2024): Estimating
-individual trajectories of structural and cognitive decline in mild
-cognitive impairment for early prediction of progression to dementia of
-the {Alzheimer}'s type. Scientific Reports 14:12906.
-\url{https://www.nature.com/articles/s41598-024-63301-7}.
+Rajagopal, S. K., Beltz, A. M., Hampstead, B. M., \& Polk, T. A. (2024).
+Estimating individual trajectories of structural and cognitive decline
+in mild cognitive impairment for early prediction of progression to
+dementia of the {Alzheimer}'s type. \emph{Scientific Reports},
+\emph{14}(1), 12906. \url{https://doi.org/10.1038/s41598-024-63301-7}
 
 \bibitem[\citeproctext]{ref-raz_regional_2005}
-Raz N, Lindenberger U, Rodrigue KM, Kennedy KM, Head D, Williamson A,
-Dahle C, Gerstorf D, Acker JD (2005): Regional {Brain} {Changes} in
-{Aging} {Healthy} {Adults}: {General} {Trends}, {Individual}
-{Differences} and {Modifiers}. Cerebral Cortex 15:1676--1689.
-\url{https://dx.doi.org/10.1093/cercor/bhi044}.
+Raz, N., Lindenberger, U., Rodrigue, K. M., Kennedy, K. M., Head, D.,
+Williamson, A., Dahle, C., Gerstorf, D., \& Acker, J. D. (2005).
+Regional {Brain} {Changes} in {Aging} {Healthy} {Adults}: {General}
+{Trends}, {Individual} {Differences} and {Modifiers}. \emph{Cerebral
+Cortex}, \emph{15}(11), 1676--1689.
+\url{https://doi.org/10.1093/cercor/bhi044}
 
 \bibitem[\citeproctext]{ref-rigby_generalized_2005}
-Rigby RA, Stasinopoulos DM (2005): Generalized {Additive} {Models} for
-{Location}, {Scale} and {Shape}. Journal of the Royal Statistical
-Society Series C: Applied Statistics 54:507--554.
-\url{https://dx.doi.org/10.1111/j.1467-9876.2005.00510.x}.
+Rigby, R. A., \& Stasinopoulos, D. M. (2005). Generalized {Additive}
+{Models} for {Location}, {Scale} and {Shape}. \emph{Journal of the Royal
+Statistical Society Series C: Applied Statistics}, \emph{54}(3),
+507--554. \url{https://doi.org/10.1111/j.1467-9876.2005.00510.x}
 
 \bibitem[\citeproctext]{ref-ritchie_sex_2018}
-Ritchie SJ, Cox SR, Shen X, Lombardo MV, Reus LM, Alloza C, Harris MA,
-Alderson HL, Hunter S, Neilson E, Liewald DCM, Auyeung B, Whalley HC,
-Lawrie SM, Gale CR, Bastin ME, McIntosh AM, Deary IJ (2018): Sex
+Ritchie, S. J., Cox, S. R., Shen, X., Lombardo, M. V., Reus, L. M.,
+Alloza, C., Harris, M. A., Alderson, H. L., Hunter, S., Neilson, E.,
+Liewald, D. C. M., Auyeung, B., Whalley, H. C., Lawrie, S. M., Gale, C.
+R., Bastin, M. E., McIntosh, A. M., \& Deary, I. J. (2018). Sex
 {Differences} in the {Adult} {Human} {Brain}: {Evidence} from 5216 {UK}
-{Biobank} {Participants}. Cerebral Cortex (New York, NY) 28:2959--2975.
-\url{https://pmc.ncbi.nlm.nih.gov/articles/PMC6041980/}.
+{Biobank} {Participants}. \emph{Cerebral Cortex (New York, NY)},
+\emph{28}(8), 2959--2975. \url{https://doi.org/10.1093/cercor/bhy109}
 
 \bibitem[\citeproctext]{ref-rosseel_lavaan_2012}
-Rosseel Y (2012): Lavaan: {An} {R} {Package} for {Structural} {Equation}
-{Modeling}. Journal of Statistical Software 48:1--36.
-\url{https://doi.org/10.18637/jss.v048.i02}.
+Rosseel, Y. (2012). Lavaan: {An} {R} {Package} for {Structural}
+{Equation} {Modeling}. \emph{Journal of Statistical Software},
+\emph{48}, 1--36. \url{https://doi.org/10.18637/jss.v048.i02}
 
 \bibitem[\citeproctext]{ref-ruigrok_meta-analysis_2014}
-Ruigrok ANV, Salimi-Khorshidi G, Lai M-C, Baron-Cohen S, Lombardo MV,
-Tait RJ, Suckling J (2014): A meta-analysis of sex differences in human
-brain structure. Neuroscience \& Biobehavioral Reviews 39:34--50.
-\url{https://www.sciencedirect.com/science/article/pii/S0149763413003011}.
+Ruigrok, A. N. V., Salimi-Khorshidi, G., Lai, M.-C., Baron-Cohen, S.,
+Lombardo, M. V., Tait, R. J., \& Suckling, J. (2014). A meta-analysis of
+sex differences in human brain structure. \emph{Neuroscience \&
+Biobehavioral Reviews}, \emph{39}, 34--50.
+\url{https://doi.org/10.1016/j.neubiorev.2013.12.004}
 
 \bibitem[\citeproctext]{ref-sanchis-segura_effects_2020}
-Sanchis-Segura C, Ibañez-Gual MV, Aguirre N, Cruz-Gómez ÁJ, Forn C
-(2020): Effects of different intracranial volume correction methods on
-univariate sex differences in grey matter volume and multivariate sex
-prediction. Scientific Reports 10:12953.
-\url{https://www.nature.com/articles/s41598-020-69361-9}.
+Sanchis-Segura, C., Ibañez-Gual, M. V., Aguirre, N., Cruz-Gómez, Á. J.,
+\& Forn, C. (2020). Effects of different intracranial volume correction
+methods on univariate sex differences in grey matter volume and
+multivariate sex prediction. \emph{Scientific Reports}, \emph{10}(1),
+12953. \url{https://doi.org/10.1038/s41598-020-69361-9}
 
 \bibitem[\citeproctext]{ref-sanfilipo_correction_2004}
-Sanfilipo MP, Benedict RHB, Zivadinov R, Bakshi R (2004): Correction for
-intracranial volume in analysis of whole brain atrophy in multiple
-sclerosis: The proportion vs. Residual method. NeuroImage 22:1732--1743.
-\url{https://www.sciencedirect.com/science/article/pii/S1053811904001934}.
+Sanfilipo, M. P., Benedict, R. H. B., Zivadinov, R., \& Bakshi, R.
+(2004). Correction for intracranial volume in analysis of whole brain
+atrophy in multiple sclerosis: The proportion vs. Residual method.
+\emph{NeuroImage}, \emph{22}(4), 1732--1743.
+\url{https://doi.org/10.1016/j.neuroimage.2004.03.037}
 
 \bibitem[\citeproctext]{ref-schmaal_subcortical_2016}
-Schmaal L, Veltman DJ, Erp TGM van, Sämann PG, Frodl T, Jahanshad N,
-Loehrer E, Tiemeier H, Hofman A, Niessen WJ, Vernooij MW, Ikram MA,
-Wittfeld K, Grabe HJ, Block A, Hegenscheid K, Völzke H, Hoehn D, Czisch
-M, Lagopoulos J, Hatton SN, Hickie IB, Goya-Maldonado R, Krämer B,
-Gruber O, Couvy-Duchesne B, Rentería ME, Strike LT, Mills NT, Zubicaray
-GI de, McMahon KL, Medland SE, Martin NG, Gillespie NA, Wright MJ, Hall
-GB, MacQueen GM, Frey EM, Carballedo A, Velzen LS van, Tol MJ van, Wee
-NJ van der, Veer IM, Walter H, Schnell K, Schramm E, Normann C, Schoepf
-D, Konrad C, Zurowski B, Nickson T, McIntosh AM, Papmeyer M, Whalley HC,
-Sussmann JE, Godlewska BR, Cowen PJ, Fischer FH, Rose M, Penninx BWJH,
-Thompson PM, Hibar DP (2016): Subcortical brain alterations in major
-depressive disorder: Findings from the {ENIGMA} {Major} {Depressive}
-{Disorder} working group. Molecular Psychiatry 21:806--812.
-\url{https://www.nature.com/articles/mp201569}.
+Schmaal, L., Veltman, D. J., Erp, T. G. M. van, Sämann, P. G., Frodl,
+T., Jahanshad, N., Loehrer, E., Tiemeier, H., Hofman, A., Niessen, W.
+J., Vernooij, M. W., Ikram, M. A., Wittfeld, K., Grabe, H. J., Block,
+A., Hegenscheid, K., Völzke, H., Hoehn, D., Czisch, M., \ldots{} Hibar,
+D. P. (2016). Subcortical brain alterations in major depressive
+disorder: Findings from the {ENIGMA} {Major} {Depressive} {Disorder}
+working group. \emph{Molecular Psychiatry}, \emph{21}(6), 806--812.
+\url{https://doi.org/10.1038/mp.2015.69}
 
 \bibitem[\citeproctext]{ref-schoemaker_hippocampal-ventricle_2019}
-Schoemaker D, Buss C, Pietrantonio S, Maunder L, Freiesleben SD,
-Hartmann J, Collins DL, Lupien S, Pruessner JC (2019): The
-hippocampal-to-ventricle ratio ({HVR}): {Presentation} of a manual
-segmentation protocol and preliminary evidence. NeuroImage 203:116108.
-\url{https://www.sciencedirect.com/science/article/pii/S1053811919306998}.
+Schoemaker, D., Buss, C., Pietrantonio, S., Maunder, L., Freiesleben, S.
+D., Hartmann, J., Collins, D. L., Lupien, S., \& Pruessner, J. C.
+(2019). The hippocampal-to-ventricle ratio ({HVR}): {Presentation} of a
+manual segmentation protocol and preliminary evidence.
+\emph{NeuroImage}, \emph{203}, 116108.
+\url{https://doi.org/10.1016/j.neuroimage.2019.116108}
 
 \bibitem[\citeproctext]{ref-sudlow_uk_2015}
-Sudlow C, Gallacher J, Allen N, Beral V, Burton P, Danesh J, Downey P,
-Elliott P, Green J, Landray M, Liu B, Matthews P, Ong G, Pell J, Silman
-A, Young A, Sprosen T, Peakman T, Collins R (2015):
-\href{https://doi.org/10.1371/journal.pmed.1001779}{{UK} biobank: An
-open access resource for identifying the causes of a wide range of
-complex diseases of middle and old age}. PLoS medicine 12:e1001779.
+Sudlow, C., Gallacher, J., Allen, N., Beral, V., Burton, P., Danesh, J.,
+Downey, P., Elliott, P., Green, J., Landray, M., Liu, B., Matthews, P.,
+Ong, G., Pell, J., Silman, A., Young, A., Sprosen, T., Peakman, T., \&
+Collins, R. (2015). {UK} biobank: An open access resource for
+identifying the causes of a wide range of complex diseases of middle and
+old age. \emph{PLoS Medicine}, \emph{12}(3), e1001779.
+\url{https://doi.org/10.1371/journal.pmed.1001779}
 
 \bibitem[\citeproctext]{ref-tai_detection_2025}
-Tai XY, Toniolo S, Llewellyn DJ, Van Duijn CM, Husain M, Manohar SG
-(2025): Detection of cognitive deficits years prior to clinical
-diagnosis across neurological conditions. Brain Communications
-7:fcaf307.
-\url{https://academic.oup.com/braincomms/article/doi/10.1093/braincomms/fcaf307/8239187}.
+Tai, X. Y., Toniolo, S., Llewellyn, D. J., Van Duijn, C. M., Husain, M.,
+\& Manohar, S. G. (2025). Detection of cognitive deficits years prior to
+clinical diagnosis across neurological conditions. \emph{Brain
+Communications}, \emph{7}(5), fcaf307.
+\url{https://doi.org/10.1093/braincomms/fcaf307}
 
 \bibitem[\citeproctext]{ref-voevodskaya_effects_2014}
-Voevodskaya O, Simmons A, Nordenskjöld R, Kullberg J, Ahlström H, Lind
-L, Wahlund L-O, Larsson E-M, Westman E, Alzheimer's Disease Neuroimaging
-Initiative (2014): The effects of intracranial volume adjustment
-approaches on multiple regional {MRI} volumes in healthy aging and
-{Alzheimer}'s disease. Frontiers in Aging Neuroscience 6.
-\url{http://journal.frontiersin.org/article/10.3389/fnagi.2014.00264/abstract}.
+Voevodskaya, O., Simmons, A., Nordenskjöld, R., Kullberg, J., Ahlström,
+H., Lind, L., Wahlund, L.-O., Larsson, E.-M., Westman, E., \&
+Alzheimer's Disease Neuroimaging Initiative. (2014). The effects of
+intracranial volume adjustment approaches on multiple regional {MRI}
+volumes in healthy aging and {Alzheimer}'s disease. \emph{Frontiers in
+Aging Neuroscience}, \emph{6}.
+\url{https://doi.org/10.3389/fnagi.2014.00264}
 
 \bibitem[\citeproctext]{ref-wang_comparison_2024}
-Wang J, Hill-Jarrett T, Buto P, Pederson A, Sims KD, Zimmerman SC,
-DeVost MA, Ferguson E, Lacar B, Yang Y, Choi M, Caunca MR, La Joie R,
-Chen R, Glymour MM, Ackley SF (2024):
-\href{https://doi.org/10.1002/hbm.26633}{Comparison of approaches to
-control for intracranial volume in research on the association of brain
-volumes with cognitive outcomes}. Human Brain Mapping 45:e26633.
+Wang, J., Hill-Jarrett, T., Buto, P., Pederson, A., Sims, K. D.,
+Zimmerman, S. C., DeVost, M. A., Ferguson, E., Lacar, B., Yang, Y.,
+Choi, M., Caunca, M. R., La Joie, R., Chen, R., Glymour, M. M., \&
+Ackley, S. F. (2024). Comparison of approaches to control for
+intracranial volume in research on the association of brain volumes with
+cognitive outcomes. \emph{Human Brain Mapping}, \emph{45}(4), e26633.
+\url{https://doi.org/10.1002/hbm.26633}
 
 \bibitem[\citeproctext]{ref-williams_neuroanatomical_2021}
-Williams CM, Peyre H, Toro R, Ramus F (2021): Neuroanatomical norms in
-the {UK} {Biobank}: {The} impact of allometric scaling, sex, and age.
-Human Brain Mapping 42:4623--4642.
-\url{https://onlinelibrary.wiley.com/doi/abs/10.1002/hbm.25572}.
+Williams, C. M., Peyre, H., Toro, R., \& Ramus, F. (2021).
+Neuroanatomical norms in the {UK} {Biobank}: {The} impact of allometric
+scaling, sex, and age. \emph{Human Brain Mapping}, \emph{42}(14),
+4623--4642. \url{https://doi.org/10.1002/hbm.25572}
 
 \bibitem[\citeproctext]{ref-xu_longitudinal_2020}
-Xu R, Hu X, Jiang X, Zhang Y, Wang J, Zeng X (2020): Longitudinal volume
-changes of hippocampal subfields and cognitive decline in {Parkinson}'s
-disease. Quantitative Imaging in Medicine and Surgery 10:220--232.
-\url{http://qims.amegroups.com/article/view/31826/27332}.
+Xu, R., Hu, X., Jiang, X., Zhang, Y., Wang, J., \& Zeng, X. (2020).
+Longitudinal volume changes of hippocampal subfields and cognitive
+decline in {Parkinson}'s disease. \emph{Quantitative Imaging in Medicine
+and Surgery}, \emph{10}(1), 220--232.
+\url{https://doi.org/10.21037/qims.2019.10.17}
 
 \bibitem[\citeproctext]{ref-zheng_sex_2017}
-Zheng Z, Li R, Xiao F, He R, Zhang S, Li J (2017): Sex {Matters}:
-{Hippocampal} {Volume} {Predicts} {Individual} {Differences} in
-{Associative} {Memory} in {Cognitively} {Normal} {Older} {Women} but
-{Not} {Men}. Frontiers in Human Neuroscience 11.
-\url{https://www.frontiersin.org/journals/human-neuroscience/articles/10.3389/fnhum.2017.00093/full}.
+Zheng, Z., Li, R., Xiao, F., He, R., Zhang, S., \& Li, J. (2017). Sex
+{Matters}: {Hippocampal} {Volume} {Predicts} {Individual} {Differences}
+in {Associative} {Memory} in {Cognitively} {Normal} {Older} {Women} but
+{Not} {Men}. \emph{Frontiers in Human Neuroscience}, \emph{11}.
+\url{https://doi.org/10.3389/fnhum.2017.00093}
 
 \end{CSLReferences}
 
