@@ -93,7 +93,7 @@ if (!is.null(eng_demog)) {
 mtch_demog <- demog_data$CRS$MTCH
 setDT(mtch_demog)
 n_matched <- nrow(mtch_demog)
-n_initial_imaging <- 47398
+n_initial_imaging <- 42898  # unique EIDs; see R/scripts/audit_sex_balance.R
 
 sample_sizes    <- extract_sample_sizes(demog_data)
 n_matched_pairs <- sample_sizes$n_matched_pairs

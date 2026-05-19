@@ -234,7 +234,7 @@ University, Montreal, Quebec, Canada}
 \affil[3]{Department of Biomedical Engineering, McGill
 University, Montreal, Quebec, Canada}
 
-\date{2026-04-30}
+\date{2026-05-14}
 
 \begin{document}
 \maketitle
@@ -417,46 +417,56 @@ flow is shown in Figure~\ref{fig-prisma}.
                     fill=black!3, dashed},
   arrow/.style={-{Stealth[length=5pt]}, thick, black!70}
 ]
-  % Main flow (top to bottom)
+  % Main flow (top to bottom). All counts are unique participants;
+  % sex-stratified Ns from R/scripts/audit_sex_balance.R.
   \node[process] (initial)
-    {UK Biobank Imaging Cohort\\[2pt]\textbf{N\,=\,47,398}};
+    {UK Biobank Imaging Cohort\\[2pt]\textbf{N\,=\,42,898}\\[-1pt]{\scriptsize F:\,22,594\,|\,M:\,20,304}};
 
   \node[decision, below=of initial] (qc)
     {Quality control filter};
 
   \node[process, below=of qc] (passed)
-    {Passed all processing\\[2pt]\textbf{n\,=\,38,567}};
+    {Passed all processing\\[2pt]\textbf{n\,=\,33,911}\\[-1pt]{\scriptsize F:\,19,193\,|\,M:\,14,718}};
 
   \node[decision, below=of passed] (gq)
     {ICD-10 exclusion:\\G00--G99, Q00--Q07};
 
   \node[sample, below=of gq] (sensitivity)
-    {Sensitivity sample\\[2pt]\textbf{N\,=\,30,032}};
+    {Sensitivity sample\\[2pt]\textbf{N\,=\,30,032}\\[-1pt]{\scriptsize F:\,16,894\,|\,M:\,13,138}};
 
   \node[decision, below=of sensitivity] (f)
     {ICD-10 exclusion:\\F00--F99};
 
   \node[sample, below=of f] (primary)
-    {\textbf{Primary sample}\\[2pt]\textbf{N\,=\,27,680}};
+    {\textbf{Primary sample}\\[2pt]\textbf{N\,=\,27,680}\\[-1pt]{\scriptsize F:\,15,555\,|\,M:\,12,125}};
+
+  \node[decision, below=of primary] (edu)
+    {Missing education or\\site data};
+
+  \node[sample, below=of edu] (gamlss)
+    {GAMLSS sample\\[2pt]\textbf{N\,=\,27,434}\\[-1pt]{\scriptsize F:\,15,412\,|\,M:\,12,022}};
 
   % Exclusion boxes (right side)
   \node[excluded, right=of qc] (exc1)
-    {Excluded\\[2pt]n\,=\,8,831};
+    {Excluded\\[2pt]n\,=\,8,987};
 
   \node[excluded, right=of gq] (exc2)
-    {Excluded\\[2pt]n\,=\,8,535};
+    {Excluded\\[2pt]n\,=\,3,879};
 
   \node[excluded, right=of f] (exc3)
     {Excluded\\[2pt]n\,=\,2,352};
 
-  % Subsamples (below primary, three across)
-  \node[subsample, below=1.2cm of primary, xshift=-4.2cm] (england)
+  \node[excluded, right=of edu] (exc4)
+    {Excluded\\[2pt]n\,=\,246};
+
+  % Subsamples (below GAMLSS, three across)
+  \node[subsample, below=1.2cm of gamlss, xshift=-4.2cm] (england)
     {England only\\[2pt]\textit{N\,=\,25,172}\\[-1pt]{\scriptsize(SEM analyses)}};
 
-  \node[subsample, below=1.2cm of primary] (matched)
+  \node[subsample, below=1.2cm of gamlss] (matched)
     {ICV-matched\\[2pt]\textit{N\,=\,9,500}\\[-1pt]{\scriptsize(Sex differences)}};
 
-  \node[subsample, below=1.2cm of primary, xshift=4.2cm] (longitudinal)
+  \node[subsample, below=1.2cm of gamlss, xshift=4.2cm] (longitudinal)
     {Longitudinal\\[2pt]\textit{N\,=\,2,935}\\[-1pt]{\scriptsize(Normative calibration)}};
 
   % Arrows
@@ -469,15 +479,20 @@ flow is shown in Figure~\ref{fig-prisma}.
   \draw[arrow] (sensitivity) -- (f);
   \draw[arrow] (f) -- (primary);
   \draw[arrow] (f) -- (exc3);
-  \draw[arrow, dashed] (primary.south) -- ++(0,-0.35cm) -| (england.north);
-  \draw[arrow, dashed] (primary.south) -- (matched.north);
-  \draw[arrow, dashed] (primary.south) -- ++(0,-0.35cm) -| (longitudinal.north);
+  \draw[arrow] (primary) -- (edu);
+  \draw[arrow] (edu) -- (gamlss);
+  \draw[arrow] (edu) -- (exc4);
+  \draw[arrow, dashed] (gamlss.south) -- ++(0,-0.35cm) -| (england.north);
+  \draw[arrow, dashed] (gamlss.south) -- (matched.north);
+  \draw[arrow, dashed] (gamlss.south) -- ++(0,-0.35cm) -| (longitudinal.north);
 \end{tikzpicture}
 
 }
 
-\caption{\label{fig-prisma}\textbf{Participant selection flow.} Dashed
-boxes indicate analytic subsamples derived from the primary sample.}
+\caption{\label{fig-prisma}\textbf{Participant selection flow.} All
+counts are unique participants; F and M values give female and male
+sub-counts at each stage. Dashed boxes indicate analytic subsamples
+derived from the GAMLSS sample.}
 
 \end{figure}%
 
@@ -1569,7 +1584,10 @@ participants are healthier and more educated than the general population
 (Fry et al., 2017), limiting generalizability to clinical populations.
 Some cognitive tests had incomplete data, and complete-case analyses may
 introduce selection bias. APOE genotype was unavailable, precluding
-examination of gene × sex interactions relevant to dementia risk.
+examination of gene × sex interactions relevant to dementia risk. The
+final analytic sample is 56.2\% female; because GAMLSS normative models
+were fit separately by sex, this imbalance does not bias the within-sex
+centile curves.
 
 Methodologically, the study did not include power-corrected proportions
 allometric adjustment (Sanchis-Segura et al., 2020). Imaging site
@@ -1631,13 +1649,13 @@ provided critical review, and approved the final manuscript.
 This research has been conducted using the UK Biobank Resource under
 Application Number 45551.
 
-\section*{Funding}\label{funding}
-\addcontentsline{toc}{section}{Funding}
-
 This investigation was supported in part by an award from the
 International Progressive MS Alliance (award reference number
-PA-1412-02420), a grant from the Canadian Institutes of Health Research,
-and a donation from the Famille Louise \& Andre Charron.
+PA-1412-02420), a grant from the Canadian Institutes of Health Research
+{[}Project Grant FRN 205819{]}, and a donation from the Famille Louise
+\& Andre Charron. The funders had no role in study design, data
+collection and analysis, decision to publish, or preparation of the
+manuscript.
 
 \section*{Conflict of Interest
 Statement}\label{conflict-of-interest-statement}
