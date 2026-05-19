@@ -12,6 +12,7 @@ outputs/*
 outputs/figures/*
 !outputs/**/
 !outputs/**/.gitkeep
+archive/
 logs/*
 !logs/**/
 !logs/**/.gitkeep
