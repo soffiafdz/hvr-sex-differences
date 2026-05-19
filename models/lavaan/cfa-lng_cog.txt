@@ -4,12 +4,12 @@
 # i.e. single CFA for All cognitive data
 
 # ==== General factor ====
-g_t1 =~ 1*PRS_mean_time_t1 + 1*FLINT_t1 + 1*REACT_t1 + 
+g_t1 =~ 1*PRS_mean_time_t1 + FLINT_t1 + REACT_t1 +
         c(gf1, gm1)*PRS_mean_inc_t1 + c(gf2, gm2)*NUM_t1 + c(gf3, gm3)*PRMEM_res_n_t1 +
         c(gf4, gm4)*MATS_corr_t1 + c(gf5, gm5)*TRLS_alnum_time_t1 + c(gf6, gm6)*TOWER_corr_t1 +
         c(gf7, gm7)*TRLS_num_time_t1 + c(gf8, gm8)*SYM_corr_t1 + c(gf9, gm9)*SYM_try_t1
 
-g_t2 =~ 1*PRS_mean_time_t2 + 1*FLINT_t2 + 1*REACT_t2 +
+g_t2 =~ 1*PRS_mean_time_t2 + FLINT_t2 + REACT_t2 +
         c(gf1, gm1)*PRS_mean_inc_t2 + c(gf2, gm2)*NUM_t2 + c(gf3, gm3)*PRMEM_res_n_t2 +
         c(gf4, gm4)*MATS_corr_t2 + c(gf5, gm5)*TRLS_alnum_time_t2 + c(gf6, gm6)*TOWER_corr_t2 +
         c(gf7, gm7)*TRLS_num_time_t2 + c(gf8, gm8)*SYM_corr_t2 + c(gf9, gm9)*SYM_try_t2
