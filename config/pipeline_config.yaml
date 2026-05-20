@@ -15,7 +15,7 @@ scripts:
     demographics: no
     normative_tables: no
     sex_differences: no
-    hvr_comparison: no
+    hvr_comparison: yes
     sem_analysis: no
     manuscript_objects: no
   adjust_headsize:
