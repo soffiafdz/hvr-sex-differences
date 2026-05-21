@@ -118,6 +118,16 @@ matched_lv_res <- sex_diff$COMPARISON[ROI == "LV" & ADJ == "RES"]
 matched_hc_non <- sex_diff$COMPARISON[ROI == "HC" & ADJ == "NON"]
 matched_lv_non <- sex_diff$COMPARISON[ROI == "LV" & ADJ == "NON"]
 
+# --- Hemisphere rows (for hemisphere comparison paragraph) ---
+# Note: HVR uses _non to avoid collision with the bilateral temporal-stability
+# Pearson r scalars (hvr_r, hc_r, lv_r) computed later in this script.
+hc_res_l <- sex_diff$OVERALL[ROI == "HC"  & ADJ == "RES" & SIDE == "L"]
+hc_res_r <- sex_diff$OVERALL[ROI == "HC"  & ADJ == "RES" & SIDE == "R"]
+lv_res_l <- sex_diff$OVERALL[ROI == "LV"  & ADJ == "RES" & SIDE == "L"]
+lv_res_r <- sex_diff$OVERALL[ROI == "LV"  & ADJ == "RES" & SIDE == "R"]
+hvr_non_l <- sex_diff$OVERALL[ROI == "HVR" & ADJ == "NON" & SIDE == "L"]
+hvr_non_r <- sex_diff$OVERALL[ROI == "HVR" & ADJ == "NON" & SIDE == "R"]
+
 # --- Derived percentages ---
 hvr_icv <- get_hvr_icv_validation(sex_diff)
 
@@ -325,6 +335,10 @@ ms <- list(
     matched_hvr = matched_hvr, matched_hc_res = matched_hc_res,
     matched_lv_res = matched_lv_res,
     matched_hc_non = matched_hc_non, matched_lv_non = matched_lv_non,
+    # Hemisphere rows
+    hc_res_l = hc_res_l, hc_res_r = hc_res_r,
+    lv_res_l = lv_res_l, lv_res_r = lv_res_r,
+    hvr_non_l = hvr_non_l, hvr_non_r = hvr_non_r,
     # Derived percentages
     icv_reduction_pct = icv_reduction_pct, hvr_reduction_pct = hvr_reduction_pct,
     hc_d_range = hc_d_range,
