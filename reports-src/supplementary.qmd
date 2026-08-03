@@ -293,6 +293,7 @@ format_centile_hemisphere_gt(
 #| fig-cap: "**GAMLSS normative model calibration.** Points represent observed vs. expected proportions in held-out test data. Diagonal line indicates perfect calibration."
 #| fig-width: 6.5
 #| fig-height: 3.5
+#| dev: cairo_pdf
 
 if (!is.null(gamlss_calib)) {
   fig_gamlss_validation_combined(gamlss_calib)
@@ -376,6 +377,7 @@ format_sem_covariates_gt(covar_dt, model_name = "HVR Model")
 #| fig-cap: "**Distribution overlap by sex.** Across adjustment methods. Left column: full sample. Right column: head-size matched sample (age $\\pm 1$ year, intracranial volume $\\pm 25$ cc)."
 #| fig-width: 5
 #| fig-height: 7
+#| dev: cairo_pdf
 fig_distribution_overlap(brain_data, matched_brain_data, show_matched = TRUE)
 ```
 
