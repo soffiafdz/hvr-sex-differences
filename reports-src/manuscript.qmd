@@ -91,8 +91,6 @@ format:
         \renewcommand\Authfont{\normalsize}
         \renewcommand\Affilfont{\small\itshape}
         % Force tables to appear exactly where placed (prevent float drift)
-        \usepackage{tikz}
-        \usetikzlibrary{shapes.geometric, arrows.meta, positioning}
         \usepackage{float}
         \floatplacement{table}{H}
         % Center longtables
@@ -170,101 +168,11 @@ Three additional subsamples were defined for specific analyses (@fig-prisma; @tb
 
 Participants were excluded if they had any of the following ICD-10 diagnoses recorded in linked hospital records: F00-F99 (mental and behavioral disorders including dementia, mood disorders, schizophrenia, and anxiety disorders, which are associated with hippocampal volume alterations [@schmaal_subcortical_2016; @cao_volumes_2023; @brosch_reduced_2022]); G00-G99 (neurological diseases including Parkinson's disease, multiple sclerosis, epilepsy, and cerebrovascular disease, which directly affect brain structure [@van_erp_subcortical_2016; @xu_longitudinal_2020; @koenig_hippocampal_2014; @tai_detection_2025]); and Q00-Q07 (congenital CNS malformations affecting normal brain development). This exclusion strategy selected a sample of cognitively healthy adults without conditions known to affect hippocampal morphometry. The full exclusion flow is shown in @fig-prisma.
 
-::: {#fig-prisma}
+<!-- Diagram source: reports-src/figures/fig-prisma.tex (compiled to PDF; see
+     that file's header for the build command). Supplied as a separate graphics
+     file rather than inline TikZ, per Wiley figure requirements. -->
 
-```{=latex}
-\centering
-\begin{tikzpicture}[
-  node distance=0.8cm and 1.6cm,
-  every node/.style={font=\small},
-  process/.style={rectangle, draw=black!70, thick, text width=4.2cm,
-                  minimum height=0.9cm, align=center, rounded corners=3pt},
-  decision/.style={rectangle, draw=black!70, thick, text width=3.2cm,
-                   minimum height=0.9cm, align=center, rounded corners=3pt,
-                   fill=black!5},
-  excluded/.style={rectangle, draw=black!70, thick, text width=3.2cm,
-                   minimum height=0.9cm, align=center, rounded corners=3pt,
-                   fill=black!8, text=black!70},
-  sample/.style={rectangle, draw=black!70, very thick, text width=4.2cm,
-                 minimum height=0.9cm, align=center, rounded corners=3pt},
-  subsample/.style={rectangle, draw=black!70, thick, text width=3.6cm,
-                    minimum height=0.9cm, align=center, rounded corners=3pt,
-                    fill=black!3, dashed},
-  arrow/.style={-{Stealth[length=5pt]}, thick, black!70}
-]
-  % Main flow (top to bottom). All counts are unique participants;
-  % sex-stratified Ns from R/scripts/audit_sex_balance.R.
-  \node[process] (initial)
-    {UK Biobank Imaging Cohort\\[2pt]\textbf{N\,=\,42,898}\\[-1pt]{\scriptsize F:\,22,594\,|\,M:\,20,304}};
-
-  \node[decision, below=of initial] (qc)
-    {Quality control filter};
-
-  \node[process, below=of qc] (passed)
-    {Passed all processing\\[2pt]\textbf{n\,=\,33,911}\\[-1pt]{\scriptsize F:\,19,193\,|\,M:\,14,718}};
-
-  \node[decision, below=of passed] (gq)
-    {ICD-10 exclusion:\\G00--G99, Q00--Q07};
-
-  \node[sample, below=of gq] (sensitivity)
-    {Sensitivity sample\\[2pt]\textbf{N\,=\,30,032}\\[-1pt]{\scriptsize F:\,16,894\,|\,M:\,13,138}};
-
-  \node[decision, below=of sensitivity] (f)
-    {ICD-10 exclusion:\\F00--F99};
-
-  \node[sample, below=of f] (primary)
-    {\textbf{Primary sample}\\[2pt]\textbf{N\,=\,27,680}\\[-1pt]{\scriptsize F:\,15,555\,|\,M:\,12,125}};
-
-  \node[decision, below=of primary] (edu)
-    {Missing education or\\site data};
-
-  \node[sample, below=of edu] (gamlss)
-    {GAMLSS sample\\[2pt]\textbf{N\,=\,27,434}\\[-1pt]{\scriptsize F:\,15,412\,|\,M:\,12,022}};
-
-  % Exclusion boxes (right side)
-  \node[excluded, right=of qc] (exc1)
-    {Excluded\\[2pt]n\,=\,8,987};
-
-  \node[excluded, right=of gq] (exc2)
-    {Excluded\\[2pt]n\,=\,3,879};
-
-  \node[excluded, right=of f] (exc3)
-    {Excluded\\[2pt]n\,=\,2,352};
-
-  \node[excluded, right=of edu] (exc4)
-    {Excluded\\[2pt]n\,=\,246};
-
-  % Subsamples (below GAMLSS, three across)
-  \node[subsample, below=1.2cm of gamlss, xshift=-4.2cm] (england)
-    {England only\\[2pt]\textit{N\,=\,25,172}\\[-1pt]{\scriptsize(SEM analyses)}};
-
-  \node[subsample, below=1.2cm of gamlss] (matched)
-    {ICV-matched\\[2pt]\textit{N\,=\,9,500}\\[-1pt]{\scriptsize(Sex differences)}};
-
-  \node[subsample, below=1.2cm of gamlss, xshift=4.2cm] (longitudinal)
-    {Longitudinal\\[2pt]\textit{N\,=\,2,935}\\[-1pt]{\scriptsize(Normative calibration)}};
-
-  % Arrows
-  \draw[arrow] (initial) -- (qc);
-  \draw[arrow] (qc) -- (passed);
-  \draw[arrow] (qc) -- (exc1);
-  \draw[arrow] (passed) -- (gq);
-  \draw[arrow] (gq) -- (sensitivity);
-  \draw[arrow] (gq) -- (exc2);
-  \draw[arrow] (sensitivity) -- (f);
-  \draw[arrow] (f) -- (primary);
-  \draw[arrow] (f) -- (exc3);
-  \draw[arrow] (primary) -- (edu);
-  \draw[arrow] (edu) -- (gamlss);
-  \draw[arrow] (edu) -- (exc4);
-  \draw[arrow, dashed] (gamlss.south) -- ++(0,-0.35cm) -| (england.north);
-  \draw[arrow, dashed] (gamlss.south) -- (matched.north);
-  \draw[arrow, dashed] (gamlss.south) -- ++(0,-0.35cm) -| (longitudinal.north);
-\end{tikzpicture}
-```
-
-**Participant selection flow.** All counts are unique participants; F and M values give female and male sub-counts at each stage. Dashed boxes indicate analytic subsamples derived from the GAMLSS sample.
-:::
+![**Participant selection flow.** All counts are unique participants; F and M values give female and male sub-counts at each stage. Dashed boxes indicate analytic subsamples derived from the GAMLSS sample.](figures/fig-prisma.pdf){#fig-prisma}
 
 ### Quality Control
 
