@@ -506,6 +506,7 @@ Age × sex interactions were significant for all three measures. HC showed males
 #| fig-cap: "**Age-related patterns in sex differences.** Solid line = hippocampal-to-ventricle ratio; dashed lines = hippocampal/ventricular volume. White-filled points = non-significant (95% confidence interval crosses zero)."
 #| fig-width: 6.5
 #| fig-height: 4.5
+#| dev: cairo_pdf
 fig_age_trajectory(sex_diff)
 ```
 
@@ -518,6 +519,7 @@ fig_age_trajectory(sex_diff)
 #| fig-cap: "**Sex-specific normative centile curves.** Hippocampal-to-ventricle ratio (top), hippocampal volume (middle), and lateral ventricular volume (bottom). Left and right columns show female and male centiles separately; the centre column overlays both sexes for direct comparison. Hippocampal and ventricular volume models include intracranial volume as a covariate."
 #| fig-width: 6.5
 #| fig-height: 8
+#| dev: cairo_pdf
 fig_normative_centiles_panel(norm_tables)
 ```
 
@@ -565,6 +567,7 @@ For general cognition (*g*), HC~RES~ → *g* was not significant in males (p = `
 #| fig-cap: "**Brain-cognition paths by sex.** Points represent standardized coefficients; lines show 95% bootstrap confidence intervals. White-filled points indicate non-significant effects."
 #| fig-width: 6.5
 #| fig-height: 4.4
+#| dev: cairo_pdf
 fig_sem_forest(sem_params)
 ```
 
