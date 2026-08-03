@@ -234,7 +234,7 @@ University, Montreal, Quebec, Canada}
 \affil[3]{Department of Biomedical Engineering, McGill
 University, Montreal, Quebec, Canada}
 
-\date{2026-05-21}
+\date{2026-08-03}
 
 \begin{document}
 \maketitle
@@ -534,11 +534,11 @@ Alfaro-Almagro et al. (2018).
 Hippocampal and ventricular volumes were segmented using an in-house
 convolutional neural network trained on manually labeled data.
 Validation against manual segmentations showed Dice \(\kappa\) = 0.94
-and Pearson r = 0.99 (Fernandez-Lozano et al., 2025). Outputs included
-bilateral hippocampal volumes (left, right, total) and temporal horn
-volumes of the lateral ventricles (left, right, total). Intracranial
-volume (ICV) was obtained from AssemblyNet (Coupé et al., 2020), a
-large-ensemble convolutional neural network for whole-brain MRI
+and Spearman's \(\rho\) = 0.99 (Fernandez-Lozano et al., 2025). Outputs
+included bilateral hippocampal volumes (left, right, total) and temporal
+horn volumes of the lateral ventricles (left, right, total).
+Intracranial volume (ICV) was obtained from AssemblyNet (Coupé et al.,
+2020), a large-ensemble convolutional neural network for whole-brain MRI
 segmentation.
 
 \subsubsection{Head-Size Adjustment
@@ -619,19 +619,19 @@ all available data under a missing-at-random assumption.
 CFA}\label{factor-structure-bifactor-cfa}
 
 Cognitive indicators were modeled using a bifactor confirmatory factor
-analysis (CFA) (Sudlow et al., 2015) with three latent factors. The
-general factor (\emph{g}) loaded on all 12 indicators. The
-memory-specific factor (Memory\textsubscript{s}, orthogonal to \emph{g})
-loaded on pair matching, numeric memory, and prospective memory. The
-processing speed-specific factor (Speed\textsubscript{s}, orthogonal to
-\emph{g}) loaded on reaction time, trail making numeric, and symbol
-digit substitution correct. Factor scales were set using the marker
-variable method (first loading fixed to 1.0 for each factor). All latent
-factors were constrained to be orthogonal, consistent with bifactor
-model assumptions. Cross-loadings were fixed to zero. Residual
-covariances were specified for indicator pairs sharing method variance
-within the same test (pair matching time with errors; symbol digit
-correct with attempts; trail making numeric with alphanumeric).
+analysis (CFA) with three latent factors. The general factor (\emph{g})
+loaded on all 12 indicators. The memory-specific factor
+(Memory\textsubscript{s}, orthogonal to \emph{g}) loaded on pair
+matching, numeric memory, and prospective memory. The processing
+speed-specific factor (Speed\textsubscript{s}, orthogonal to \emph{g})
+loaded on reaction time, trail making numeric, and symbol digit
+substitution correct. Factor scales were set using the marker variable
+method (first loading fixed to 1.0 for each factor). All latent factors
+were constrained to be orthogonal, consistent with bifactor model
+assumptions. Cross-loadings were fixed to zero. Residual covariances
+were specified for indicator pairs sharing method variance within the
+same test (pair matching time with errors; symbol digit correct with
+attempts; trail making numeric with alphanumeric).
 
 Models were estimated using maximum likelihood with robust standard
 errors (MLR) in lavaan (Rosseel, 2012).
@@ -664,8 +664,9 @@ ICV-matched subsample where females and males were paired on age
 (\(\pm 1\) year) and ICV (\(\pm 25\) cc, approximately 0.3 SD). Matching
 used the MatchIt package (v4.7.2; Ho et al. (2011)) with optimal 1:1
 matching without replacement (\texttt{method\ =\ "optimal"},
-\texttt{distance\ =\ "mahalanobis"}), with calipers enforcing tolerance
-bounds. This yielded N = 4,750 matched pairs (total N = 9,500). We
+\texttt{distance\ =\ "mahalanobis"}), with calipers (the maximum
+permitted within-pair difference) set to the age and ICV tolerances
+above. This yielded N = 4,750 matched pairs (total N = 9,500). We
 reasoned that if sex differences in HC persist after matching on ICV,
 they cannot be attributed solely to head-size confounding, and if HVR
 shows similar effects in full and matched samples, this indicates HVR is
@@ -962,9 +963,12 @@ Residualization eliminated ICV association by construction (r
 \(\approx\) 0). HVR's correlation with ICV (r = -0.252) was smaller in
 magnitude than raw HC (r = 0.605) but remained negative, unlike
 residualized HC (r \(\approx\) 0). This represents a 58\% reduction in
-absolute ICV association. The negative direction mirrors the LV-ICV
-relationship (r = 0.462), indicating that the HVR-ICV association
-reflects the ventricular component's scaling with head size.
+absolute ICV association. This residual negative association arises
+because the ventricular volume, which itself scales positively with head
+size (LV-ICV r = 0.462), sits in the HVR denominator: larger heads yield
+larger ventricles and, in turn, a lower HVR. The HVR-ICV association
+therefore reflects the ventricular component's scaling with head size
+rather than a residual hippocampal effect.
 
 \begin{table}
 
@@ -1034,10 +1038,8 @@ observed for HC.
 \paragraph{HVR}\label{hvr}
 
 HVR showed a consistent female advantage: d = 0.52 {[}95\% CI: 0.49,
-0.54{]}. The combination of males having relatively smaller hippocampi
-(after head-size adjustment) and larger ventricles produces this female
-advantage in HVR. Distribution overlap between sexes across adjustment
-methods is shown in Supporting Information (Figure S2).
+0.54{]}. Distribution overlap between sexes across adjustment methods is
+shown in Supporting Information (Figure S2).
 
 \begin{figure}
 
@@ -1481,8 +1483,8 @@ contribute to the female advantage, as longer reproductive spans are
 associated with younger brain ages (Luders et al., 2025) and estrogen
 promotes hippocampal neurogenesis and synaptic plasticity (Jett et al.,
 2022). However, the female advantage is not universal: female APOE ε4
-carriers show faster hippocampal loss than male carriers in aMCI (Park
-et al., 2025), indicating that genetic risk can modulate typical
+carriers show faster hippocampal loss than male carriers in amnestic MCI
+(Park et al., 2025), indicating that genetic risk can modulate typical
 sex-differential patterns. Other large studies have found no significant
 sex differences in hippocampal age slopes (Fjell et al., 2009; Pintzka
 et al., 2015), underscoring that the presence of age × sex interactions
@@ -1504,16 +1506,13 @@ sex differences in centiles are minimal, consistent with the near-zero
 Cohen's d for residualized volumes, supporting combined norms when
 proper ICV adjustment is applied. For LV, males show greater ventricular
 variability at older ages, potentially reflecting greater heterogeneity
-in aging-related patterns. Well-calibrated centile estimates (Figure S1)
-have demonstrated clinical utility in detecting case-control differences
-and predicting diagnostic transition from MCI to Alzheimer's disease
-(Bethlehem et al., 2022; Dima et al., 2022). HVR showed slightly lower
-test-retest reliability (ICC \textgreater{} 0.93; Table S3) than HC or
-LV alone over a mean 2.7-year follow-up. Because this interval spans
-real aging-related change, the lower ICC may partly reflect HVR's
-sensitivity to concurrent hippocampal atrophy and ventricular expansion
-rather than measurement noise alone --- a hypothesis that dedicated
-longitudinal studies with shorter retest intervals could directly test.
+in aging-related patterns. HVR showed slightly lower test-retest
+reliability (ICC \textgreater{} 0.93; Table S3) than HC or LV alone over
+a mean 2.7-year follow-up. Because this interval spans real
+aging-related change, the lower ICC may partly reflect HVR's sensitivity
+to concurrent hippocampal atrophy and ventricular expansion rather than
+measurement noise alone --- a hypothesis that dedicated longitudinal
+studies with shorter retest intervals could directly test.
 
 \subsection{Brain-Cognition
 Associations}\label{brain-cognition-associations-2}
@@ -1601,12 +1600,14 @@ models (Burns et al., 2020; Eid et al., 2017)---indicating that memory
 variance was fully captured by \emph{g}; brain-cognition paths involving
 Memory\textsubscript{s} are therefore not reported. Ratios can exhibit
 non-normality and complex interpretation when numerator and denominator
-correlate differently with outcomes, though HVR showed approximately
-normal distributions here. All brain-cognition associations were small
-(all \(\beta\) \textless{} 0.07), explaining less than 1\% of variance
-in cognitive performance. While statistically significant given the
-large sample, the practical and clinical significance of these
-associations remains to be established.
+correlate differently with outcomes; HVR was only moderately skewed here
+rather than markedly non-normal, and the normative models used a
+distribution family (BCCG) that explicitly accommodates skewness. All
+brain-cognition associations were small (all \(\beta\) \textless{}
+0.07), explaining less than 1\% of variance in cognitive performance.
+While statistically significant given the large sample, the practical
+and clinical significance of these associations remains to be
+established.
 
 \subsection{Future Directions}\label{future-directions}
 
@@ -1784,9 +1785,10 @@ Aging Neuroscience}, \emph{11}.
 
 \bibitem[\citeproctext]{ref-dima_subcortical_2022}
 Dima, D., Modabbernia, A., Papachristou, E., Doucet, G. E., Agartz, I.,
-et al. (2022). Subcortical volumes across the lifespan: {Data} from
-18,605 healthy individuals aged 3--90 years. \emph{Human Brain Mapping},
-\emph{43}(1), 452--469. \url{https://doi.org/10.1002/hbm.25320}
+\& Karolinska Schizophrenia Project (KaSP). (2022). Subcortical volumes
+across the lifespan: {Data} from 18,605 healthy individuals aged 3--90
+years. \emph{Human Brain Mapping}, \emph{43}(1), 452--469.
+\url{https://doi.org/10.1002/hbm.25320}
 
 \bibitem[\citeproctext]{ref-eid_anomalous_2017}
 Eid, M., Geiser, C., Koch, T., \& Heene, M. (2017). Anomalous results in
