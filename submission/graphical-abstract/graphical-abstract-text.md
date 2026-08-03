@@ -1,0 +1,1 @@
+Hippocampal sex differences in 27,680 UK Biobank adults reversed direction depending on the head-size correction applied, spanning 1.5 standard deviations. The hippocampal-to-ventricle ratio gave one consistent female advantage that survived intracranial-volume matching, predicted cognition in both sexes, and yielded the first sex-specific normative centile curves.

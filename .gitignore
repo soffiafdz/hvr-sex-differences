@@ -90,3 +90,7 @@ Thumbs.db
 .envrc
 .lintr
 *.bib
+
+# Generated graphical-abstract rasters (rebuild: R/scripts/make_graphical_abstract.R)
+submission/graphical-abstract/*.tiff
+submission/graphical-abstract/*.png
