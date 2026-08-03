@@ -236,6 +236,20 @@ University, Montreal, Quebec, Canada}
 
 \date{2026-08-03}
 
+% Running head (HBM requires a short running title of < 40 characters)
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape HVR Sex Differences in UK Biobank}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyhead[L]{\small\itshape HVR Sex Differences in UK Biobank}%
+  \fancyhead[R]{\small\thepage}%
+  \renewcommand{\headrulewidth}{0.4pt}%
+}
+
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -270,6 +284,29 @@ clinical utility. We provide sex-specific normative centile curves for
 clinical application.
 \end{abstract}
 
+
+\textbf{Keywords:} hippocampus, lateral ventricles, sex characteristics,
+magnetic resonance imaging, cognitive aging, biomarkers, reference
+values
+
+\section*{Key Points}\label{key-points}
+\addcontentsline{toc}{section}{Key Points}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Hippocampal sex differences reverse direction depending on head-size
+  adjustment method, spanning 1.5 SD across analytical choices.
+\item
+  The hippocampal-to-ventricle ratio (HVR) provides consistent sex
+  difference estimates without requiring head-size correction and
+  predicts cognition comparably to adjusted hippocampal volume.
+\item
+  Males show steeper cross-sectional age-related HVR reductions;
+  sex-specific normative centile curves are provided for clinical
+  application.
+\end{enumerate}
 
 \section{Introduction}\label{introduction}
 

@@ -12,3 +12,19 @@ $endfor$
 $if(date)$
 \date{$date$}
 $endif$
+
+$if(running-title)$
+% Running head (HBM requires a short running title of < 40 characters)
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape $running-title$}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyhead[L]{\small\itshape $running-title$}%
+  \fancyhead[R]{\small\thepage}%
+  \renewcommand{\headrulewidth}{0.4pt}%
+}
+$endif$
